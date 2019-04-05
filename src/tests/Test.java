@@ -1,10 +1,16 @@
 package tests;
 
+import static org.junit.Assert.*;
+
+import model.player.Player;
+
 public class Test {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
+	// verifica base di Player()
+	@org.junit.Test
+	public void testPlayer() {
+		final Player player = new Player("ugo");
+		assertEquals(player.getName(), "ugo");
 	}
 
 }
