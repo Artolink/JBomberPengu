@@ -1,12 +1,12 @@
 package model.blocks;
 
 import javafx.geometry.Point2D;
-import model.Block;
+import model.AbstractEntity;
 
 /**
  * Class for the indestructible walls in the game.
  */
-public final class IndestructibleBlock extends Block {
+public final class IndestructibleBlock extends AbstractEntity {
     /**
      * Wall builder.
      * 

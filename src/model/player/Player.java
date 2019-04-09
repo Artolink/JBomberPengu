@@ -1,46 +1,51 @@
 package model.player;
 
-import model.Entity;
+import javafx.geometry.Point2D;
+import model.AbstractEntity;
 
 /**
- * Class for the player that the user will control.
+ * The player that the user will control.
  */
-public class Player implements Entity {
+public final class Player extends AbstractEntity {
 
-    private final String playerName;
-    private Integer points = 0;
+    private final String name;
+    private Integer score = 0;
 
     /**
+     * Player builder.
      * 
-     * @param playerName the name of the player
+     * @param name the name of the player
+     * @param pos  the initial position of the player
      */
-    public Player(final String playerName) {
-        this.playerName = playerName;
+    public Player(final String name, final Point2D pos) {
+        super(pos, true, true);
+        this.name = name;
     }
 
     /**
-     * Returns player name.
+     * Returns the name of the player.
+     * 
+     * @return player name
      */
-    @Override
     public String getName() {
-        return this.playerName;
+        return this.name;
     }
 
     /**
-     * Adds points to the player.
+     * Gets the score of the player.
      * 
-     * @param points the score of the player
+     * @return player score
      */
-    @Override
-    public void addPoints(final Integer points) {
-        this.points += points;
+    public Integer getScore() {
+        return this.score;
     }
 
     /**
-     * Returns the score of the player.
+     * Adds the score to the player.
+     * 
+     * @param score The score of the player
      */
-    @Override
-    public Integer getPoints() {
-        return this.points;
+    public void addScore(final Integer score) {
+        this.score += score;
     }
 }

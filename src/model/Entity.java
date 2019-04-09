@@ -29,7 +29,8 @@ public interface Entity {
     boolean isSolid();
 
     /**
-     * Defines if the entity is destructible (e.g. blocks, enemies..) or not (e.g. bombs, walls..).
+     * Defines if the entity is destructible (e.g. blocks, enemies..) or not (e.g.
+     * bombs, walls..).
      * 
      * @return 1 if destructible, 0 otherwise
      */

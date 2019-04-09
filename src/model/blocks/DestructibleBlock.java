@@ -2,12 +2,12 @@ package model.blocks;
 
 import java.util.Optional;
 import javafx.geometry.Point2D;
-import model.Block;
+import model.AbstractEntity;
 
 /**
  * Class for the destructible blocks in the game.
  */
-public final class DestructibleBlock extends Block {
+public final class DestructibleBlock extends AbstractEntity {
 
     private static final double MAX_POWER_UP = 0.5;
 
