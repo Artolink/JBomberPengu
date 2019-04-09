@@ -19,13 +19,22 @@ public final class DestructibleBlock extends AbstractEntity {
     public DestructibleBlock(final Point2D pos) {
         super(pos, true, true);
     }
-
+    /**
+     * Defines if the block has got a power-up.
+     * 
+     * @return 1 if has got a power-up, 0 otherwise
+     */
     public boolean hasPowerUp() {
         return Math.random() < MAX_POWER_UP;
     }
 
-    // L'OBJECT SAREBBE UN POWERUP GENERICO IN FUTURO IMPLEMENTATO
-    public Optional<Object> releasePowerUpWhenDestroyed() {
+    /**
+     * DA IMPLEMENTARE FACOLTATIVAMENTE.
+     * L'OBJECT SAREBBE UN POWERUP GENERICO IN FUTURO IMPLEMENTATO.
+     * 
+     * @return a possible power-up, or nothing
+     */ 
+    public Optional<Object> dropPowerUpWhenDestroyed() {
         if (hasPowerUp()) {
             return Optional.of(null); // A CASO
         } else {

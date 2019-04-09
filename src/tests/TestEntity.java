@@ -1,6 +1,8 @@
 package tests;
 
 import static org.junit.Assert.*;
+
+import javafx.geometry.Point2D;
 import model.player.Player;
 
 /**
@@ -12,15 +14,11 @@ public class TestEntity {
      */
     @org.junit.Test
     public void testPlayer() {
-        final Player player = new Player("ugo");
+        final Player player = new Player("Andrea", new Point2D(0, 0));
 
-        assertEquals(player.getName(), "ugo");
-        assertEquals(player.getPoints(), new Integer(0));
-        player.addPoints(10);
-
-        assertEquals(player.getPoints(), new Integer(10));
-        player.addPoints(-5);
-
-        assertEquals(player.getPoints(), new Integer(5));
+        assertEquals(player.getName(), "Andrea");
+        assertEquals(player.getScore(), Integer.valueOf(0));
+        player.addScore(10);
+        assertEquals(player.getScore(), Integer.valueOf(10));
     }
 }
