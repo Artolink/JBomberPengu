@@ -8,7 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import controller.utils.FileWorker;
-import model.utils.BiDimension;
+import model.utils.Pair;
 import model.AbstractEntity;
 import model.Level;
 import model.map.GameMap;
@@ -65,7 +65,7 @@ public class MapOnFile {
         try {
             final JSONArray mappa = this.mainInfo.getJSONArray(String.valueOf(level.get()));
             JSONArray riga = mappa.getJSONArray(0);
-            final GameMap gameMap = new GameMap(new BiDimension(riga.length(), mappa.length()));
+            final GameMap gameMap = new GameMap(new Pair<Integer, Integer>(riga.length(), mappa.length()));
             for (int a = 0; a < mappa.length(); a++) {
                 riga = mappa.getJSONArray(a);
                 for (int b = 0; b < riga.length(); b++) {

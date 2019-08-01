@@ -4,7 +4,7 @@ import javax.naming.CannotProceedException;
 
 import model.Level;
 import model.map.GameMap;
-import model.utils.BiDimension;
+import model.utils.Pair;
 
 /**
  * Generate a GameMap from scratch.
@@ -13,14 +13,14 @@ import model.utils.BiDimension;
 public class MapGenerator {
 
     private final Level level;
-    private final BiDimension dimensions;
+    private final Pair<Integer, Integer> dimensions;
 
     /**
      * Initialize the level and dimensions of the GameMap to be generated. 
      * @param level level to generate
      * @param dimensions dimension of the GameMap
      */
-    public MapGenerator(final Level level, final BiDimension dimensions) {
+    public MapGenerator(final Level level, final Pair<Integer, Integer> dimensions) {
         this.level = level;
         this.dimensions = dimensions;
     }

@@ -1,13 +1,13 @@
 package model.map;
 
 import model.AbstractEntity;
-import model.utils.BiDimension;
+import model.utils.Pair;
 
 /**
  * Map of the Game. Contains Blocks e dimensions.
  */
 public class GameMap {
-    private final BiDimension dimensions;
+    private final Pair<Integer, Integer> dimensions;
     private AbstractEntity[][] map;
 
     /**
@@ -15,7 +15,7 @@ public class GameMap {
      * @param dimensions dimensions of Map
      * @throws IllegalArgumentException 
      */
-    public GameMap(final BiDimension dimensions) throws IllegalArgumentException {
+    public GameMap(final Pair<Integer, Integer> dimensions) throws IllegalArgumentException {
         if (dimensions.getX() <= 0 && dimensions.getY() <= 0) {
             throw new IllegalArgumentException("Incorrect dimension/s");
         }
@@ -27,7 +27,7 @@ public class GameMap {
      * Get Dimension2 object with dimension of the GameMap.
      * @return Dimension2 dimensions of GameMap
      */
-    public BiDimension getDimensions() {
+    public Pair<Integer, Integer> getDimensions() {
         return dimensions;
     }
 
@@ -77,7 +77,7 @@ public class GameMap {
      * @return AbstractEntity on specified position
      * @throws IllegalArgumentException throws if the argument is not correct
      */
-    public AbstractEntity getBlock(final BiDimension dim) throws IllegalArgumentException {
+    public AbstractEntity getBlock(final Pair<Integer, Integer> dim) throws IllegalArgumentException {
         return this.getBlock(dim.getX(), dim.getY());
     }
 
@@ -88,7 +88,7 @@ public class GameMap {
      * @param dim dimensions
      * @throws IllegalArgumentException throws if the argument is not correct
      */
-    public void setBlock(final AbstractEntity block, final BiDimension dim) throws IllegalArgumentException {
+    public void setBlock(final AbstractEntity block, final Pair<Integer, Integer> dim) throws IllegalArgumentException {
         this.setBlock(block, dim.getX(), dim.getY());
     }
 
