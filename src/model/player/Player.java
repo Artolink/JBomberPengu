@@ -1,12 +1,12 @@
 package model.player;
 
 import javafx.geometry.Point2D;
-import model.AbstractEntity;
+import model.AbstractDestructibleEntity;
 
 /**
  * The player that the user will control.
  */
-public final class Player extends AbstractEntity {
+public final class Player extends AbstractDestructibleEntity {
 
     private final String name;
     private Integer score = 0;
@@ -18,7 +18,7 @@ public final class Player extends AbstractEntity {
      * @param pos  the initial position of the player
      */
     public Player(final String name, final Point2D pos) {
-        super(pos, true, true);
+        super(pos, true);
         this.name = name;
     }
 
@@ -47,5 +47,11 @@ public final class Player extends AbstractEntity {
      */
     public void addScore(final Integer score) {
         this.score += score;
+    }
+
+    @Override
+    public boolean isBeingDestroyed() {
+        // QUANDO NON HA PIU' VITE, RETURN TRUE
+        return false;
     }
 }

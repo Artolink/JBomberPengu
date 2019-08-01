@@ -3,9 +3,9 @@ package model;
 import javafx.geometry.Point2D;
 
 /**
- * Interface for every generic entity in the game.
+ * Main interface of the game, used for every generic indestructible entity.
  */
-public interface Entity {
+public interface IndestructibleEntity {
 
     /**
      * Gets the position of the entity.
@@ -15,7 +15,7 @@ public interface Entity {
     Point2D getPosition();
 
     /**
-     * Sets the INITIAL position of the entity.
+     * Sets the initial position of the entity.
      * 
      * @param position defines the entity position
      */
@@ -27,14 +27,4 @@ public interface Entity {
      * @return 1 if solid, 0 otherwise
      */
     boolean isSolid();
-
-    /**
-     * Defines if the entity is destructible (e.g. blocks, enemies..) or not (e.g.
-     * bombs, walls..).
-     * 
-     * @return 1 if destructible, 0 otherwise
-     */
-    boolean isDestructible();
-
-    // HITBOX? TILES?
 }

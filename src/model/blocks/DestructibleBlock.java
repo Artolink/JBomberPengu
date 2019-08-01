@@ -2,15 +2,15 @@ package model.blocks;
 
 import java.util.Optional;
 import javafx.geometry.Point2D;
-import model.AbstractEntity;
+import model.AbstractDestructibleEntity;
 
 /**
- * Class for the destructible blocks in the game.
+ * Final class for the destructible blocks in the game.
  * 
  */
-public final class DestructibleBlock extends AbstractEntity {
+public final class DestructibleBlock extends AbstractDestructibleEntity {
 
-    private static final double MAX_POWER_UP = 0.5; 
+    private static final double MAX_POWER_UP = 0.5;
 
     /**
      * Block builder.
@@ -18,8 +18,15 @@ public final class DestructibleBlock extends AbstractEntity {
      * @param pos defines the initial position of the block
      */
     public DestructibleBlock(final Point2D pos) {
-        super(pos, true, true);
+        super(pos, true);
     }
+
+    @Override
+    public boolean isBeingDestroyed() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
     /**
      * Defines if the block has got a power-up.
      * 

@@ -1,6 +1,6 @@
 package model.map;
 
-import model.AbstractEntity;
+import model.AbstractIndestructibleEntity;
 import model.utils.Pair;
 
 /**
@@ -8,7 +8,7 @@ import model.utils.Pair;
  */
 public class GameMap {
     private final Pair<Integer, Integer> dimensions;
-    private AbstractEntity[][] map;
+    private AbstractIndestructibleEntity[][] map;
 
     /**
      * Constructor set dimensions of GameMap.
@@ -20,7 +20,7 @@ public class GameMap {
             throw new IllegalArgumentException("Incorrect dimension/s");
         }
         this.dimensions = dimensions;
-        this.map = new AbstractEntity[dimensions.getX()][dimensions.getY()];
+        this.map = new AbstractIndestructibleEntity[dimensions.getX()][dimensions.getY()];
     }
 
     /**
@@ -37,7 +37,7 @@ public class GameMap {
     public void setAllEmpty() {
         for (int a = 0; a < this.dimensions.getX(); a++) {
             for (int b = 0; b < this.dimensions.getY(); b++) {
-                // TODO this.map[a][b] = new AbstractEntity();
+                // TODO this.map[a][b] = new AbstractIndestructibleEntity();
             }
         }
     }
@@ -50,7 +50,7 @@ public class GameMap {
      * @param y vertical position
      * @throws IllegalArgumentException throws if the argument is not correct
      */
-    public void setBlock(final AbstractEntity block, final int x, final int y) throws IllegalArgumentException {
+    public void setBlock(final AbstractIndestructibleEntity block, final int x, final int y) throws IllegalArgumentException {
         if (this.isDimensionsCorrect(x, y)) {
             throw new IllegalArgumentException();
         }
@@ -64,7 +64,7 @@ public class GameMap {
      * @return AbstractEntity on specified position
      * @throws IllegalArgumentException throws if the argument is not correct
      */
-    public AbstractEntity getBlock(final int x, final int y) throws IllegalArgumentException {
+    public AbstractIndestructibleEntity getBlock(final int x, final int y) throws IllegalArgumentException {
         if (this.isDimensionsCorrect(x, y)) {
             throw new IllegalArgumentException();
         }
@@ -77,7 +77,7 @@ public class GameMap {
      * @return AbstractEntity on specified position
      * @throws IllegalArgumentException throws if the argument is not correct
      */
-    public AbstractEntity getBlock(final Pair<Integer, Integer> dim) throws IllegalArgumentException {
+    public AbstractIndestructibleEntity getBlock(final Pair<Integer, Integer> dim) throws IllegalArgumentException {
         return this.getBlock(dim.getX(), dim.getY());
     }
 
@@ -88,7 +88,7 @@ public class GameMap {
      * @param dim dimensions
      * @throws IllegalArgumentException throws if the argument is not correct
      */
-    public void setBlock(final AbstractEntity block, final Pair<Integer, Integer> dim) throws IllegalArgumentException {
+    public void setBlock(final AbstractIndestructibleEntity block, final Pair<Integer, Integer> dim) throws IllegalArgumentException {
         this.setBlock(block, dim.getX(), dim.getY());
     }
 

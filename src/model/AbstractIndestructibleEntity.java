@@ -3,25 +3,22 @@ package model;
 import javafx.geometry.Point2D;
 
 /**
- * Abstract implementation of {@link Entity}.
+ * Abstract implementation of {@link IndestructibleEntity}.
  */
-public abstract class AbstractEntity implements Entity {
+public abstract class AbstractIndestructibleEntity implements IndestructibleEntity {
 
     private final boolean solid;
-    private final boolean destructible;
     private Point2D position;
 
     /**
-     * AbstractEntity builder.
+     * AbstractIndestructibleEntity builder.
      * 
      * @param pos          defines the initial position of the entity
      * @param solid        defines the entity is solid or not
-     * @param destructible defines if the entity is destructible or not
      */
-    public AbstractEntity(final Point2D pos, final boolean solid, final boolean destructible) {
+    public AbstractIndestructibleEntity(final Point2D pos, final boolean solid) {
         this.position = pos;
         this.solid = solid;
-        this.destructible = destructible;
     }
 
     @Override
@@ -38,10 +35,5 @@ public abstract class AbstractEntity implements Entity {
     @Override
     public final boolean isSolid() {
         return this.solid;
-    }
-
-    @Override
-    public final boolean isDestructible() {
-        return this.destructible;
     }
 }

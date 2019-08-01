@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 import controller.utils.FileWorker;
 import model.utils.Pair;
-import model.AbstractEntity;
+import model.AbstractIndestructibleEntity;
 import model.Level;
 import model.map.GameMap;
 
@@ -70,7 +70,7 @@ public class MapOnFile {
                 riga = mappa.getJSONArray(a);
                 for (int b = 0; b < riga.length(); b++) {
                     // is inverted a,b?
-                    gameMap.setBlock((AbstractEntity) Class.forName(riga.getString(b)).newInstance(), a, b);
+                    gameMap.setBlock((AbstractIndestructibleEntity) Class.forName(riga.getString(b)).newInstance(), a, b);
                 }
             }
             return gameMap;
