@@ -1,6 +1,8 @@
 package model.map;
 
+import javafx.geometry.Point2D;
 import model.AbstractIndestructibleEntity;
+import model.blocks.Terrain;
 import model.utils.Pair;
 
 /**
@@ -37,7 +39,7 @@ public class GameMap {
     public void setAllEmpty() {
         for (int a = 0; a < this.dimensions.getX(); a++) {
             for (int b = 0; b < this.dimensions.getY(); b++) {
-                // TODO this.map[a][b] = new AbstractIndestructibleEntity();
+                this.map[a][b] = new Terrain(new Point2D(0, 0)); /////////???????????
             }
         }
     }
@@ -50,11 +52,11 @@ public class GameMap {
      * @param y vertical position
      * @throws IllegalArgumentException throws if the argument is not correct
      */
-    public void setBlock(final AbstractIndestructibleEntity block, final int x, final int y) throws IllegalArgumentException {
-        if (this.isDimensionsCorrect(x, y)) {
+    public void setBlock(final AbstractIndestructibleEntity block, final int row, final int column) throws IllegalArgumentException {
+        if (!this.isDimensionsCorrect(row, column)) {
             throw new IllegalArgumentException();
         }
-        this.map[x][y] = block;
+        this.map[row][column] = block;
     }
 
     /**
@@ -64,11 +66,11 @@ public class GameMap {
      * @return AbstractEntity on specified position
      * @throws IllegalArgumentException throws if the argument is not correct
      */
-    public AbstractIndestructibleEntity getBlock(final int x, final int y) throws IllegalArgumentException {
-        if (this.isDimensionsCorrect(x, y)) {
+    public AbstractIndestructibleEntity getBlock(final int row, final int column) throws IllegalArgumentException {
+        if (!this.isDimensionsCorrect(row, column)) {
             throw new IllegalArgumentException();
         }
-        return this.map[x][y];
+        return this.map[row][column];
     }
 
     /**

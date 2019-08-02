@@ -1,6 +1,8 @@
 package controller.map;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.util.Optional;
 
 import javax.naming.CannotProceedException;
 import org.json.JSONArray;
@@ -8,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import controller.utils.FileWorker;
+import javafx.geometry.Point2D;
 import model.utils.Pair;
 import model.AbstractIndestructibleEntity;
 import model.Level;
@@ -48,8 +51,7 @@ public class MapOnFile {
             try {
                 this.mainInfo.getJSONArray(String.valueOf(level.get()));
                 return true;
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (JSONException e) {
                 return false;
             }
         }
@@ -61,7 +63,7 @@ public class MapOnFile {
      * @param level required Level 
      * @return GameMap saved on file or null if the map of specified level is not present
      */
-    public GameMap getMap(final Level level) {
+    public Optional<GameMap> getMap(final Level level) {
         try {
             final JSONArray mappa = this.mainInfo.getJSONArray(String.valueOf(level.get()));
             JSONArray riga = mappa.getJSONArray(0);
@@ -69,14 +71,14 @@ public class MapOnFile {
             for (int a = 0; a < mappa.length(); a++) {
                 riga = mappa.getJSONArray(a);
                 for (int b = 0; b < riga.length(); b++) {
-                    // is inverted a,b?
-                    gameMap.setBlock((AbstractIndestructibleEntity) Class.forName(riga.getString(b)).newInstance(), a, b);
+                    final Constructor<?> constructor = Class.forName(riga.getString(b)).getConstructor(Point2D.class);
+                    gameMap.setBlock((AbstractIndestructibleEntity) constructor.newInstance(new Point2D(b, a)), b, a);
                 }
             }
-            return gameMap;
+            return Optional.of(gameMap);
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return Optional.empty();
         }
     }
 
@@ -113,7 +115,7 @@ public class MapOnFile {
             final JSONArray row = new JSONArray();
             x = map.getDimensions().getX();
             for (int b = 0; b < x; b++) {
-                row.put(map.getBlock(b, a).getClass().toString());
+                row.put(map.getBlock(b, a).getClass().getCanonicalName());
             }
             main.put(row);
         }
