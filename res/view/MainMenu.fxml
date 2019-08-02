@@ -23,10 +23,10 @@
                   <Font name="System Bold Italic" size="36.0" />
                </font>
             </Label>
-            <Button fx:id="spBtn" disable="false" mnemonicParsing="false" onAction="#SinglePlayerBtPressed" text="Singleplayer" />
-            <Button fx:id="mpBtn" mnemonicParsing="false" onAction="#MultiPlayerBtPressed" text="Multiplayer" />
-            <Button fx:id="SettingsBtn" mnemonicParsing="false" onAction="#SettingsBtPressed" text="Settings" />
-            <ComboBox fx:id="languageChoiceBox" onAction="#LanguageChoiceBoxPressed" prefWidth="150.0" />
+            <Button fx:id="spBtn" disable="false" mnemonicParsing="false" onAction="#singlePlayerBtPressed" text="Singleplayer" />
+            <Button fx:id="mpBtn" mnemonicParsing="false" onAction="#multiPlayerBtPressed" text="Multiplayer" />
+            <Button fx:id="SettingsBtn" mnemonicParsing="false" onAction="#settingsBtPressed" text="Settings" />
+            <ComboBox fx:id="languageChoiceBox" onAction="#languageChoiceBoxPressed" prefWidth="150.0" />
             <Button fx:id="closeButton" mnemonicParsing="false" onAction="#closeGame" text="Exit" />
          </children>
          <padding>
