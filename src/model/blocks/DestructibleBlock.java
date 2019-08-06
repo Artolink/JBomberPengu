@@ -10,7 +10,10 @@ import model.AbstractDestructibleEntity;
  */
 public final class DestructibleBlock extends AbstractDestructibleEntity {
 
-    private static final double MAX_POWER_UP = 0.5;
+    private static final double POWER_UP_CHANCE = 0.5;
+    private static final int WIDTH = 50;
+    private static final int HEIGHT = 50;
+    private final Optional<Object> powerup; //sostituire con enum di powerup
 
     /**
      * Block builder.
@@ -18,35 +21,22 @@ public final class DestructibleBlock extends AbstractDestructibleEntity {
      * @param pos defines the initial position of the block
      */
     public DestructibleBlock(final Point2D pos) {
-        super(pos, true);
+        super(pos);
+        this.powerup = this.hasPowerUp();
+        setCollisionBox(pos, WIDTH, HEIGHT);
     }
 
-    @Override
-    public boolean isBeingDestroyed() {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    /**
-     * Defines if the block has got a power-up.
-     * 
-     * @return 1 if has got a power-up, 0 otherwise
-     */
-    public boolean hasPowerUp() {
-        return Math.random() < MAX_POWER_UP;
+    private Optional<Object> hasPowerUp() {
+        return Math.random() < POWER_UP_CHANCE ? Optional.of(1) : Optional.of(null); //sostituire 1 con enum di powerup
     }
 
     /**
-     * DA IMPLEMENTARE FACOLTATIVAMENTE.
-     * L'OBJECT SAREBBE UN POWERUP GENERICO IN FUTURO IMPLEMENTATO.
+     * VOID SAREBBE DA SOSTITUIRE CON UN POWERUP GENERICO DA RILASCIARE.
      * 
-     * @return a possible power-up, or nothing
      */ 
-    public Optional<Object> dropPowerUpWhenDestroyed() {
-        if (hasPowerUp()) {
-            return Optional.of(null); // A CASO
-        } else {
-            return Optional.empty();
+    public void dropPowerUpWhenDestroyed() {
+        if (this.powerup.isPresent()) {
+            return;
         }
     }
 }

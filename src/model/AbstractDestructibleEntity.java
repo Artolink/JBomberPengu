@@ -7,37 +7,25 @@ import javafx.geometry.Point2D;
  */
 public abstract class AbstractDestructibleEntity extends AbstractIndestructibleEntity implements DestructibleEntity {
 
-    private boolean destroyed;
+    private boolean destroyed; //NON SO ANCORA SE SERVE
 
     /**
      * AbstractDestructibleEntity builder.
      * 
-     * @param pos          defines the initial position of the entity
-     * @param solid        defines the entity is solid or not
+     * @param pos defines the initial position of the entity
      */
-    public AbstractDestructibleEntity(final Point2D pos, final boolean solid) {
-        super(pos, solid);
+    public AbstractDestructibleEntity(final Point2D pos) {
+        super(pos);
         this.destroyed = false;
     }
 
-    /**
-     * Defines if the entity is destroyed or not.
-     * 
-     * @return 1 if destroyed, 0 otherwise
-     */
-    public boolean isDestroyed() {
+    @Override
+    public final boolean isDestroyed() {
         return this.destroyed;
     }
 
-    /**
-     * Sets the status of the entity (1 if destroyed, 0 otherwise).
-     * 
-     * @param destroyed defines if the Entity has been destroyed or not
-     */
-    public void setStatus(final boolean destroyed) {
+    @Override
+    public final void setStatus(final boolean destroyed) { //forse da far overraidare in più casi (es. player 0 vite..)
         this.destroyed = destroyed;
     }
-
-    @Override
-    public abstract boolean isBeingDestroyed();
 }

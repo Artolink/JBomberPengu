@@ -2,6 +2,7 @@ package model.blocks;
 
 import javafx.geometry.Point2D;
 import model.AbstractDestructibleEntity;
+import model.player.Player;
 
 /**
  * Base class for the bomb (more bomb types can be added in the future).
@@ -9,19 +10,33 @@ import model.AbstractDestructibleEntity;
  */
 public class Bomb extends AbstractDestructibleEntity {
 
-    private static final int BASE_RANGE = 5;
+    private static final int WIDTH = 50;
+    private static final int HEIGHT = 50;
 
+    private final Player playerInfo;
     private int range;
 
     /**
      * Bomb builder.
      * 
-     * @param pos defines the initial position of the bomb
+     * @param pos       defines the initial position of the bomb
+     * @param pinfo     defines all the player's informations associated with the bomb 
+     * @param range     defines the explosion's dimension
      */
-    public Bomb(final Point2D pos) {
-        super(pos, true);
-        setStatus(false); //sets the entity status (destroyed or not) to false
-        this.range = BASE_RANGE;
+    public Bomb(final Point2D pos, final Player pinfo, final int range) {
+        super(pos);
+        setCollisionBox(pos, WIDTH, HEIGHT);
+        this.playerInfo = pinfo;
+        this.range = range;
+    }
+
+    /**
+     * Gets the player informations associated with the bomb.
+     * 
+     * @return a Player
+     */
+    public Player getPlayerInfo() {
+        return this.playerInfo;
     }
 
     /**
@@ -44,17 +59,5 @@ public class Bomb extends AbstractDestructibleEntity {
             throw new IllegalArgumentException("Range must be a positive number");
         }
         this.range = range;
-    }
-
-    /**
-     * Gets bomb's status (exploded or not).
-     * 
-     * @return true if it's exploded, false otherwise
-     */
-
-    @Override
-    public final boolean isBeingDestroyed() {
-        //UNA VOLTA CHE HO LA CLASSE TIMER PASSARLA E FARE METODO CHE QUANDO SCADE TIMER EXPLODED = TRUE
-        return false;
     }
 }

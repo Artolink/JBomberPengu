@@ -15,6 +15,7 @@ public class Terrain extends AbstractIndestructibleEntity {
      * @param pos defines the initial position of the block
      */
     public Terrain(final Point2D pos) {
-        super(pos, false);
+        super(pos);
+        setCollisionBox();
     }
 }
