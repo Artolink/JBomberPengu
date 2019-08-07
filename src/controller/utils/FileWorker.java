@@ -67,18 +67,14 @@ public class FileWorker {
      * @throws IOException caused by error reading the file
      */
     public String load() throws IOException {
-        this.content = "";
-        final File file = new File(this.fileName + FILEEXTENSION);
-        if (!file.exists()) {
-            if (file.createNewFile()) {
-                throw new IOException("File could not be created");
-            }
-        }
+        File file = this.createIfNotExists();
         final FileReader fileReader = new FileReader(file);
         final BufferedReader bufferedReader = new BufferedReader(fileReader);
-        String line = "";
-        while ((line = bufferedReader.readLine()) != null) {
+        String line = bufferedReader.readLine();
+        this.content = "";
+        while (line != null) {
             this.content += line;
+            line = bufferedReader.readLine();
         }
         bufferedReader.close();
         fileReader.close();
@@ -91,10 +87,21 @@ public class FileWorker {
      * @throws IOException caused by error writing on file
      */
     public void save() throws IOException {
-        final FileWriter fileWriter = new FileWriter(this.fileName + FILEEXTENSION);
+        File file = this.createIfNotExists();
+        final FileWriter fileWriter = new FileWriter(file);
         final BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
         bufferedWriter.write(this.content);
         bufferedWriter.close();
         fileWriter.close();
+    }
+    
+    private File createIfNotExists() throws IOException {
+        final File file = new File(this.fileName + FILEEXTENSION);
+        if (!file.exists()) {
+            if (!file.createNewFile()) {
+                throw new IOException("File could not be created");
+            }
+        }
+        return file;
     }
 }
