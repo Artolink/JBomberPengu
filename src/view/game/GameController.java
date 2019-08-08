@@ -29,7 +29,8 @@ private static final int BLOCK_DIMENSION = 47;
     
     public void initialize() {
         
-        button.setText("arrenditi");
+        button.setText(getTranslator().getValueOf("give up"));
+        
         background.fitWidthProperty().bind(anchorPane1.widthProperty());
         background.fitHeightProperty().bind(anchorPane1.heightProperty());
         background.setPreserveRatio(true);
@@ -45,11 +46,12 @@ private static final int BLOCK_DIMENSION = 47;
         canvas.setHeight(anchorPane1.getPrefHeight());
         gc = canvas.getGraphicsContext2D();
         anchorPane1.getChildren().add(canvas);
+        getTranslator();
     }
     
     public void draw(Image image, int row, int col) {
 
-        gc.drawImage(image, BLOCK_DIMENSION*row+10, BLOCK_DIMENSION*col+10, BLOCK_DIMENSION, BLOCK_DIMENSION);
+        gc.drawImage(image, BLOCK_DIMENSION*row+10, BLOCK_DIMENSION*col+10, BLOCK_DIMENSION, BLOCK_DIMENSION);//calcolare scarto
      }
     
     //cambia le dimensioni del pannello, del canvas e della scena
@@ -77,6 +79,13 @@ private static final int BLOCK_DIMENSION = 47;
         
         this.dimensions = dim;
     }
+
+    //it returns the size of the game area (canvas)
+    @Override
+    public Pair<Double, Double> getSizes(){
+        
+        return new Pair<Double, Double>(canvas.getWidth(), canvas.getHeight());
+    }
     
     //calcola quanto deve essere grande la finestra o la scena in base a quante righe e colonne ci sono nella mappa
     private Pair<Double, Double> computeWindowSize(Integer row, Integer col){
@@ -86,7 +95,7 @@ private static final int BLOCK_DIMENSION = 47;
         
         computeX = BLOCK_DIMENSION*row;
         computeY = BLOCK_DIMENSION*col;
-        return new Pair<Double, Double>(computeX, computeY);//aggiungere scarto
+        return new Pair<Double, Double>(computeX, computeY);//aggiungere e calcolare scarto
     }
     
 }
