@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.canvas.*?>
 <?import javafx.scene.image.*?>
-<?import javafx.scene.control.*?>
 <?import java.lang.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.StackPane?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <bottom>
-      <Button mnemonicParsing="false" text="Button" BorderPane.alignment="CENTER" />
-   </bottom>
-   <center>
-      <ImageView fitHeight="371.0" fitWidth="517.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+<AnchorPane fx:id="anchorPane1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="495.0" prefWidth="611.0" style="-fx-background-color: lightcyan;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="test.Controller">
+   <children>
+      <ImageView fx:id="background" fitHeight="444.0" fitWidth="584.0" layoutX="7.0" layoutY="7.0">
          <image>
-            <Image url="@../../../../resources/Images/sfondo.png" />
+            <Image url="@../../../../OneDrive/Desktop/OOP%20project/jbomberpengu/res/sfondo.png" />
          </image>
       </ImageView>
-   </center>
-</BorderPane>
+      <Button fx:id="button" layoutX="249.0" layoutY="413.0" mnemonicParsing="false" text="Button" />
+   </children>
+</AnchorPane>
