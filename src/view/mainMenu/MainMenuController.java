@@ -11,6 +11,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import model.language.ApplicationStrings;
+import view.FxmlFileLoader;
 import view.GUIImpl;
 
 public class MainMenuController extends GUIImpl{
@@ -105,7 +106,8 @@ public class MainMenuController extends GUIImpl{
     private void singlePlayerBtPressed() {
         System.out.println("Singleplayer button pressed");
         //addPage(new GameGUI()).load();
-        System.out.println(getDimensionsMultipliers().toString());
+        getDimensionsMultipliers();
+
     }
 
     /**
@@ -114,6 +116,7 @@ public class MainMenuController extends GUIImpl{
     @FXML
     private void multiPlayerBtPressed() {
         System.out.println("Multiplayer button pressed");
+        addPage(new FxmlFileLoader("view", "Game")).load();;
     }
  
     /**

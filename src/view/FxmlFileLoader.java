@@ -20,7 +20,7 @@ public class FxmlFileLoader extends Page {
      * @param fileAddress - the folder where the FXML file is
      * @param fileName - the name of the file
      */
-    FxmlFileLoader(String fileAddress, String fileName){
+    public FxmlFileLoader(String fileAddress, String fileName){
     this.fileAddress = fileAddress;
     this.fileName = fileName;
     loadFile();

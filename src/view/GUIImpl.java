@@ -20,8 +20,8 @@ public class GUIImpl extends Application implements GUI {
     private static final Pair<String, String> MAIN_MENU_FILE = new Pair<>("view" + File.separator + "mainMenu", "MainMenu");
     private static final String ICON_FILE = "view" + File.separator + "penguin.png";
 
-    private static final int  MIN_HEIGHT = 400;    //misure arbitrarie
-    private static final int  MIN_WIDHT = 400;
+    private static Pair<Double, Double> preferredSizes;
+    private static Pair<Double, Double> modifiedSizes;
 
     private static boolean initialized = false;
 
@@ -69,18 +69,10 @@ public class GUIImpl extends Application implements GUI {
     }
 
     public ApplicationStrings getTranslator() {
-        if (applicationStrings.isPresent()) {
-            return applicationStrings.get();
-        } else {
-            try {
-                applicationStrings = Optional.ofNullable(new ApplicationStrings());
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return applicationStrings.get();
+        if (!applicationStrings.isPresent()) {
+            applicationStrings = Optional.ofNullable(new ApplicationStrings());
         }
+        return applicationStrings.get();
 
     }
 
@@ -88,6 +80,10 @@ public class GUIImpl extends Application implements GUI {
     public void switchScene(Scene scene) {
         if (scene != null) {
             GUIImpl.stage.setScene(scene);
+            GUIImpl.stage.sizeToScene();
+            
+            preferredSizes = new Pair<>(scene.getWidth(), scene.getHeight());
+            modifiedSizes = getSizes();
         }
     }
 
@@ -111,8 +107,13 @@ public class GUIImpl extends Application implements GUI {
 
     @Override
     public Pair<Double, Double> getDimensionsMultipliers() {
-    // TODO Auto-generated method stub
-        return new Pair<Double, Double>(1d, 1d);
+        if (preferredSizes.getX() == 0 || preferredSizes.getY() == 0) {
+            return new Pair<Double, Double>(1d, 1d);
+        }
+        System.out.println(preferredSizes.getX() + " " + preferredSizes.getY());
+        System.out.println(modifiedSizes.getX() + " " + modifiedSizes.getY());
+        System.out.println(modifiedSizes.getX() / preferredSizes.getX() + " " + modifiedSizes.getY() / preferredSizes.getY());
+        return new Pair<Double, Double>(modifiedSizes.getX() / preferredSizes.getX(), modifiedSizes.getY() / preferredSizes.getY());
     }
 
     @Override
@@ -167,8 +168,21 @@ public class GUIImpl extends Application implements GUI {
         GUIImpl.stage.setTitle("jbomberpengu");
 
         //setting some arbitrary dimensions
-        GUIImpl.stage.setMinHeight(MIN_HEIGHT);
-        GUIImpl.stage.setMinWidth(MIN_WIDHT);
+        //GUIImpl.stage.setMinHeight(MIN_HEIGHT);
+        //GUIImpl.stage.setMinWidth(MIN_WIDHT);
+        GUIImpl.stage.sizeToScene();
+
+        //preferredSizes = getSizes();
+        //modifiedSizes = new Pair<Double, Double>(preferredSizes.getX(), preferredSizes.getY());
+
+        GUIImpl.stage.widthProperty().addListener((obs, oldVal, newVal) -> {
+            modifiedSizes = getSizes();
+            System.out.println(getDimensionsMultipliers().toString());
+        });
+
+        GUIImpl.stage.heightProperty().addListener((obs, oldVal, newVal) -> {
+            modifiedSizes = getSizes();
+        });
     }
 
 }
