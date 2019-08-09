@@ -8,13 +8,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.StackPane?>
 
-<AnchorPane fx:id="anchorPane1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="495.0" prefWidth="611.0" style="-fx-background-color: lightcyan;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="test.Controller">
+<AnchorPane fx:id="anchorPane1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="495.0" prefWidth="611.0" style="-fx-background-color: lightcyan;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.game.GameController">
    <children>
-      <ImageView fx:id="background" fitHeight="444.0" fitWidth="584.0" layoutX="7.0" layoutY="7.0">
-         <image>
-            <Image url="@../../../../OneDrive/Desktop/OOP%20project/jbomberpengu/res/sfondo.png" />
-         </image>
-      </ImageView>
-      <Button fx:id="button" layoutX="249.0" layoutY="413.0" mnemonicParsing="false" text="Button" />
+      <Button fx:id="button" layoutX="285.0" layoutY="458.0" mnemonicParsing="false" text="Button" onAction="#buttonPressed" />
    </children>
 </AnchorPane>
