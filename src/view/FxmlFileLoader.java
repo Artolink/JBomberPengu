@@ -6,6 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
+/**
+ *  The class needed for loading FXML file and his controller.
+ */
 public class FxmlFileLoader extends Page {
 
     private String fileName;
@@ -20,20 +23,20 @@ public class FxmlFileLoader extends Page {
      * @param fileAddress - the folder where the FXML file is
      * @param fileName - the name of the file
      */
-    public FxmlFileLoader(String fileAddress, String fileName){
-    this.fileAddress = fileAddress;
-    this.fileName = fileName;
-    loadFile();
+    public FxmlFileLoader(final String fileAddress, final String fileName) {
+        this.fileAddress = fileAddress;
+        this.fileName = fileName;
+        loadFile();
     }
 
 
     @Override
-    public String getPageName() {
+    public final String getPageName() {
         return fileName;
     }
 
     @Override
-    public Scene getScene() {
+    public final Scene getScene() {
         return scene;
     }
 

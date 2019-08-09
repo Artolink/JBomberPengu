@@ -14,16 +14,19 @@ import model.language.ApplicationStrings;
 import view.FxmlFileLoader;
 import view.GUIImpl;
 
+/**
+ *  The controller of MainMenu.fxml .
+ */
 public class MainMenuController extends GUIImpl{
 
-    private static final String UNSELECTED_BUTTON_NAME = "view" + File.separator + "Empty_Button.png";
-    private static final String SELECTED_BUTTON_NAME = "view" + File.separator + "Empty_Button_Glowing.png";
+    //private static final String UNSELECTED_BUTTON_NAME = "view" + File.separator + "Empty_Button.png";
+    //private static final String SELECTED_BUTTON_NAME = "view" + File.separator + "Empty_Button_Glowing.png";
  
-    private static final int BUTTONS_HEIGHT = 50;
-    private static final int BUTTONS_WIDTH = 150;
+    //private static final int BUTTONS_HEIGHT = 50;
+    //private static final int BUTTONS_WIDTH = 150;
  
-    private Image unselected;
-    private Image selected;
+    //private Image unselected;
+    //private Image selected;
     //private ImageView toggleImage;
  
  
@@ -41,16 +44,20 @@ public class MainMenuController extends GUIImpl{
     private ObservableList<String> languageComboBoxData = FXCollections.observableArrayList();
  
     // Add a public no-args constructor
+    /**
+     * 
+     */
     public MainMenuController() {
 
-     try {
-     unselected = new Image(UNSELECTED_BUTTON_NAME);
-     selected = new Image(SELECTED_BUTTON_NAME);
+        /*
+        try {
+            unselected = new Image(UNSELECTED_BUTTON_NAME);
+            selected = new Image(SELECTED_BUTTON_NAME);
         } catch (Exception e) {
-      System.out.println("ERROR: Image/es not found");
+            System.out.println("ERROR: Image/es not found");
         }
-
-     languageComboBoxData.addAll(getTranslator().getAvailableLanguages());
+         */
+        languageComboBoxData.addAll(getTranslator().getAvailableLanguages());
     }
 
     // Private methods -------------------------------------------------------------------------------------------
@@ -61,10 +68,11 @@ public class MainMenuController extends GUIImpl{
     @FXML
     private void initialize() {
 
-     setButtonGraphics(spBtn, unselected, selected);
+     /*setButtonGraphics(spBtn, unselected, selected);
      setButtonGraphics(mpBtn, unselected, selected);
      setButtonGraphics(settingsBtn, unselected, selected);
-        setButtonGraphics(closeBtn, unselected, selected);
+     setButtonGraphics(closeBtn, unselected, selected);
+     */
 
      /*
      Background background = new Background(toggleImage);
@@ -81,7 +89,7 @@ public class MainMenuController extends GUIImpl{
          return new ListCell<String>() {
 
        @Override
-       protected void updateItem(String item, boolean empty) {
+       protected void updateItem(final String item, final boolean empty) {
         super.updateItem(item, empty); 
         if (item == null || empty) {
          setText(null);
@@ -94,8 +102,9 @@ public class MainMenuController extends GUIImpl{
 
      });
 
-     
-    //changeNames(); //TODO
+     //System.out.println(this.getPageName());  //TODO
+
+     //changeNames(); //TODO
 
     } 
 
@@ -116,7 +125,7 @@ public class MainMenuController extends GUIImpl{
     @FXML
     private void multiPlayerBtPressed() {
         System.out.println("Multiplayer button pressed");
-        addPage(new FxmlFileLoader("view", "Game")).load();;
+        addPage(new FxmlFileLoader("view", "Game")).load();
     }
  
     /**
@@ -163,13 +172,13 @@ public class MainMenuController extends GUIImpl{
         settingsBtn.setText(t.getValueOf("settings"));
         closeBtn.setText(t.getValueOf("close"));
     }
- 
+    /*
     /**
      * Changes the aspect of a button.
      * @param button - the button you want to modify
      * @param toggleImage 
-     */
-    private void setButtonGraphics(Button button, ImageView toggleImage) {
+     *
+    private void setButtonGraphics(final Button button, final ImageView toggleImage) {
         button.setGraphic(toggleImage);
     }
  
@@ -189,9 +198,10 @@ public class MainMenuController extends GUIImpl{
         toggleImage.setFitHeight(BUTTONS_HEIGHT);
         toggleImage.setFitWidth(BUTTONS_WIDTH);
         setButtonGraphics(button, toggleImage);
-            
+
          //TODO translate to css
     }
+    */
  
  /*
   *  To get the items in the choice box:
