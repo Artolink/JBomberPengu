@@ -6,6 +6,9 @@ import javafx.scene.Scene;
 import model.language.ApplicationStrings;
 import model.utils.Pair;
 
+/**
+ * 
+ */
 public interface GUI {
 
     /**
@@ -13,6 +16,12 @@ public interface GUI {
      * @return if not initilized returns a new ApplicationStrings, else it returns the instance already created
      */
     public ApplicationStrings getTranslator();
+
+    /**
+     * 
+     * @return The scene currently displayed.
+     */
+    public Scene getCurrentScene();
 
     /**
      * To be called when a new Scene has to be loaded.
@@ -65,6 +74,11 @@ public interface GUI {
     public Page addPage(Page c);
 
     /**
+     * @return The currently loaded page
+     */
+    public Page getCurrentPage();
+
+    /**
      * Gets the page whit matching name.
      * @param name - the name of the page you want
      * @return the matching page
@@ -85,7 +99,7 @@ public interface GUI {
     public void loadPage(String name);
 
     /**
-     * Closes the game, equivalent to System.exit(0)
+     * Closes the game, equivalent to System.exit(0).
      */
     public void closeGame();
 
