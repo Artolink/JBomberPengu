@@ -93,6 +93,8 @@ public class MainMenuController extends GUIImpl{
 
      });
 
+     
+    //changeNames(); //TODO
 
     } 
 
@@ -102,9 +104,8 @@ public class MainMenuController extends GUIImpl{
     @FXML
     private void singlePlayerBtPressed() {
         System.out.println("Singleplayer button pressed");
-        //addPage(new GameGUI());
-        System.out.println(getPages());
-        //loadPage("Game");
+        //addPage(new GameGUI()).load();
+        System.out.println(getDimensionsMultipliers().toString());
     }
 
     /**
@@ -115,6 +116,22 @@ public class MainMenuController extends GUIImpl{
         System.out.println("Multiplayer button pressed");
     }
  
+    /**
+     * Action executed when map editor button is pressed.
+     */
+    @FXML
+    private void mapEditorPressed() {
+        System.out.println("Map editor button pressed");
+    }
+
+    /**
+     * Action executed when language editor button is pressed.
+     */
+    @FXML
+    private void languageEditorPressed() {
+        System.out.println("Language editor button pressed");
+    }
+
     /**
      * Action executed when Settings button is pressed.
      */
@@ -129,7 +146,7 @@ public class MainMenuController extends GUIImpl{
     @FXML
     private void languageChoiceBoxPressed() {
         getTranslator().setLanguage(languageChoiceBox.getValue());
-        changeNames();
+        //changeNames(); //TODO
     }
 
  
@@ -161,14 +178,16 @@ public class MainMenuController extends GUIImpl{
                   .when(button.hoverProperty())
                     .then(selected)
                     .otherwise(unselected)
-                );
-            } catch (NullPointerException e) {
-                System.out.println("ERROR: Images not loaded correctly");
-            }
-            toggleImage.setPreserveRatio(true);
-            toggleImage.setFitHeight(BUTTONS_HEIGHT);
-            toggleImage.setFitWidth(BUTTONS_WIDTH);
-            setButtonGraphics(button, toggleImage);
+            );
+        } catch (NullPointerException e) {
+            System.out.println("ERROR: Images not loaded correctly");
+        }
+        toggleImage.setPreserveRatio(true);
+        toggleImage.setFitHeight(BUTTONS_HEIGHT);
+        toggleImage.setFitWidth(BUTTONS_WIDTH);
+        setButtonGraphics(button, toggleImage);
+            
+         //TODO translate to css
     }
  
  /*

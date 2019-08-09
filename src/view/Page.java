@@ -16,4 +16,11 @@ public abstract class Page extends GUIImpl {
      */
     public abstract Scene getScene();
 
+    /**
+     * Loads this Page on the stage.
+     */
+    public void load() {
+        loadPage(this.getPageName());
+    }
+
 }

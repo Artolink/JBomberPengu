@@ -23,7 +23,7 @@ public class FxmlFileLoader extends Page {
     FxmlFileLoader(String fileAddress, String fileName){
     this.fileAddress = fileAddress;
     this.fileName = fileName;
-    load();
+    loadFile();
     }
 
 
@@ -57,7 +57,7 @@ public class FxmlFileLoader extends Page {
     /**
      * Creates the Scene from the FXML file. Called from FxmlFileLoader.
      */
-    private void load() {
+    private void loadFile() {
         try {
             loader = new FXMLLoader(ClassLoader.getSystemClassLoader().getResource(fileAddress + File.separator + fileName + ".fxml"));
             Parent root = loader.load();
