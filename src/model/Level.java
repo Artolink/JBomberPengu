@@ -6,12 +6,13 @@ package model;
 public class Level {
 
     private int position;
+    private static final int MINIMUMLEVEL = 1;
 
     /**
      * Constructor initialize the level to 0.
      */
     public Level() {
-        this.position = 0;
+        this.position = MINIMUMLEVEL;
     }
 
     /**
@@ -20,7 +21,7 @@ public class Level {
      * @throws IllegalArgumentException throw if we are passing an illegal argument
      */
     public void setLevel(final int level) throws IllegalArgumentException {
-        if (level < 0) {
+        if (level < MINIMUMLEVEL) {
             throw new IllegalArgumentException();
         } else {
             this.position = level;

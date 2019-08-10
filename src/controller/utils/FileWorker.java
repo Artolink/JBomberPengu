@@ -22,12 +22,13 @@ public class FileWorker {
      */
     public FileWorker(final String fileName) {
         this.fileName = fileName;
+        this.content = "";
     }
 
     /**
-     * Check the content of file readed.
+     * Check the content of file read.
      * 
-     * @return true if nothing readed, false otherwise.
+     * @return true if nothing read, false otherwise.
      */
     public boolean isEmpty() {
         return this.content.isEmpty();
@@ -67,7 +68,7 @@ public class FileWorker {
      * @throws IOException caused by error reading the file
      */
     public String load() throws IOException {
-        File file = this.createIfNotExists();
+        final File file = this.createIfNotExists();
         final FileReader fileReader = new FileReader(file);
         final BufferedReader bufferedReader = new BufferedReader(fileReader);
         String line = bufferedReader.readLine();
@@ -82,19 +83,19 @@ public class FileWorker {
     }
 
     /**
-     * Save the content setted with setContent() on file.
+     * Save the content set with setContent() on file.
      * 
      * @throws IOException caused by error writing on file
      */
     public void save() throws IOException {
-        File file = this.createIfNotExists();
+        final File file = this.createIfNotExists();
         final FileWriter fileWriter = new FileWriter(file);
         final BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
         bufferedWriter.write(this.content);
         bufferedWriter.close();
         fileWriter.close();
     }
-    
+
     private File createIfNotExists() throws IOException {
         final File file = new File(this.fileName + FILEEXTENSION);
         if (!file.exists()) {

@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.naming.CannotProceedException;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,19 +19,16 @@ import controller.utils.FileWorker;
  */
 public class LanguageSaver {
 
-    /**
-     * Name of the file to work with.
-     */
     private String languageName;
     private JSONObject translatedStrings;
-    private JSONObject loadedTranslation;
+    private final JSONObject loadedTranslation;
     private boolean fromList;
 
     /**
      * Init variable.
      */
     public LanguageSaver() {
-        ApplicationStrings appString = new ApplicationStrings();
+        final ApplicationStrings appString = new ApplicationStrings();
         appString.setDefault();
         this.loadedTranslation = appString.getSelectedLanguageInfo();
         this.translatedStrings = new JSONObject();
@@ -41,6 +37,7 @@ public class LanguageSaver {
 
     /**
      * Set language to insert.
+     * 
      * @param lang language to insert
      */
     public void setLanguage(final String lang) {
@@ -49,7 +46,8 @@ public class LanguageSaver {
 
     /**
      * Insert a translation into this object.
-     * @param key key of translation
+     * 
+     * @param key   key of translation
      * @param value translated value
      * @throws IllegalArgumentException cannot insert this key value couple
      */
@@ -71,6 +69,7 @@ public class LanguageSaver {
 
     /**
      * Insert a list of translation into this object.
+     * 
      * @param translation list of translation
      * @throws IllegalArgumentException cannot insert these translation
      */
@@ -91,6 +90,7 @@ public class LanguageSaver {
 
     /**
      * Know if you have inserted all keys to be translated.
+     * 
      * @return true if you can save, false otherwise
      */
     public boolean canSave() {
@@ -99,13 +99,15 @@ public class LanguageSaver {
 
     /**
      * Save the inserted translation into file FILENAME.
+     * 
      * @return if correctly saved
      * @throws CannotProceedException error accessing file
      */
     public boolean saveTraductions() throws CannotProceedException {
         if (this.canSave()) {
             try {
-                final FileWorker fileWorker = new FileWorker(ApplicationStrings.DIRECTORY_NAME + File.separator + this.languageName);
+                final FileWorker fileWorker = new FileWorker(
+                        ApplicationStrings.DIRECTORY_NAME + File.separator + this.languageName);
                 fileWorker.setContent(this.translatedStrings.toString());
                 fileWorker.save();
             } catch (IOException e) {
@@ -117,8 +119,8 @@ public class LanguageSaver {
             return false;
         }
     }
-    
-    private boolean contains(final Iterator<?> list, String key) {
+
+    private boolean contains(final Iterator<?> list, final String key) {
         while (list.hasNext()) {
             if (list.next().equals(key)) {
                 return true;

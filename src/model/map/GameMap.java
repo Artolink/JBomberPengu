@@ -48,8 +48,8 @@ public class GameMap {
      * Set a Block in a specified position.
      * 
      * @param block Block to insert in a specified position
-     * @param x horizontal position
-     * @param y vertical position
+     * @param row horizontal position
+     * @param column vertical position
      * @throws IllegalArgumentException throws if the argument is not correct
      */
     public void setBlock(final AbstractIndestructibleEntity block, final int row, final int column) throws IllegalArgumentException {
@@ -61,8 +61,8 @@ public class GameMap {
 
     /**
      * Get Block at specified position.
-     * @param x horizontal position
-     * @param y vertical position
+     * @param row horizontal position
+     * @param column vertical position
      * @return AbstractEntity on specified position
      * @throws IllegalArgumentException throws if the argument is not correct
      */

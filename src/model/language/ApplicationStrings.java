@@ -75,7 +75,7 @@ public class ApplicationStrings {
     /**
      * Get the selected language.
      * 
-     * @return String of selected language, null if not setted yet
+     * @return String of selected language, null if not set yet
      */
     public String getSelectedLanguage() {
         return this.selectedLanguage.isEmpty() ? null : this.selectedLanguage;
