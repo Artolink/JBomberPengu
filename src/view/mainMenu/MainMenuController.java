@@ -1,15 +1,11 @@
 package view.mainMenu;
 
-import java.io.File;
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import model.language.ApplicationStrings;
 import view.FxmlFileLoader;
 import view.GUIImpl;
@@ -17,18 +13,7 @@ import view.GUIImpl;
 /**
  *  The controller of MainMenu.fxml .
  */
-public class MainMenuController extends GUIImpl{
-
-    //private static final String UNSELECTED_BUTTON_NAME = "view" + File.separator + "Empty_Button.png";
-    //private static final String SELECTED_BUTTON_NAME = "view" + File.separator + "Empty_Button_Glowing.png";
- 
-    //private static final int BUTTONS_HEIGHT = 50;
-    //private static final int BUTTONS_WIDTH = 150;
- 
-    //private Image unselected;
-    //private Image selected;
-    //private ImageView toggleImage;
- 
+public class MainMenuController extends GUIImpl {
  
     @FXML
     private Button spBtn;
@@ -48,15 +33,6 @@ public class MainMenuController extends GUIImpl{
      * 
      */
     public MainMenuController() {
-
-        /*
-        try {
-            unselected = new Image(UNSELECTED_BUTTON_NAME);
-            selected = new Image(SELECTED_BUTTON_NAME);
-        } catch (Exception e) {
-            System.out.println("ERROR: Image/es not found");
-        }
-         */
         languageComboBoxData.addAll(getTranslator().getAvailableLanguages());
     }
 
@@ -67,17 +43,6 @@ public class MainMenuController extends GUIImpl{
      */
     @FXML
     private void initialize() {
-
-     /*setButtonGraphics(spBtn, unselected, selected);
-     setButtonGraphics(mpBtn, unselected, selected);
-     setButtonGraphics(settingsBtn, unselected, selected);
-     setButtonGraphics(closeBtn, unselected, selected);
-     */
-
-     /*
-     Background background = new Background(toggleImage);
-     spBtn.setBackground(value);
-     */
 
      // Init ComboBox items.
      languageChoiceBox.setItems(languageComboBoxData);
@@ -102,9 +67,7 @@ public class MainMenuController extends GUIImpl{
 
      });
 
-     //System.out.println(this.getPageName());  //TODO
-
-     //changeNames(); //TODO
+     changeNames();
 
     } 
 
@@ -115,7 +78,7 @@ public class MainMenuController extends GUIImpl{
     private void singlePlayerBtPressed() {
         System.out.println("Singleplayer button pressed");
         //addPage(new GameGUI()).load();
-        getDimensionsMultipliers();
+        getDimensionsMultipliers(); //TODO
 
     }
 
@@ -134,6 +97,7 @@ public class MainMenuController extends GUIImpl{
     @FXML
     private void mapEditorPressed() {
         System.out.println("Map editor button pressed");
+        addPage(new FxmlFileLoader("view\\mapEditor\\MapEditor.fxml")).load();
     }
 
     /**
@@ -142,6 +106,7 @@ public class MainMenuController extends GUIImpl{
     @FXML
     private void languageEditorPressed() {
         System.out.println("Language editor button pressed");
+        addPage(new FxmlFileLoader("view\\multiLang\\MultilangView.fxml")).load();
     }
 
     /**
@@ -150,6 +115,7 @@ public class MainMenuController extends GUIImpl{
     @FXML
     private void settingsBtPressed() {
         System.out.println("Settings button pressed");
+        addPage(new FxmlFileLoader("view\\settings\\SettingsMenu.fxml")).load();
     }
  
     /**
@@ -158,7 +124,7 @@ public class MainMenuController extends GUIImpl{
     @FXML
     private void languageChoiceBoxPressed() {
         getTranslator().setLanguage(languageChoiceBox.getValue());
-        //changeNames(); //TODO
+        changeNames();
     }
 
  
@@ -166,43 +132,18 @@ public class MainMenuController extends GUIImpl{
      * Methods that changes the language to the selected one. Triggered when LanguageChoiceBox is Pressed.
      */
     private void changeNames() {
-        ApplicationStrings t = getTranslator();
-        spBtn.setText(t.getValueOf("singleplayer"));
-        mpBtn.setText(t.getValueOf("multiplayer"));
-        settingsBtn.setText(t.getValueOf("settings"));
-        closeBtn.setText(t.getValueOf("close"));
-    }
-    /*
-    /**
-     * Changes the aspect of a button.
-     * @param button - the button you want to modify
-     * @param toggleImage 
-     *
-    private void setButtonGraphics(final Button button, final ImageView toggleImage) {
-        button.setGraphic(toggleImage);
-    }
- 
-
-    private void setButtonGraphics(Button button, Image unselected, Image selected) {
-        ImageView toggleImage = new ImageView();
         try {
-            toggleImage.imageProperty().bind(Bindings
-                  .when(button.hoverProperty())
-                    .then(selected)
-                    .otherwise(unselected)
-            );
-        } catch (NullPointerException e) {
-            System.out.println("ERROR: Images not loaded correctly");
-        }
-        toggleImage.setPreserveRatio(true);
-        toggleImage.setFitHeight(BUTTONS_HEIGHT);
-        toggleImage.setFitWidth(BUTTONS_WIDTH);
-        setButtonGraphics(button, toggleImage);
-
-         //TODO translate to css
+            ApplicationStrings t = getTranslator();
+            spBtn.setText(t.getValueOf("singleplayer"));
+            mpBtn.setText(t.getValueOf("multiplayer"));
+            settingsBtn.setText(t.getValueOf("settings"));
+            closeBtn.setText(t.getValueOf("close"));
+        } catch (Exception e) {
+            System.out.println("ERROR OCCURRED while translating");
+        } 
     }
-    */
- 
+
+
  /*
   *  To get the items in the choice box:
    ObservableList<String> availableChoices = choiceBox.getItems();
