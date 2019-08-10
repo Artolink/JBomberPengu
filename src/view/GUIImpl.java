@@ -112,6 +112,13 @@ public class GUIImpl extends Application implements GUI {
 
     @Override
     public final Pair<Double, Double> getDimensionsMultipliers() {
+        if (preferredSizes == null) {
+            preferredSizes = getSizes();
+        }
+        if (modifiedSizes == null) {
+            modifiedSizes = getSizes();
+        }
+
         if (preferredSizes.getX() == 0 || preferredSizes.getY() == 0) {
             return new Pair<Double, Double>(1d, 1d);
         }
@@ -175,9 +182,6 @@ public class GUIImpl extends Application implements GUI {
         //set the app title
         GUIImpl.stage.setTitle("jbomberpengu");
 
-        //setting some arbitrary dimensions
-        //GUIImpl.stage.setMinHeight(MIN_HEIGHT);
-        //GUIImpl.stage.setMinWidth(MIN_WIDHT);
         GUIImpl.stage.sizeToScene();
 
         GUIImpl.stage.widthProperty().addListener((obs, oldVal, newVal) -> {
