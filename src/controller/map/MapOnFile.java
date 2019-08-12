@@ -10,7 +10,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import controller.utils.FileWorker;
-import javafx.geometry.Point2D;
 import model.utils.Pair;
 import model.AbstractIndestructibleEntity;
 import model.Level;
@@ -71,8 +70,8 @@ public class MapOnFile {
             for (int a = 0; a < mappa.length(); a++) {
                 riga = mappa.getJSONArray(a);
                 for (int b = 0; b < riga.length(); b++) {
-                    final Constructor<?> constructor = Class.forName(riga.getString(b)).getConstructor(Point2D.class);
-                    gameMap.setBlock((AbstractIndestructibleEntity) constructor.newInstance(new Point2D(b, a)), b, a);
+                    final Constructor<?> constructor = Class.forName(riga.getString(b)).getConstructor();
+                    gameMap.setBlock((AbstractIndestructibleEntity) constructor.newInstance(), b, a);
                 }
             }
             return Optional.of(gameMap);

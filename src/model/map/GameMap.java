@@ -1,6 +1,5 @@
 package model.map;
 
-import javafx.geometry.Point2D;
 import model.AbstractIndestructibleEntity;
 import model.blocks.Terrain;
 import model.utils.Pair;
@@ -39,7 +38,7 @@ public class GameMap {
     public void setAllEmpty() {
         for (int a = 0; a < this.dimensions.getX(); a++) {
             for (int b = 0; b < this.dimensions.getY(); b++) {
-                this.map[a][b] = new Terrain(new Point2D(0, 0)); /////////???????????
+                this.map[a][b] = new Terrain();
             }
         }
     }

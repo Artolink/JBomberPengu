@@ -95,8 +95,8 @@ public class MapGenerator {
         while (true) {
             final Random rand = new Random();
             rand.setSeed(System.currentTimeMillis());
-            position = new Pair<Integer, Integer>(rand.nextInt(this.dimensions.getX() - 1),
-                    rand.nextInt(this.dimensions.getY() - 1));
+            position = new Pair<Integer, Integer>(rand.nextInt(this.dimensions.getX()),
+                    rand.nextInt(this.dimensions.getY()));
             if (this.illegalPosition.contains(position)) {
                 continue;
             } else {
