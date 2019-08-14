@@ -1,17 +1,17 @@
 package model.blocks;
 
-import javafx.geometry.Point2D;
-import model.AbstractDestructibleEntity;
+import model.AbstractEntity;
 import model.player.Player;
+import model.utils.Pair;
 
 /**
  * Base class for the bomb (more bomb types can be added in the future).
  *
  */
-public class Bomb extends AbstractDestructibleEntity {
+public class Bomb extends AbstractEntity { 
 
-    private static final int WIDTH = 50;
-    private static final int HEIGHT = 50;
+    //TIMER
+    private static final int DEFAULT_RANGE = 2;
 
     private final Player playerInfo;
     private int range;
@@ -21,13 +21,12 @@ public class Bomb extends AbstractDestructibleEntity {
      * 
      * @param pos       defines the initial position of the bomb
      * @param pinfo     defines all the player's informations associated with the bomb 
-     * @param range     defines the explosion's dimension
      */
-    public Bomb(final Point2D pos, final Player pinfo, final int range) {
+    public Bomb(final Pair<Integer, Integer> pos, final Player pinfo) {
         super(pos);
-        setCollisionBox(pos, WIDTH, HEIGHT);
         this.playerInfo = pinfo;
-        this.range = range;
+        this.range = DEFAULT_RANGE;
+        setImagePath("");
     }
 
     /**
@@ -59,5 +58,17 @@ public class Bomb extends AbstractDestructibleEntity {
             throw new IllegalArgumentException("Range must be a positive number");
         }
         this.range = range;
+    }
+
+    @Override
+    public final String toString() {
+        return new StringBuilder().append("BOMB -  ")
+                .append("Planted by: ")
+                .append(this.playerInfo.getName())
+                .append(" - Range is: ")
+                .append(this.getRange())
+                .append("\n")
+                .append(super.toString())
+                .toString();
     }
 }
