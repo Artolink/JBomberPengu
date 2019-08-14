@@ -1,4 +1,4 @@
-package controller.language;
+package model.language;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,9 +10,7 @@ import javax.naming.CannotProceedException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import model.language.ApplicationStrings;
-import model.language.Translation;
-import controller.utils.FileWorker;
+import model.utils.FileWorker;
 
 /**
  * Utility class to save a translation from user.

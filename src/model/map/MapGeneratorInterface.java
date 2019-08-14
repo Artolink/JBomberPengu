@@ -1,6 +1,4 @@
-package controller.map;
-
-import model.map.GameMap;
+package model.map;
 
 /**
  * Generate a GameMap from scratch.

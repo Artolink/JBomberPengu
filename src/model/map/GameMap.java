@@ -1,6 +1,6 @@
 package model.map;
 
-import model.AbstractIndestructibleEntity;
+import model.AbstractEntity;
 import model.blocks.Terrain;
 import model.utils.Pair;
 
@@ -10,7 +10,7 @@ import model.utils.Pair;
 public class GameMap implements GameMapInterface {
 
     private final Pair<Integer, Integer> dimensions;
-    private AbstractIndestructibleEntity[][] map;
+    private AbstractEntity[][] map;
 
     /**
      * Constructor set dimensions of GameMap.
@@ -22,7 +22,7 @@ public class GameMap implements GameMapInterface {
             throw new IllegalArgumentException("Incorrect dimension/s");
         }
         this.dimensions = dimensions;
-        this.map = new AbstractIndestructibleEntity[dimensions.getX()][dimensions.getY()];
+        this.map = new AbstractEntity[dimensions.getX()][dimensions.getY()];
     }
 
     @Override
@@ -40,7 +40,7 @@ public class GameMap implements GameMapInterface {
     }
 
     @Override
-    public final void setBlock(final AbstractIndestructibleEntity block, final int row, final int column) throws IllegalArgumentException {
+    public final void setBlock(final AbstractEntity block, final int row, final int column) throws IllegalArgumentException {
         if (!this.isDimensionsCorrect(row, column)) {
             throw new IllegalArgumentException();
         }
@@ -49,7 +49,7 @@ public class GameMap implements GameMapInterface {
 
 
     @Override
-    public final AbstractIndestructibleEntity getBlock(final int row, final int column) throws IllegalArgumentException {
+    public final AbstractEntity getBlock(final int row, final int column) throws IllegalArgumentException {
         if (!this.isDimensionsCorrect(row, column)) {
             throw new IllegalArgumentException();
         }
@@ -57,12 +57,12 @@ public class GameMap implements GameMapInterface {
     }
 
     @Override
-    public final AbstractIndestructibleEntity getBlock(final Pair<Integer, Integer> dim) throws IllegalArgumentException {
+    public final AbstractEntity getBlock(final Pair<Integer, Integer> dim) throws IllegalArgumentException {
         return this.getBlock(dim.getX(), dim.getY());
     }
 
     @Override
-    public final void setBlock(final AbstractIndestructibleEntity block, final Pair<Integer, Integer> dim) throws IllegalArgumentException {
+    public final void setBlock(final AbstractEntity block, final Pair<Integer, Integer> dim) throws IllegalArgumentException {
         this.setBlock(block, dim.getX(), dim.getY());
     }
 

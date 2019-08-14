@@ -1,11 +1,10 @@
-package controller.map;
+package model.map;
 
 import java.util.Optional;
 
 import javax.naming.CannotProceedException;
 
 import model.Level;
-import model.map.GameMap;
 
 /**
  * Get and Save map on file.

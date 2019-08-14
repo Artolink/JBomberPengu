@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import controller.map.MapGenerator;
-import controller.map.MapOnFile;
-import javafx.geometry.Point2D;
 import model.map.GameMap;
+import model.map.MapGenerator;
+import model.map.MapOnFile;
 import model.player.Player;
 import model.utils.Pair;
 
@@ -21,7 +20,7 @@ public class Model {
 
     private final Level level;
     private GameMap map;
-    private List<Player> players = new ArrayList<Player>();
+    private final List<Player> players = new ArrayList<Player>();
 
     /**
      * Constructor initialize level and link to view controller.
@@ -55,10 +54,18 @@ public class Model {
         return generator.get();
     }
 
+    /**
+     * Get the GameMap of this level.
+     * @return GameMap object
+     */
     public final GameMap getGameMap() {
         return this.map;
     }
 
+    /**
+     * Get the players.
+     * @return players
+     */
     public List<Player> getPlayers() {
         return this.players;
     }

@@ -1,4 +1,4 @@
-package controller.score;
+package model.score;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,8 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import controller.utils.FileWorker;
-import model.score.Score;
+import model.utils.FileWorker;
 
 /**
  * Load and save Score/s.

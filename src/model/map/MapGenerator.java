@@ -1,4 +1,4 @@
-package controller.map;
+package model.map;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,6 @@ import javax.naming.CannotProceedException;
 import model.Level;
 import model.blocks.DestructibleBlock;
 import model.blocks.IndestructibleBlock;
-import model.map.GameMap;
 import model.utils.Pair;
 
 /**

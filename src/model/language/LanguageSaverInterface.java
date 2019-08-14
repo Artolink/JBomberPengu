@@ -1,9 +1,8 @@
-package controller.language;
+package model.language;
 
 import java.util.List;
 
 import javax.naming.CannotProceedException;
-import model.language.Translation;
 
 /**
  * Utility class to save a translation from user.

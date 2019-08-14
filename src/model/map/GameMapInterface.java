@@ -1,6 +1,6 @@
 package model.map;
 
-import model.AbstractIndestructibleEntity;
+import model.AbstractEntity;
 import model.utils.Pair;
 
 /**
@@ -27,7 +27,7 @@ public interface GameMapInterface {
      * @param column vertical position
      * @throws IllegalArgumentException throws if the argument is not correct
      */
-    void setBlock(AbstractIndestructibleEntity block, int row, int column) throws IllegalArgumentException;
+    void setBlock(AbstractEntity block, int row, int column) throws IllegalArgumentException;
 
     /**
      * Get Block at specified position.
@@ -36,7 +36,7 @@ public interface GameMapInterface {
      * @return AbstractEntity on specified position
      * @throws IllegalArgumentException throws if the argument is not correct
      */
-    AbstractIndestructibleEntity getBlock(int row, int column) throws IllegalArgumentException;
+    AbstractEntity getBlock(int row, int column) throws IllegalArgumentException;
 
     /**
      * Get Block at specified position.
@@ -44,7 +44,7 @@ public interface GameMapInterface {
      * @return AbstractEntity on specified position
      * @throws IllegalArgumentException throws if the argument is not correct
      */
-    AbstractIndestructibleEntity getBlock(Pair<Integer, Integer> dim) throws IllegalArgumentException;
+    AbstractEntity getBlock(Pair<Integer, Integer> dim) throws IllegalArgumentException;
 
     /**
      * Set a Block in a specified position.
@@ -53,5 +53,5 @@ public interface GameMapInterface {
      * @param dim dimensions
      * @throws IllegalArgumentException throws if the argument is not correct
      */
-    void setBlock(AbstractIndestructibleEntity block, Pair<Integer, Integer> dim) throws IllegalArgumentException;
+    void setBlock(AbstractEntity block, Pair<Integer, Integer> dim) throws IllegalArgumentException;
 }

@@ -1,4 +1,4 @@
-package controller.map;
+package model.map;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -9,11 +9,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import controller.utils.FileWorker;
+import model.utils.FileWorker;
 import model.utils.Pair;
-import model.AbstractIndestructibleEntity;
+import model.AbstractEntity;
 import model.Level;
-import model.map.GameMap;
 
 /**
  * Get and Save map on file.
@@ -61,7 +60,7 @@ public class MapOnFile implements MapOnFileInterface {
                 riga = mappa.getJSONArray(a);
                 for (int b = 0; b < riga.length(); b++) {
                     final Constructor<?> constructor = Class.forName(riga.getString(b)).getConstructor(Pair.class);
-                    gameMap.setBlock((AbstractIndestructibleEntity) constructor.newInstance(new Pair<Integer, Integer>(b,a)), b, a);
+                    gameMap.setBlock((AbstractEntity) constructor.newInstance(new Pair<Integer, Integer>(b, a)), b, a);
                 }
             }
             return Optional.of(gameMap);

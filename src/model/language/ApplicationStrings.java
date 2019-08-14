@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import controller.utils.FileWorker;
+import model.utils.FileWorker;
 
 /**
  * Class containing all application string saved on file.
