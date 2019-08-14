@@ -17,7 +17,7 @@ import controller.utils.FileWorker;
 /**
  * Utility class to save a translation from user.
  */
-public class LanguageSaver {
+public class LanguageSaver implements LanguageSaverInterface {
 
     private String languageName;
     private JSONObject translatedStrings;
@@ -35,23 +35,13 @@ public class LanguageSaver {
         this.fromList = false;
     }
 
-    /**
-     * Set language to insert.
-     * 
-     * @param lang language to insert
-     */
-    public void setLanguage(final String lang) {
+    @Override
+    public final void setLanguage(final String lang) {
         this.languageName = lang;
     }
 
-    /**
-     * Insert a translation into this object.
-     * 
-     * @param key   key of translation
-     * @param value translated value
-     * @throws IllegalArgumentException cannot insert this key value couple
-     */
-    public void insertTranslation(final String key, final String value) throws IllegalArgumentException {
+    @Override
+    public final void insertTranslation(final String key, final String value) throws IllegalArgumentException {
         try {
             if (this.contains(this.loadedTranslation.keys(), key)) {
                 this.translatedStrings.put(key, value);
@@ -67,13 +57,8 @@ public class LanguageSaver {
         }
     }
 
-    /**
-     * Insert a list of translation into this object.
-     * 
-     * @param translation list of translation
-     * @throws IllegalArgumentException cannot insert these translation
-     */
-    public void insertAllTranslation(final List<Translation> translation) throws IllegalArgumentException {
+    @Override
+    public final void insertAllTranslation(final List<Translation> translation) throws IllegalArgumentException {
         this.fromList = true;
         final Iterator<Translation> iterator = translation.iterator();
         Translation trad;
@@ -88,22 +73,13 @@ public class LanguageSaver {
         return this.loadedTranslation.length();
     }
 
-    /**
-     * Know if you have inserted all keys to be translated.
-     * 
-     * @return true if you can save, false otherwise
-     */
-    public boolean canSave() {
+    @Override
+    public final boolean canSave() {
         return this.translatedStrings.length() == this.getNumbreOfKeyToTranslate() && this.languageName != null;
     }
 
-    /**
-     * Save the inserted translation into file FILENAME.
-     * 
-     * @return if correctly saved
-     * @throws CannotProceedException error accessing file
-     */
-    public boolean saveTraductions() throws CannotProceedException {
+    @Override
+    public final boolean saveTraductions() throws CannotProceedException {
         if (this.canSave()) {
             try {
                 final FileWorker fileWorker = new FileWorker(

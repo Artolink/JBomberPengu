@@ -18,7 +18,7 @@ import model.map.GameMap;
 /**
  * Get and Save map on file.
  */
-public class MapOnFile {
+public class MapOnFile implements MapOnFileInterface {
 
     private static final String FILENAME = "maps";
     private JSONObject mainInfo;
@@ -37,13 +37,8 @@ public class MapOnFile {
         }
     }
 
-    /**
-     * Check if specified level is present on saved map.
-     * 
-     * @param level level to check
-     * @return true if present, false otherwise
-     */
-    public boolean containsLevel(final Level level) {
+    @Override
+    public final boolean containsLevel(final Level level) {
         if (this.mainInfo == null) {
             return false;
         } else {
@@ -56,13 +51,8 @@ public class MapOnFile {
         }
     }
 
-    /**
-     * Get a GameMap for the specified Level.
-     * 
-     * @param level required Level 
-     * @return GameMap saved on file or null if the map of specified level is not present
-     */
-    public Optional<GameMap> getMap(final Level level) {
+    @Override
+    public final Optional<GameMap> getMap(final Level level) {
         try {
             final JSONArray mappa = this.mainInfo.getJSONArray(String.valueOf(level.get()));
             JSONArray riga = mappa.getJSONArray(0);
@@ -70,8 +60,8 @@ public class MapOnFile {
             for (int a = 0; a < mappa.length(); a++) {
                 riga = mappa.getJSONArray(a);
                 for (int b = 0; b < riga.length(); b++) {
-                    final Constructor<?> constructor = Class.forName(riga.getString(b)).getConstructor();
-                    gameMap.setBlock((AbstractIndestructibleEntity) constructor.newInstance(), b, a);
+                    final Constructor<?> constructor = Class.forName(riga.getString(b)).getConstructor(Pair.class);
+                    gameMap.setBlock((AbstractIndestructibleEntity) constructor.newInstance(new Pair<Integer, Integer>(b,a)), b, a);
                 }
             }
             return Optional.of(gameMap);
@@ -81,13 +71,8 @@ public class MapOnFile {
         }
     }
 
-    /**
-     * Save the generated map of a Level on file.
-     * @param generated GameMap to save
-     * @param level Level of GameMap to save
-     * @throws CannotProceedException JSON, IOFile or Level error
-     */
-    public void save(final GameMap generated, final Level level) throws CannotProceedException {
+    @Override
+    public final void save(final GameMap generated, final Level level) throws CannotProceedException {
         if (this.mainInfo == null) {
             throw new CannotProceedException("Error occurred while reading the file or parsing JSON");
         } else if (this.containsLevel(level)) {

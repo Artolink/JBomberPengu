@@ -1,4 +1,4 @@
-package view;
+package view.multilang;
 
 import java.util.List;
 import java.util.stream.Collectors;

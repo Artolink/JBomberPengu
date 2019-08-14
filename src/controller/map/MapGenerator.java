@@ -16,7 +16,7 @@ import model.utils.Pair;
  * Generate a GameMap from scratch.
  *
  */
-public class MapGenerator {
+public class MapGenerator implements MapGeneratorInterface {
 
     private final Level level;
     private final Pair<Integer, Integer> dimensions;
@@ -40,12 +40,8 @@ public class MapGenerator {
         this.illegalPosition.add(new Pair<Integer, Integer>(dimensions.getX() - 1, dimensions.getY() - 2));
     }
 
-    /**
-     * Generate and return a GameMap.
-     * 
-     * @return a GameMap object with level and dimension specified in constructor
-     */
-    public GameMap get() {
+    @Override
+    public final GameMap get() {
         final GameMap generata = this.generate();
         try {
             final MapOnFile mapOnFile = new MapOnFile();
@@ -70,7 +66,7 @@ public class MapGenerator {
                 if (map.getBlock(whereToSet).getClass().equals(IndestructibleBlock.class)) {
                     continue;
                 } else {
-                    map.setBlock(new IndestructibleBlock(), whereToSet);
+                    map.setBlock(new IndestructibleBlock(whereToSet), whereToSet);
                     break;
                 }
             }
@@ -82,7 +78,7 @@ public class MapGenerator {
                         || map.getBlock(whereToSet).getClass().equals(DestructibleBlock.class)) {
                     continue;
                 } else {
-                    map.setBlock(new DestructibleBlock(), whereToSet);
+                    map.setBlock(new DestructibleBlock(whereToSet), whereToSet);
                     break;
                 }
             }

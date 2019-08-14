@@ -4,7 +4,7 @@ package model.language;
  * Associate a key value of a game string to its translation in a user chosen
  * language.
  */
-public class Translation {
+public class Translation implements TranslationInterface {
 
     private String key;
     private String translated;
@@ -19,35 +19,23 @@ public class Translation {
         this.translated = translated;
     }
 
-    /**
-     * Get key of the translation.
-     * @return string of the key
-     */
-    public String getKey() {
+    @Override
+    public final String getKey() {
         return key;
     }
 
-    /**
-     * Set the key of this translation.
-     * @param key key to be setted
-     */
-    public void setKey(final String key) {
+    @Override
+    public final void setKey(final String key) {
         this.key = key;
     }
 
-    /**
-     * Get the translation value.
-     * @return string of the translation
-     */
-    public String getTranslation() {
+    @Override
+    public final String getTranslation() {
         return translated;
     }
-
-    /**
-     * Set the translation.
-     * @param translated string of the translation
-     */
-    public void setTranslation(final String translated) {
+    
+    @Override
+    public final void setTranslation(final String translated) {
         this.translated = translated;
     }
 
