@@ -1,24 +1,21 @@
 package model.blocks;
 
-import javafx.geometry.Point2D;
-import model.AbstractIndestructibleEntity;
+import model.AbstractEntity;
+import model.utils.Pair;
 
 /**
  * Final class for the indestructible walls in the game.
  */
-public final class IndestructibleBlock extends AbstractIndestructibleEntity {
-
-    private static final int WIDTH = 50;
-    private static final int HEIGHT = 50;
+public final class IndestructibleBlock extends AbstractEntity {
 
     /**
      * Wall builder.
-     * 
-     * @param pos defines the initial position of the wall
+     *
+     * @param pos defines the initial position of the block
      */
-    public IndestructibleBlock(final Point2D pos) {
+    public IndestructibleBlock(final Pair<Integer, Integer> pos) {
         super(pos);
-        setCollisionBox(pos, WIDTH, HEIGHT);
+        setImagePath("");
     }
 
 }
