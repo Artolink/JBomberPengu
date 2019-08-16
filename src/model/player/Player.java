@@ -1,32 +1,63 @@
 package model.player;
 
 import java.io.File;
+import java.util.Set;
 
 import model.AbstractEntity;
+import model.collisions.Collision;
+import model.collisions.CollisionImpl;
+import model.utils.Directions;
 import model.utils.Pair;
+import model.utils.Rectangle;
 
 /**
  * The player that the user will control.
  */
 public final class Player extends AbstractEntity {
 
+    private static final int INITIAL_BOMB_NUMBER = 1;
+
+    private Integer id;
+    private Integer score;
+    private Integer bombNumber;
     private final String name;
-    private Integer score = 0;
-    private final Pair<Integer, Integer> initialPosition;
     private Directions direction;
+    private final Collision playerCollisions;
 
     /**
      * Player builder.
      * 
-     * @param name the name of the player
-     * @param pos  the initial position of the player
+     * @param id        the ID of the player
+     * @param name      the name of the player
+     * @param pos       the initial position of the player
      */
-    public Player(final String name, final Pair<Integer, Integer> pos) {
+    public Player(final Integer id, final String name, final Pair<Integer, Integer> pos) {
         super(pos);
-        this.initialPosition = pos;
+        this.id = id;
         this.name = name;
+        this.score = 0;
+        this.bombNumber = INITIAL_BOMB_NUMBER;
         this.direction = Directions.STATIONARY;
+        this.playerCollisions = new CollisionImpl(this);
         this.setImagePath(ClassLoader.getSystemClassLoader().getResource("view") + File.separator + "bomba gialla.png");
+    }
+
+    /**
+     * Gets the ID of the player.
+     * 
+     * @return player ID
+     */
+    public Integer getID() {
+        return this.id;
+    }
+
+    /**
+     * Sets the ID of the player.
+     * 
+     * @param id is the id of the player
+     */
+    public void setID(final Integer id) {
+        this.id = id;
     }
 
     /**
@@ -56,24 +87,57 @@ public final class Player extends AbstractEntity {
         this.score += score;
     }
 
-    public boolean isBeingDestroyed() {
-        // QUANDO NON HA PIU' VITE, RETURN TRUE
-        return false;
+    /**
+     * Gets the number of bombs the player can place.
+     * 
+     * @return the number of bombs player can place.
+     */
+    public Integer getBombNumber() {
+        return this.bombNumber;
     }
 
-    public Pair<Integer, Integer> getInitialPosition() {
-        return this.initialPosition;
+    /**
+     * Sets the number of bombs the player can place.
+     * 
+     * @param bombNumber defines the number of bombs player can place on the map
+     */
+    public void setBombNumber(final Integer bombNumber) {
+        this.bombNumber = bombNumber;
     }
 
-    public void setDirection(Directions direction) {
+    /**
+     * Sets the directions to move.
+     * 
+     * @param direction is the enumeration containing all the possible directions to move
+     */
+    public void setDirection(final Directions direction) {
         this.direction = direction;
     }
 
+    /**
+     * Gets the directions enumeration.
+     * 
+     * @return the 
+     */
     public Directions getDirection() {
         return this.direction;
     }
 
-    public enum Directions {
-        UP, DOWN, LEFT, RIGHT, STATIONARY;
+
+    /**
+     * Method that checks if the player can move in a particular direction.
+     * 
+     * @param dir               defines the direction of the player
+     * @param blockSet          is the set of blocks surrounding the player
+     * @param bombSet           is the set of bombs surrounding the player
+     * @param explosionSet      is the set of explosions in the game map 
+     */
+    public void move(final Directions dir, final Set<Rectangle> blockSet, final Set<Rectangle> bombSet, final Set<Rectangle> explosionSet) {
+        this.setCollisionBox();
+        if (!this.playerCollisions.blocksCollision(blockSet) && !this.playerCollisions.bombCollision(bombSet)) {
+            //super.move(dir);
+        } else if (this.playerCollisions.explosionCollision(explosionSet)) {
+            this.setStatus(true);
+        } 
     }
 }

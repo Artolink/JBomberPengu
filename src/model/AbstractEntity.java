@@ -12,8 +12,8 @@ public abstract class AbstractEntity implements Entity {
     private Optional<Rectangle> hitbox;
     private Pair<Integer, Integer> position;
     private String path;
-    private double width;
-    private double height;
+    private int width;
+    private int height;
     private boolean destroyed;
 
     /**
@@ -60,32 +60,28 @@ public abstract class AbstractEntity implements Entity {
         return this.destroyed;
     }
 
-    /**
-     * This method can be overwritten when needed, for more complex cases 
-     * (e.g. when player has 0 lives sets destroyed to true, when bomb timer is expired sets destroyed to true..)
-     */
     @Override
-    public void setStatus(final boolean destroyed) { 
+    public final void setStatus(final boolean destroyed) { 
         this.destroyed = destroyed;
     }
 
     @Override
-    public final double getHeight() {
+    public final int getHeight() {
         return this.height;
     }
 
     @Override
-    public final double getWidth() {
+    public final int getWidth() {
         return this.width;
     }
 
     @Override
-    public final void setHeight(final double height) {
+    public final void setHeight(final int height) {
         this.height = height;
     }
 
     @Override
-    public final void setWidth(final double width) {
+    public final void setWidth(final int width) {
         this.width = width;
     }
 }

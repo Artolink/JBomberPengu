@@ -22,14 +22,6 @@ public class TestCollisions {
         final Pair<Integer, Integer> middlePosition = new Pair<Integer, Integer>(10, 10);
         final Pair<Integer, Integer> touchingPosition = new Pair<Integer, Integer>(0, 49);
         final Pair<Integer, Integer> endingPosition = new Pair<Integer, Integer>(500, 500);
-        final Rectangle r1 = new Rectangle(initialPosition, 100, 100);
-        final Rectangle r2 = new Rectangle(initialPosition, 200, 200);
-        final Rectangle r3 = new Rectangle(middlePosition, 100, 100);
-        final Rectangle r4 = new Rectangle(endingPosition, 100, 100);
-
-        assertTrue("Rectangles collide. Should return true.", r1.intersectsWith(r2));
-        assertTrue("Rectangles collide. Should return true.", r1.intersectsWith(r3));
-        assertFalse("Rectangles do not collide. Should return false.", r1.intersectsWith(r4));
 
         final DestructibleBlock block1 = new DestructibleBlock(initialPosition);
         final DestructibleBlock block2 = new DestructibleBlock(middlePosition);
@@ -52,8 +44,20 @@ public class TestCollisions {
         block4.setWidth(50);
         block4.setCollisionBox();
 
+        final Rectangle r1 = new Rectangle(initialPosition, block1.getWidth(), block1.getHeight());
+        final Rectangle r2 = new Rectangle(initialPosition, block2.getWidth(), block2.getHeight());
+        final Rectangle r3 = new Rectangle(middlePosition, block3.getWidth(), block3.getHeight());
+        final Rectangle r4 = new Rectangle(endingPosition, block4.getWidth(), block4.getHeight());
+
+        //Rectangles collision test
+        assertTrue("Rectangles collide. Should return true.", r1.intersectsWith(r2));
+        assertTrue("Rectangles collide. Should return true.", r1.intersectsWith(r3));
+        assertFalse("Rectangles do not collide. Should return false.", r1.intersectsWith(r4));
+
+        //Blocks collision test
         assertTrue("Blocks collide. Should return true.", block1.getCollisionBox().get().intersectsWith(block2.getCollisionBox().get()));
-        //assertTrue("Blocks collide. Should return true.", block1.getCollisionBox().get().hasCollidedUp(block3)); //NOT WORKING
+        assertTrue("Blocks collide up. Should return true.", block1.getCollisionBox().get().hasCollidedUp(block3)); //NOT WORKING
+        //assertFalse("Blocks do not collide up. Should return false.", block1.getCollisionBox().get().hasCollidedUp(block4)); //NOT WORKING
 
     }
 }

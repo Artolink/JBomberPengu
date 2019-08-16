@@ -10,7 +10,7 @@ import model.Entity;
 public final class Rectangle {
 
     private Pair<Integer, Integer> position;
-    private double width, height;
+    private int width, height;
 
     /**
      * Rectangle builder.
@@ -19,7 +19,7 @@ public final class Rectangle {
      * @param width     defines the initial width of the rectangle
      * @param height    defines the initial height of the rectangle
      */
-    public Rectangle(final Pair<Integer, Integer> pos, final double width, final double height) {
+    public Rectangle(final Pair<Integer, Integer> pos, final int width, final int height) {
         this.position = pos;
         this.width = width;
         this.height = height;
@@ -103,12 +103,12 @@ public final class Rectangle {
         xe2 = e.getPosition().getX() + this.width;
         ye1 = e.getPosition().getY() + this.height;
 
-        if (x1 > xe1  || x1 < xe2) {
-            if (y1 <= ye1) {
+        if ((x1 >= xe1 && x1 <= xe2)) {
+            if (y1 >= ye1) {
                 return true;
             }
-        } else if (x2 > xe1 || x2 < xe2) {
-            if (y1 <= ye1) {
+        } else if ((x2 <= xe1 && x2 >= xe2)) {
+            if (y1 >= ye1) {
                 return true;
             }
         }

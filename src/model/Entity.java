@@ -69,26 +69,26 @@ public interface Entity {
      * 
      * @return entity width
      */
-    double getWidth();
+    int getWidth();
 
     /**
      * Sets the new entity width.
      * 
      * @param width defines the new entity width
      */
-    void setWidth(double width);
+    void setWidth(int width);
 
     /**
      * Gets the entity height.
      * 
      * @return entity height
      */
-    double getHeight();
+    int getHeight();
 
     /**
      * Sets the new entity height.
      * 
      * @param height defines the new entity width
      */
-    void setHeight(double height);
+    void setHeight(int height);
 }

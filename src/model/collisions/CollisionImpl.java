@@ -23,7 +23,7 @@ public final class CollisionImpl implements Collision {
     }
 
     @Override
-    public boolean allBlocksCollision(final Set<Rectangle> blockSet) {
+    public boolean blocksCollision(final Set<Rectangle> blockSet) {
         return blockSet.stream().anyMatch((block) -> this.entityHitbox.get().intersectsWith(block));
     }
 
