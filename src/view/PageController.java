@@ -9,8 +9,8 @@ public abstract class PageController extends GUIImpl {
 
     /**
      * the translation method.
-     * @param translator - the translation class
+     * @param t - the translation class
      */
-    public abstract void translate(ApplicationStrings translator);
+    public abstract void translate(ApplicationStrings t);
 
 }
