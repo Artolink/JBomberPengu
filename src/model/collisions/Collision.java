@@ -14,7 +14,7 @@ public interface Collision {
      * @param blockSet is the set containing all blocks
      * @return true if there's a collision, false otherwise
      */
-    boolean allBlocksCollision(Set<Rectangle> blockSet);
+    boolean blocksCollision(Set<Rectangle> blockSet);
 
     /**
      * Checks if there's a collision with a bomb.
