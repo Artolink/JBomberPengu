@@ -1,9 +1,6 @@
 package view;
 
-import java.util.Map;
-
-import javafx.scene.Scene;
-import model.language.ApplicationStrings;
+import controller.Controller;
 import model.utils.Pair;
 
 /**
@@ -12,48 +9,29 @@ import model.utils.Pair;
 public interface GUI {
 
     /**
-     * Needed to reach the translator class.
-     * @return if not initilized returns a new ApplicationStrings, else it returns the instance already created
+     *The pages available.
      */
-    public ApplicationStrings getTranslator();
+    public enum PageNames {
+        MAINMENU, GAME, GAMENDED, SETTINGS, MAPEDITOR, LANGUAGEDITOR;
+    }
+
+    /**
+     *Set the fullscreen state.
+     * @param fullscreen - true if you want to set fullscreen on (reset to default every time you change scene)
+     */
+    public void setFullscreenMode(boolean fullscreen);
 
     /**
      * 
-     * @return The scene currently displayed.
+     * @return the fullscreen state as boolean
      */
-    public Scene getCurrentScene();
-
-    /**
-     * To be called when a new Scene has to be loaded.
-     * @param scene - the Scene you want to load.
-     */
-    public void switchScene(Scene scene);
-
-    /**
-     * To be called when a new Scene has to be loaded and are
-     * required some fixed dimensions.
-     * @param scene - the Scene you want to load.
-     * @param width - your stage width
-     * @param height - your stage height
-     */
-    public void switchScene(Scene scene, Double width, Double height);
-
-    /**
-     * To be called when a new Scene has to be loaded and are
-     * required some fixed dimensions and you need to specify
-     * the fullscreen visualization.
-     * @param scene - the Scene you want to load.
-     * @param width - your stage width
-     * @param height - your stage height
-     * @param fullscreen - true if you want to set fullscreen on (reset to default every time you change scene)
-     */
-    public void switchScene(Scene scene, Double width, Double height, boolean fullscreen);
+    public boolean getFullscreenState();
 
     /**
      * Get stage sizes.
      * @return Pair (width, height)
      */
-    public Pair<Double, Double> getSizes();
+    public Pair<Double, Double> getStageSizes();
 
     /**
      * 
@@ -62,46 +40,25 @@ public interface GUI {
     public Pair<Double, Double> getDimensionsMultipliers();
 
     /**
-     * To be called only one time during startup, sets the controller for communication purposes.
+     * To be called befor launch(), sets the controller for communication purposes.
      */
-    public void setController();
+    public void setController(Controller controller);
 
     /**
-     * add a new Page.
-     * @param c - the page you want to add
-     * @return the page you just added
+     * 
+     * @return the controller associated to the current page
      */
-    public Page addPage(Page c);
-
-    /**
-     * @return The currently loaded page
-     */
-    public Page getCurrentPage();
-
-    /**
-     * Gets the page whit matching name.
-     * @param name - the name of the page you want
-     * @return the matching page
-     * @exception exception can throw something if there is no match    //TODO
-     */
-    public Page getPage(String name);
-
-    /**
-     * Gets all the pages added. 
-     * @return Map of pages
-     */
-    public Map<String, Page> getPages();
+    public PageController getActivePageController();
 
     /**
      * loads the page whit matching name on the stage.
-     * @param name - the name of the page you want to load
+     * @param pageName - the name of the page you want to load
      */
-    public void loadPage(String name);
+    public void loadPage(PageNames pageName);
 
     /**
      * Closes the game, equivalent to System.exit(0).
      */
     public void closeGame();
-
 
 }

@@ -1,19 +1,20 @@
 package view.mapEditor;
 
 import javafx.fxml.FXML;
-import view.GUIImpl;
+import model.language.ApplicationStrings;
+import view.PageController;
 
 /**
  *
  */
-public class MapEditorController extends GUIImpl {
+public class MapEditorController extends PageController {
 
     /**
      * Saves the work.
      */
     @FXML
     public void saveButton() {
-        //TODO
+        getController().actionPerformedSaveBtn();
     }
 
     /**
@@ -21,6 +22,12 @@ public class MapEditorController extends GUIImpl {
      */
     @FXML
     public void backButton() {
-        loadPage("MainMenu");
+        getController().actionPerformedBackBtn();
+    }
+
+    @Override
+    public void translate(final ApplicationStrings translator) {
+        // TODO Auto-generated method stub
+
     }
 }

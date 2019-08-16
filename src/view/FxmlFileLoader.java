@@ -35,6 +35,7 @@ public class FxmlFileLoader extends Page {
      * @param path - this will be passed directly to the loader
      */
     public FxmlFileLoader(final String path) {
+        super();
         this.path = path;
         this.pageName = nameExtrapolator(path);
         loadFile();
@@ -55,7 +56,7 @@ public class FxmlFileLoader extends Page {
      * 
      * @return Returns the controller associated with the Page.
      */
-    public Object getController() {
+    public PageController getPageController() {
         return loader.getController();
     }
 
@@ -74,22 +75,20 @@ public class FxmlFileLoader extends Page {
     private void loadFile() {
         try {
             loader = new FXMLLoader(ClassLoader.getSystemClassLoader().getResource(path));
-            Parent root = loader.load();
+            final Parent root = loader.load();
             scene = new Scene(root);
-            //System.out.println("\"" + fileAddress + File.separator + fileName + ".fxml" + "\" loaded correctly");    //TODO debug
         } catch (Exception e) {
             e.printStackTrace();
-            //System.out.println("ERROR: Failed loading \"" + fileName + "\"");   //TODO debug
         }
     }
 
     private String nameExtrapolator(final String path) {
-        char[] charArray = path.toCharArray();
+        final char[] charArray = path.toCharArray();
 
         int i = 0;
         int lastFileSeparatorPosition = 0;
         int extensionStartPosition = 0;
-        for (char c: charArray) {
+        for (final char c: charArray) {
             if (c == '\\' /*File.separator.toCharArray()[0]*/) {
                 lastFileSeparatorPosition = i;
                 }
@@ -101,14 +100,15 @@ public class FxmlFileLoader extends Page {
         }
 
         if (lastFileSeparatorPosition + 1 < extensionStartPosition) {
-            String s = new String();
+            String s = "";
             for (i = lastFileSeparatorPosition + 1; i < extensionStartPosition; i++) {
-                s += charArray[i] + "";
+                s += charArray[i];
             }
             return s;
         } else {
             return path; 
         }
     }
+
 
 }
