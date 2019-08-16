@@ -1,11 +1,15 @@
 package view.game;
 
+import java.util.List;
+
+import controller.Controller;
 import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
+import model.player.Player;
 import model.utils.Pair;
 import view.GUIImpl;
 
@@ -14,49 +18,51 @@ import view.GUIImpl;
  */
 public class GameController extends GUIImpl {
 
-    private double blockDimension;
-    private double blockSpacing;
-    private double borderOffset;
+    private int blockDimension;
+    private int blockSpacing;
+    private int borderOffset;
+    private Pair<Integer, Integer> dimensions;
+    private final KeyAssociator associator = new KeyAssociator();
 
     @FXML
     private AnchorPane anchorPane1;
     @FXML
     private Button button;
-    @FXML
-    private GraphicsContext gc;
 
-    private final Canvas canvas = new Canvas();
-    private Pair<Integer, Integer> dimensions;
+    private final MyPane canvas = new MyPane();
+    private Controller controller;
 
     /**
      * Initialize the Game scene.
      */
     public void initialize() {
 
-        //button.setText(getTranslator().getValueOf("give up"));
+        // button.setText(getTranslator().getValueOf("give up"));
 
         anchorPane1.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;"
                 + "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
 
-        canvas.setWidth(anchorPane1.getPrefWidth());
-        canvas.setHeight(anchorPane1.getPrefHeight() - button.getLayoutY());
-        gc = canvas.getGraphicsContext2D();
+        canvas.prefWidth(anchorPane1.getPrefWidth());
+        canvas.prefHeight(anchorPane1.getPrefHeight() - button.getLayoutY());
         anchorPane1.getChildren().add(canvas);
         // getPage("Game").getScene().width
 
-    }
+        this.controller = new Controller(this);
 
-    /**
-     * Draw the images on the game area.
-     * 
-     * @param image image to draw
-     * @param row   row to add the image
-     * @param col   column to add the image
-     */
-    public void draw(final Image image, final int row, final int col) {
+        anchorPane1.setOnKeyPressed((key) -> {
+            final KeyCode code = key.getCode();
+            if (associator.contains(code)) {
+                this.controller.movePlayer(associator.getPlayer(code), associator.getDirection(code));
+            }
+        });
 
-        gc.drawImage(image, blockDimension * row + borderOffset, blockDimension * col + borderOffset,
-                blockDimension - blockSpacing, blockDimension - blockSpacing);
+        anchorPane1.setOnKeyReleased((key) -> {
+            final KeyCode code = key.getCode();
+            if (associator.contains(code)) {
+                this.controller.stopPlayer(associator.getPlayer(code), associator.getDirection(code));
+            }
+        });
+
     }
 
     /**
@@ -66,11 +72,11 @@ public class GameController extends GUIImpl {
      * @param height height to change
      */
     public void setWindowSize(final double width, final double height) {
-
         anchorPane1.setPrefWidth(width);
         anchorPane1.setPrefHeight(height);
-        canvas.setWidth(width);
-        canvas.setHeight(height - button.getLayoutY());
+        canvas.prefWidth(width);
+        canvas.prefHeight(height);
+        // set scene width
     }
 
     /**
@@ -78,10 +84,8 @@ public class GameController extends GUIImpl {
      * 
      * @return a pair that contains the correct dimensions fixed with the map
      */
-    public Pair<Double, Double> resizeToMap() {
-
-        Pair<Double, Double> pair;
-        pair = computeWindowSize(dimensions.getX(), dimensions.getY());
+    public Pair<Integer, Integer> resizeToMap() {
+        final Pair<Integer, Integer> pair = computeWindowSize(dimensions.getX(), dimensions.getY());
         setWindowSize(pair.getX(), pair.getY());
         return pair;
     }
@@ -92,7 +96,6 @@ public class GameController extends GUIImpl {
      * @param dim map size (row and columns)
      */
     public void setDimensions(final Pair<Integer, Integer> dim) {
-
         this.dimensions = dim;
     }
 
@@ -103,7 +106,6 @@ public class GameController extends GUIImpl {
      */
     @Override
     public Pair<Double, Double> getSizes() {
-
         return new Pair<Double, Double>(canvas.getWidth(), canvas.getHeight());
     }
 
@@ -112,8 +114,7 @@ public class GameController extends GUIImpl {
      * 
      * @param dim dimension
      */
-    public void setBlockDimension(final Double dim) {
-
+    public void setBlockDimension(final int dim) {
         this.blockDimension = dim;
     }
 
@@ -122,8 +123,7 @@ public class GameController extends GUIImpl {
      * 
      * @param spacing spacing
      */
-    public void setBlockSpacing(final Double spacing) {
-
+    public void setBlockSpacing(final int spacing) {
         this.blockSpacing = spacing;
     }
 
@@ -132,21 +132,14 @@ public class GameController extends GUIImpl {
      * 
      * @param offset offset
      */
-    public void setBorderOffset(final Double offset) {
-
+    public void setBorderOffset(final int offset) {
         this.borderOffset = offset;
     }
 
-    private Pair<Double, Double> computeWindowSize(final Integer row, final Integer col) {
-
-        double computeX = 0;
-        double computeY = 0;
-
-        computeX = blockDimension * row;
-        computeY = blockDimension * col;
-        return new Pair<Double, Double>(computeX, computeY);
+    private Pair<Integer, Integer> computeWindowSize(final Integer row, final Integer col) {
+        return new Pair<Integer, Integer>(blockDimension * row + 2 * borderOffset,
+                blockDimension * col + 2 * borderOffset);
     }
-
 
     /**
      * An event occurs when the button is pressed.
@@ -154,5 +147,47 @@ public class GameController extends GUIImpl {
     @FXML
     public void buttonPressed() {
         loadPage("MainMenu");
+    }
+
+    /**
+     * Draw the images on the game area.
+     * 
+     * @param path image to draw
+     * @param row  row to add the image
+     * @param col  column to add the image
+     */
+    public void draw(final String path, final int row, final int col) {
+        if (!path.isEmpty()) {
+            final Image image = new Image(path, blockDimension - blockSpacing, blockDimension - blockSpacing, false,
+                    false);
+            final ImageView view = new ImageView(image);
+            view.relocate(blockDimension * row + borderOffset, blockDimension * col + borderOffset);
+            canvas.addNode(view, row, col);
+        }
+    }
+
+    /**
+     * Draw the players specified in parameter.
+     * 
+     * @param players players to draw
+     */
+    public void drawPlayers(final List<Player> players) {
+        for (final Player player : players) {
+            this.draw(player.getImagePath(), player.getInitialPosition().getX(), player.getInitialPosition().getY());
+            player.setPosition(new Pair<>(blockDimension * player.getInitialPosition().getX() + borderOffset,
+                    blockDimension * player.getInitialPosition().getY() + borderOffset));
+            associator.associatePlayer(player);
+        }
+    }
+
+    /**
+     * Move the specified player in the final specified position.
+     * 
+     * @param player player to move
+     * @param row    row parameter
+     * @param col    column parameter
+     */
+    public void movePlayer(final Player player, final int row, final int col) {
+        this.canvas.getNode(player.getInitialPosition().getX(), player.getInitialPosition().getY()).relocate(row, col);
     }
 }

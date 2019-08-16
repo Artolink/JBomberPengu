@@ -1,15 +1,19 @@
 package model.player;
 
-import javafx.geometry.Point2D;
-import model.AbstractDestructibleEntity;
+import java.io.File;
+
+import model.AbstractEntity;
+import model.utils.Pair;
 
 /**
  * The player that the user will control.
  */
-public final class Player extends AbstractDestructibleEntity {
+public final class Player extends AbstractEntity {
 
     private final String name;
     private Integer score = 0;
+    private final Pair<Integer, Integer> initialPosition;
+    private Directions direction;
 
     /**
      * Player builder.
@@ -17,9 +21,12 @@ public final class Player extends AbstractDestructibleEntity {
      * @param name the name of the player
      * @param pos  the initial position of the player
      */
-    public Player(final String name, final Point2D pos) {
-        super(pos, true);
+    public Player(final String name, final Pair<Integer, Integer> pos) {
+        super(pos);
+        this.initialPosition = pos;
         this.name = name;
+        this.direction = Directions.STATIONARY;
+        this.setImagePath(ClassLoader.getSystemClassLoader().getResource("view") + File.separator + "bomba gialla.png");
     }
 
     /**
@@ -49,9 +56,24 @@ public final class Player extends AbstractDestructibleEntity {
         this.score += score;
     }
 
-    @Override
     public boolean isBeingDestroyed() {
         // QUANDO NON HA PIU' VITE, RETURN TRUE
         return false;
+    }
+
+    public Pair<Integer, Integer> getInitialPosition() {
+        return this.initialPosition;
+    }
+
+    public void setDirection(Directions direction) {
+        this.direction = direction;
+    }
+
+    public Directions getDirection() {
+        return this.direction;
+    }
+
+    public enum Directions {
+        UP, DOWN, LEFT, RIGHT, STATIONARY;
     }
 }
