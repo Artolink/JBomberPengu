@@ -5,41 +5,41 @@ import view.GUIImpl;
 public class Launcher {
 
     private static GUIImpl gui;
-    final static Agent agent = new Agent();
+    static final Agent AGENT = new Agent();
 
     /**
      * 
-     * @param args
+     * @param args arguments
      */
-    public static void main(String[] args) {
-    	/*
-		Model m = new Model();
-		View v = new View(m);
-		Controller c = new Controller(m);
-		MainGUI gui = new MainGUI(v, c);
-		*/
+    public static void main(final String[] args) {
+        /*
+        Model m = new Model();
+        View v = new View(m);
+        Controller c = new Controller(m);
+        MainGUI gui = new MainGUI(v, c);
+         */
 
-	    //initialize controller here
+        //initialize controller here
 
-	    gui = new GUIImpl();
+        gui = new GUIImpl();
 
-	    //Sinchronyze GUI and Controller
-	    gui.setController(/*controller here*/);
+        //Sinchronyze GUI and Controller
+        //gui.setController(/*controller here*/);
 
-	    //Start vieew Thread
-	    new Thread(agent).start();
+        //Start view Thread
+        new Thread(AGENT).start();
 
-		System.out.println("CONTROLLER IS STILL RUNNING...");
+        System.out.println("CONTROLLER IS STILL RUNNING...");
 
-		//controller stuff (start cycle)
+        //controller stuff (start cycle)
 
-	}
-	
-	
-	private static class Agent implements Runnable {
+    }
+
+
+    private static class Agent implements Runnable {
         public void run() {
             gui.launch();   //starts graphical interface
         }
-	}
-	
+    }
+
 }

@@ -48,7 +48,6 @@
              <Button mnemonicParsing="false" onAction="#mapEditorPressed" text="Map editor" />
              <Button mnemonicParsing="false" onAction="#languageEditorPressed" text="Language editor" />
              <Button fx:id="settingsBtn" mnemonicParsing="false" onAction="#settingsBtPressed" text="Settings" />
-             <ComboBox fx:id="languageChoiceBox" onAction="#languageChoiceBoxPressed" prefWidth="150.0" />
              <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#closeGame" text="Exit" />
           </children>
           <padding>

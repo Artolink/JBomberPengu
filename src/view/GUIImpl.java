@@ -29,7 +29,7 @@ public class GUIImpl extends Application implements GUI {
     private static Rectangle2D primaryScreenBounds;
     private static Rectangle2D actualFrame;
 
-    private static boolean initialized = false;
+    private static boolean initialized = true; //TODO change to false
 
     private boolean fullscreen = false;
 
@@ -41,6 +41,8 @@ public class GUIImpl extends Application implements GUI {
     private static Optional<ApplicationStrings> applicationStrings = Optional.empty();
 
     private static Controller controller;
+    
+ // application creation methods ------------------------------------------------------------------------------------------- 
 
     /**
      * Application entry point.
@@ -51,6 +53,8 @@ public class GUIImpl extends Application implements GUI {
         }
     }
 
+ // public methods -------------------------------------------------------------------------------------------
+    
     /*
      * called automatically from Application. Used for configuration purposes.
      * @see javafx.application.Application#start(javafx.stage.Stage)
@@ -63,14 +67,6 @@ public class GUIImpl extends Application implements GUI {
         primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 
         setUpStage();
-
-
-        //Translator setup
-        if (getTranslator().getSelectedLanguage() == null) {
-            //setting main language to the first found
-            getTranslator().setLanguage(getTranslator().getAvailableLanguages().get(0));
-            System.out.println(getTranslator().getSelectedLanguage() + " selected as default language.");
-        }
 
         //Load main menu FXML
         loadPage(PageNames.MAINMENU);
@@ -198,7 +194,7 @@ public class GUIImpl extends Application implements GUI {
                 System.out.println("404 Page not found");
                 break;
         }
-        
+
         switchScene(page.getScene());
     }
 
