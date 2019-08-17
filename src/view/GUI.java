@@ -12,7 +12,7 @@ public interface GUI {
      *The pages available.
      */
     enum PageNames {
-        MAINMENU, GAME, GAMENDED, SETTINGS, LANGUAGEDITOR;  //MAPEDITOR,
+        MAINMENU, GAME, GAMENDED, MAPEDITOR, SETTINGS, LANGUAGEDITOR;  //
     }
 
     /**

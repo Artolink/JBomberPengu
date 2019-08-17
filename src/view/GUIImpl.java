@@ -28,11 +28,9 @@ public class GUIImpl extends Application implements GUI {
 
     //private boolean fullscreen = false;
 
-    private Stage stage;
-
-    private Page page;
-
-    private Controller controller;
+    private static Stage stage;
+    private static Page page;
+    private static Controller controller;
 
  // application creation methods ------------------------------------------------------------------------------------------- 
 
@@ -119,7 +117,7 @@ public class GUIImpl extends Application implements GUI {
                 page = (Page) new FxmlFileLoader("view" + File.separator + "mainMenu", "MainMenu");
                 break;
             case GAME:
-                page = (Page) new FxmlFileLoader("view" + File.separator + "game", "Game");
+                page = (Page) new FxmlFileLoader("view", "Game");
                 break;
             case GAMENDED:
                 page = (Page) new FxmlFileLoader("view" + File.separator + "mainMenu", "GameEnded");
@@ -127,9 +125,9 @@ public class GUIImpl extends Application implements GUI {
             case SETTINGS:
                 page = (Page) new FxmlFileLoader("view" + File.separator + "settings", "SettingsMenu");
                 break;
-            //case MAPEDITOR:
-                //page = (Page) new FxmlFileLoader("view" + File.separator + "mapEditor", "MapEditor");
-                //break;
+            case MAPEDITOR:
+                page = (Page) new FxmlFileLoader("view" + File.separator + "mapEditor", "MapEditor");
+                break;
             case LANGUAGEDITOR:
                 page = (Page) new FxmlFileLoader("view" + File.separator + "multiLang", "MultilangView");
                 break;

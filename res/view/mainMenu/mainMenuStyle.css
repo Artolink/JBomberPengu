@@ -1,17 +1,18 @@
 .root{
-    -fx-background-image: url(sfondo.png);
+    -fx-background-image: url(../sfondo.png);
     -fx-background-size: stretch;
     -fx-background-repeat: no-repeat;
 }
 .button{
-    -fx-background-image: url(Empty_Button.png);
+    -fx-background-image: url(../Empty_Button.png);
     -fx-background-color: transparent;
     -fx-background-size: stretch;
     -fx-background-repeat: no-repeat;
     -fx-text-fill: white;
-    -fx-padding: 20 40 20 40;
+    -fx-pref-width: 200px;
+    -fx-padding: 1em 2em 1em 2em;
     -fx-margin: 0 0 20 0;
 }
 .button:hover{
-    -fx-background-image: url(Empty_Button_Glowing.png);
+    -fx-background-image: url(../Empty_Button_Glowing.png);
 }

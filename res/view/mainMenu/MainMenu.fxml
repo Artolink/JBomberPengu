@@ -17,21 +17,23 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.image.Image?>
 
-<VBox alignment="TOP_CENTER" xmlns="http://javafx.com/javafx/8" stylesheets="view/mainMenuStyle.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.mainMenu.MainMenuController">
+<VBox alignment="TOP_CENTER" style="-fx-scale-shape: 100%;" stylesheets="view/mainMenu/mainMenuStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.mainMenu.MainMenuController">
    <children>
-       <ImageView fitHeight="100.0" fitWidth="800.0">
+       <ImageView fitHeight="100.0" fitWidth="800.0" style="-fx-scale-x: 100%; -fx-scale-y: 100%;">
 	       <image>
-	           <Image url="@view/logo.png"/>
+	           <Image url="@view/logo.png" />
 	       </image>
        </ImageView>
        <HBox alignment="CENTER">
        <children>
        <VBox alignment="CENTER">
-          <ImageView fitHeight="250.0" fitWidth="250.0">
-                <image>
-                    <Image url="@view/penguin.png" />
-                </image>
-          </ImageView>
+               <children>
+             <ImageView fitHeight="250.0" fitWidth="250.0">
+                   <image>
+                       <Image url="@view/penguin.png" />
+                   </image>
+             </ImageView>
+               </children>
        </VBox>
        <VBox alignment="CENTER" spacing="10.0">
           <children>
@@ -40,13 +42,13 @@
 		             <Font size="26.0" />
 		          </font>
 		          <padding>
-		              <Insets bottom="50.0"></Insets>
+		              <Insets bottom="50.0" />
 		          </padding>
              </Label>
              <Button fx:id="spBtn" disable="true" mnemonicParsing="false" onAction="#singlePlayerBtPressed" text="Singleplayer" />
              <Button fx:id="mpBtn" mnemonicParsing="false" onAction="#multiPlayerBtPressed" text="Multiplayer" />
-             <Button mnemonicParsing="false" onAction="#mapEditorPressed" text="Map editor" />
-             <Button mnemonicParsing="false" onAction="#languageEditorPressed" text="Language editor" />
+             <Button fx:id="mapEditorBtn" disable="true" mnemonicParsing="false" onAction="#mapEditorPressed" text="Map editor" />
+             <Button fx:id="langEditorBtn" mnemonicParsing="false" onAction="#languageEditorPressed" text="Language editor" />
              <Button fx:id="settingsBtn" mnemonicParsing="false" onAction="#settingsBtPressed" text="Settings" />
              <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#closeGameBtPressed" text="Exit" />
           </children>
