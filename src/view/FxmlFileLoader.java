@@ -10,12 +10,9 @@ import javafx.scene.Scene;
  */
 public class FxmlFileLoader extends Page {
 
-    private String pageName;
+    private final String pageName;
 
-    //private String fileName;
-    //private String filePath;
-
-    private String path;
+    private final String path;
 
     private Scene scene;
     private FXMLLoader loader;
@@ -82,6 +79,11 @@ public class FxmlFileLoader extends Page {
         }
     }
 
+    /**
+     * Method called from costructor, needed to determine the page name.
+     * @param path - the complete path of the .fxml file
+     * @return the file name whitout extension
+     */
     private String nameExtrapolator(final String path) {
         final char[] charArray = path.toCharArray();
 
@@ -89,7 +91,7 @@ public class FxmlFileLoader extends Page {
         int lastFileSeparatorPosition = 0;
         int extensionStartPosition = 0;
         for (final char c: charArray) {
-            if (c == '\\' /*File.separator.toCharArray()[0]*/) {
+            if (c == File.separator.toCharArray()[0]) {
                 lastFileSeparatorPosition = i;
                 }
             if (c == '.') {
