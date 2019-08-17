@@ -23,6 +23,7 @@ public final class Player extends AbstractEntity {
     private final String name;
     private Directions direction;
     private final Collision playerCollisions;
+    private final Pair<Integer, Integer> initialPosition;
 
     /**
      * Player builder.
@@ -36,6 +37,7 @@ public final class Player extends AbstractEntity {
         this.id = id;
         this.name = name;
         this.score = 0;
+        this.initialPosition = pos;
         this.bombNumber = INITIAL_BOMB_NUMBER;
         this.direction = Directions.STATIONARY;
         this.playerCollisions = new CollisionImpl(this);
@@ -85,6 +87,15 @@ public final class Player extends AbstractEntity {
      */
     public void addScore(final Integer score) {
         this.score += score;
+    }
+
+    /**
+     * Gets the initial position of the player, useful for the view.
+     * 
+     * @return the initial position of the player
+     */
+    public Pair<Integer, Integer> getInitialPosition() {
+        return this.initialPosition;
     }
 
     /**
@@ -170,5 +181,18 @@ public final class Player extends AbstractEntity {
         default: 
             return true;
         }
+    }
+
+    @Override
+    public String toString() {
+        return new StringBuilder().append("Player n.")
+                .append(this.getID())
+                .append(" at position: ")
+                .append(this.getPosition().getX())
+                .append(", ")
+                .append(this.getPosition().getY())
+                .append(".\n")
+                .append(super.toString())
+                .toString();
     }
 }

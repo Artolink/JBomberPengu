@@ -26,7 +26,8 @@ public class Bomb extends AbstractEntity {
         super(pos);
         this.playerInfo = pinfo;
         this.range = DEFAULT_RANGE;
-        setImagePath("");
+        this.setStatus(false);
+        this.setImagePath("");
     }
 
     /**
