@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.image.Image?>
 
-<VBox alignment="TOP_CENTER" stylesheets="view/mainMenuStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.game.GameEndedController">
+<VBox alignment="TOP_CENTER" stylesheets="view/game/GameStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.game.GameEndedController">
    <children>
        <ImageView fitHeight="100.0" fitWidth="800.0">
 	       <image>

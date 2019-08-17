@@ -78,7 +78,8 @@ public class SettingsMenuController extends PageController {
      */
     @FXML
     private void languageChoiceBoxPressed() {
-        getController().actionPerformedLanguageChanged();
+        System.out.println(languageChoiceBox.getValue());
+        getController().actionPerformedLanguageChanged(languageChoiceBox.getValue());
     }
 
     /**
