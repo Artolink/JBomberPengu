@@ -1,0 +1,11 @@
+#anchorPane1{
+    -fx-padding: 10;
+    -fx-background: paleturquoise;
+}
+#border{
+    -fx-padding: 2;
+    -fx-border-style: solid inside;
+    -fx-border-width: 3;
+    -fx-border-radius: 5;
+    -fx-border-color: lightskyblue;
+}
