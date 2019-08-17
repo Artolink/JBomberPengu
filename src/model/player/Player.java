@@ -27,9 +27,9 @@ public final class Player extends AbstractEntity {
     /**
      * Player builder.
      * 
-     * @param id        the ID of the player
-     * @param name      the name of the player
-     * @param pos       the initial position of the player
+     * @param id   the ID of the player
+     * @param name the name of the player
+     * @param pos  the initial position of the player
      */
     public Player(final Integer id, final String name, final Pair<Integer, Integer> pos) {
         super(pos);
@@ -108,7 +108,8 @@ public final class Player extends AbstractEntity {
     /**
      * Sets the directions to move.
      * 
-     * @param direction is the enumeration containing all the possible directions to move
+     * @param direction is the enumeration containing all the possible directions to
+     *                  move
      */
     public void setDirection(final Directions direction) {
         this.direction = direction;
@@ -117,27 +118,57 @@ public final class Player extends AbstractEntity {
     /**
      * Gets the directions enumeration.
      * 
-     * @return the 
+     * @return the
      */
     public Directions getDirection() {
         return this.direction;
     }
 
-
     /**
      * Method that checks if the player can move in a particular direction.
      * 
-     * @param dir               defines the direction of the player
-     * @param blockSet          is the set of blocks surrounding the player
-     * @param bombSet           is the set of bombs surrounding the player
-     * @param explosionSet      is the set of explosions in the game map 
+     * @param dir          is the direction where the player wants to move
+     * @param blockSet     is the set of blocks surrounding the player
+     * @param bombSet      is the set of bombs surrounding the player
+     * @param explosionSet is the set of explosions in the game map
+     * @return a position
      */
-    public void move(final Directions dir, final Set<Rectangle> blockSet, final Set<Rectangle> bombSet, final Set<Rectangle> explosionSet) {
+    public boolean canMove(final Directions dir, final Set<Rectangle> blockSet, final Set<Rectangle> bombSet,
+            final Set<Rectangle> explosionSet) {
         this.setCollisionBox();
-        if (!this.playerCollisions.blocksCollision(blockSet) && !this.playerCollisions.bombCollision(bombSet)) {
-            //super.move(dir);
-        } else if (this.playerCollisions.explosionCollision(explosionSet)) {
+
+        if (this.playerCollisions.explosionCollision(explosionSet)) {
             this.setStatus(true);
-        } 
+            return false;
+        }
+
+        switch (dir) {
+        case UP:
+            if (blockSet.stream().anyMatch((block) -> this.getCollisionBox().get().hasCollidedUp(block)) 
+                    && bombSet.stream().anyMatch((bomb) -> this.getCollisionBox().get().hasCollidedUp(bomb))) {
+                return false;
+            }
+            return true;
+        case DOWN:
+            if (blockSet.stream().anyMatch((block) -> this.getCollisionBox().get().hasCollidedDown(block)) 
+                    && bombSet.stream().anyMatch((bomb) -> this.getCollisionBox().get().hasCollidedDown(bomb))) {
+                return false;
+            }
+            return true;
+        case LEFT:
+            if (blockSet.stream().anyMatch((block) -> this.getCollisionBox().get().hasCollidedLeft(block)) 
+                    && bombSet.stream().anyMatch((bomb) -> this.getCollisionBox().get().hasCollidedLeft(bomb))) {
+                return false;
+            }
+            return true;
+        case RIGHT:
+            if (blockSet.stream().anyMatch((block) -> this.getCollisionBox().get().hasCollidedRight(block)) 
+                    && bombSet.stream().anyMatch((bomb) -> this.getCollisionBox().get().hasCollidedRight(bomb))) {
+                return false;
+            }
+            return true;
+        default: 
+            return true;
+        }
     }
 }

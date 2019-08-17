@@ -31,9 +31,7 @@ public class GameEndedController extends PageController {
      */
     @FXML
     private void multiPlayerBtPressed() {
-      //TODO
-        System.out.println("Multiplayer button pressed");
-
+        System.out.println("Multiplayer button pressed");   //TODO debug
         getController().actionPerformedMultiplayerBtn();
     }
 
@@ -42,8 +40,7 @@ public class GameEndedController extends PageController {
      */
     @FXML
     private  void backBtPressed() {
-        System.out.println("Back button pressed");
-
+        System.out.println("Back button pressed");  //TODO debug
         getController().actionPerformedBackBtn();
     }
 

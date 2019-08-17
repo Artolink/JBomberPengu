@@ -1,11 +1,6 @@
 package view;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
 import controller.Controller;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
@@ -23,25 +18,22 @@ public class GUIImpl extends Application implements GUI {
 
     private static final String ICON_FILE = "view" + File.separator + "penguin.png";
 
-    private static Pair<Double, Double> preferredSizes;
-    private static Pair<Double, Double> modifiedSizes;
+    private Pair<Double, Double> preferredSizes;
+    private Pair<Double, Double> modifiedSizes;
 
-    private static Rectangle2D primaryScreenBounds;
-    private static Rectangle2D actualFrame;
+    private Rectangle2D primaryScreenBounds;
+    //private static Rectangle2D actualFrame;
 
-    private static boolean initialized = true; //TODO change to false
+    private boolean initialized = true; //TODO change to false
 
-    private boolean fullscreen = false;
+    //private boolean fullscreen = false;
 
-    private static Stage stage;
+    private Stage stage;
 
     private Page page;
 
-    //Instance of translation class
-    private static Optional<ApplicationStrings> applicationStrings = Optional.empty();
+    private Controller controller;
 
-    private static Controller controller;
-    
  // application creation methods ------------------------------------------------------------------------------------------- 
 
     /**
@@ -54,7 +46,7 @@ public class GUIImpl extends Application implements GUI {
     }
 
  // public methods -------------------------------------------------------------------------------------------
-    
+
     /*
      * called automatically from Application. Used for configuration purposes.
      * @see javafx.application.Application#start(javafx.stage.Stage)
@@ -62,74 +54,34 @@ public class GUIImpl extends Application implements GUI {
     @Override
     public void start(final Stage primaryStage) throws Exception {
 
-        GUIImpl.stage = primaryStage;
+        this.stage = primaryStage;
 
         primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 
+        //set up the stage whit some settings
         setUpStage();
 
-        //Load main menu FXML
+        //Load main menu FXML as default
         loadPage(PageNames.MAINMENU);
 
-        GUIImpl.stage.show();
-    }
-
-    /**
-     * Needed to reach the translator class.
-     * @return if not initilized returns a new ApplicationStrings, else it returns the instance already created
-     */
-    protected final ApplicationStrings getTranslator() {
-        if (!applicationStrings.isPresent()) {
-            applicationStrings = Optional.ofNullable(getController().getTranslator()/*new ApplicationStrings()*/);
-        }
-        return applicationStrings.get();
-    }
-
-    /**
-     * 
-     * @return The scene currently displayed.
-     */
-    protected final Scene getCurrentScene() {
-        return GUIImpl.stage.getScene();
-    }
-
-    /**
-     * To be called when a new Scene has to be loaded.
-     * @param scene - the Scene you want to load.
-     */
-    protected final void switchScene(final Scene scene) {
-        if (scene != null) {
-            GUIImpl.stage.setScene(scene);
-
-            /*
-            GUIImpl.stage.setX(actualFrame.getMinX());
-            GUIImpl.stage.setY(actualFrame.getMinY());
-            GUIImpl.stage.setWidth(actualFrame.getWidth());
-            GUIImpl.stage.setHeight(actualFrame.getHeight());
-            GUIImpl.stage.setFullScreen(fullscreen);
-            */
-
-            GUIImpl.stage.sizeToScene();
-            preferredSizes = new Pair<>(scene.getWidth(), scene.getHeight());
-            modifiedSizes = getStageSizes();
-        }
+        this.stage.show();
     }
 
     @Override
     public final void setFullscreenMode(final boolean fullscreen) {
-        GUIImpl.stage.setFullScreen(fullscreen);
+        this.stage.setFullScreen(fullscreen);
         //this.fullscreen = fullscreen;
     }
 
     @Override
     public final boolean getFullscreenState() {
-        //return GUIImpl.stage.isFullScreen();
-        return this.fullscreen;
+        return this.stage.isFullScreen();
+        //return this.fullscreen;
     }
 
     @Override
     public final Pair<Double, Double> getStageSizes() {
-        return new Pair<>(GUIImpl.stage.getWidth(), GUIImpl.stage.getHeight());
+        return new Pair<>(this.stage.getWidth(), this.stage.getHeight());
     }
 
     @Override
@@ -149,22 +101,13 @@ public class GUIImpl extends Application implements GUI {
 
     @Override
     public final void setController(final Controller controller) {
-        // TODO Auto-generated method stub
-        GUIImpl.controller = controller;
+        // TODO Are the type right?
+        this.controller = controller;
         initialized = true;
-    }
-
-    /**
-     * 
-     * @return the controller that controls this
-     */
-    protected final Controller getController() {
-        return GUIImpl.controller;
     }
 
     @Override
     public final PageController getActivePageController() {
-        // TODO Auto-generated method stub
         return getCurrentPage().getPageController();
     }
 
@@ -182,13 +125,13 @@ public class GUIImpl extends Application implements GUI {
                 page = (Page) new FxmlFileLoader("view" + File.separator + "mainMenu", "GameEnded");
                 break;
             case SETTINGS:
-                page = (Page) new FxmlFileLoader("view" + File.separator + "settings" + File.separator + "SettingsMenu.fxml");
+                page = (Page) new FxmlFileLoader("view" + File.separator + "settings", "SettingsMenu");
                 break;
-            case MAPEDITOR:
-                page = (Page) new FxmlFileLoader("view" + File.separator + "mapEditor" + File.separator + "MapEditor.fxml");
-                break;
+            //case MAPEDITOR:
+                //page = (Page) new FxmlFileLoader("view" + File.separator + "mapEditor", "MapEditor");
+                //break;
             case LANGUAGEDITOR:
-                page = (Page) new FxmlFileLoader("view" + File.separator + "multiLang" + File.separator + "MultilangView.fxml");
+                page = (Page) new FxmlFileLoader("view" + File.separator + "multiLang", "MultilangView");
                 break;
             default:
                 System.out.println("404 Page not found");
@@ -198,6 +141,32 @@ public class GUIImpl extends Application implements GUI {
         switchScene(page.getScene());
     }
 
+    // Protected methods -------------------------------------------------------------------------------------------
+
+    /**
+     * 
+     * @return The scene currently displayed.
+     */
+    protected final Scene getCurrentScene() {
+        return this.stage.getScene();
+    }
+
+    /**
+     * 
+     * @return the controller that controls this
+     */
+    protected final Controller getController() {
+        return this.controller;
+    }
+
+    /**
+     * Needed to reach the translator class.
+     * @return ApplicationStrings
+     */
+    protected final ApplicationStrings getTranslator() {
+        return getController().getTranslator();
+    }
+
     /**
      * @return The currently loaded page
      */
@@ -205,17 +174,29 @@ public class GUIImpl extends Application implements GUI {
         return page;
     }
 
-    @Override
-    public final void closeGame() {
-        System.out.println("Closing game...");
-        System.exit(0);
-    }
-
-    // Protected methods -------------------------------------------------------------------------------------------
-
-
-
     // Private methods -------------------------------------------------------------------------------------------
+
+    /**
+     * To be called when a new Scene has to be loaded.
+     * @param scene - the Scene you want to load.
+     */
+    private void switchScene(final Scene scene) {
+        if (scene != null) {
+            this.stage.setScene(scene);
+
+            /*
+            GUIImpl.stage.setX(actualFrame.getMinX());
+            GUIImpl.stage.setY(actualFrame.getMinY());
+            GUIImpl.stage.setWidth(actualFrame.getWidth());
+            GUIImpl.stage.setHeight(actualFrame.getHeight());
+            GUIImpl.stage.setFullScreen(fullscreen);
+            */
+
+            this.stage.sizeToScene();
+            preferredSizes = new Pair<>(scene.getWidth(), scene.getHeight());
+            modifiedSizes = getStageSizes();
+        }
+    }
 
     /**
      * sets stage icon, name ad his dimensions.
@@ -223,29 +204,34 @@ public class GUIImpl extends Application implements GUI {
     private void setUpStage() {
         //load the app icon
         try {
-            GUIImpl.stage.getIcons().add(new Image(ICON_FILE));
+            this.stage.getIcons().add(new Image(ICON_FILE));
         } catch (Exception e) {
             System.out.println("ERROR: Image \"" + ICON_FILE + "\" not found");
         }
         //set the app title
-        GUIImpl.stage.setTitle("jbomberpengu");
-        GUIImpl.stage.setMaxHeight(primaryScreenBounds.getHeight());
-        GUIImpl.stage.setMaxWidth(primaryScreenBounds.getWidth());
+        this.stage.setTitle("jbomberpengu");
+        this.stage.setMaxHeight(primaryScreenBounds.getHeight());
+        this.stage.setMaxWidth(primaryScreenBounds.getWidth());
 
-        //GUIImpl.stage.centerOnScreen();
-        //GUIImpl.stage.initStyle(StageStyle.UNDECORATED);
+        //this.stage.centerOnScreen();
+        //this.stage.initStyle(StageStyle.UNDECORATED);
 
-        GUIImpl.stage.sizeToScene();
+        this.stage.sizeToScene();
 
-        GUIImpl.stage.widthProperty().addListener((obs, oldVal, newVal) -> {
+        this.stage.widthProperty().addListener((obs, oldVal, newVal) -> {
             modifiedSizes = getStageSizes();
-            actualFrame = new Rectangle2D(GUIImpl.stage.getX(), GUIImpl.stage.getX(), GUIImpl.stage.getWidth(), GUIImpl.stage.getHeight());
+            //actualFrame = new Rectangle2D(GUIImpl.stage.getX(), GUIImpl.stage.getX(), GUIImpl.stage.getWidth(), GUIImpl.stage.getHeight());
         });
 
-        GUIImpl.stage.heightProperty().addListener((obs, oldVal, newVal) -> {
+        this.stage.heightProperty().addListener((obs, oldVal, newVal) -> {
             modifiedSizes = getStageSizes();
-            actualFrame = new Rectangle2D(GUIImpl.stage.getX(), GUIImpl.stage.getX(), GUIImpl.stage.getWidth(), GUIImpl.stage.getHeight());
+            //actualFrame = new Rectangle2D(GUIImpl.stage.getX(), GUIImpl.stage.getX(), GUIImpl.stage.getWidth(), GUIImpl.stage.getHeight());
         });
     }
 
 }
+
+
+
+/*
+*/

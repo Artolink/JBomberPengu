@@ -8,7 +8,7 @@ import java.util.Map;
 
 import javafx.scene.input.KeyCode;
 import model.player.Player;
-import model.player.Player.Directions;
+import model.utils.Directions;
 
 /**
  * Classes that manage the key input.
@@ -51,9 +51,10 @@ public class KeyAssociator {
     }
 
     /**
-     * Gets the direction.
+     * Gets the direction of the associate key.
+     * 
      * @param code keycode
-     * @return keycode
+     * @return the direction
      */
     public Directions getDirection(final KeyCode code) {
         if (code != null) {
@@ -64,9 +65,10 @@ public class KeyAssociator {
     }
 
     /**
-     * Associates the player to the keycode.
-     * @param player player
-     * @return keycode
+     * Associates the player to one of the keycode lists.
+     * 
+     * @param player the player
+     * @return true if the association is successful, false otherwise
      */
     public boolean associatePlayer(final Player player) {
         if (this.nextControlList.hasNext()) {
@@ -79,8 +81,9 @@ public class KeyAssociator {
 
     /**
      * Controls that the map contains the keycode.
+     * 
      * @param code keycode
-     * @return true if the map contains the keycode otherwise false
+     * @return true if the map contains the keycode, false otherwise
      */
     public boolean contains(final KeyCode code) {
         if (code != null) {
@@ -92,6 +95,7 @@ public class KeyAssociator {
 
     /**
      * Gets the player key set.
+     * 
      * @param code keycode
      * @return the player keycode
      */
