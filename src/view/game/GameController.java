@@ -2,13 +2,13 @@ package view.game;
 
 import java.util.List;
 
-import controller.Controller;
+import controller.ControllerImpl;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import model.player.Player;
 import model.utils.Pair;
 import view.GUIImpl;
@@ -20,49 +20,40 @@ public class GameController extends GUIImpl {
 
     private int blockDimension;
     private int blockSpacing;
-    private int borderOffset;
     private Pair<Integer, Integer> dimensions;
     private final KeyAssociator associator = new KeyAssociator();
 
     @FXML
-    private AnchorPane anchorPane1;
+    private HBox anchorPane1;
     @FXML
-    private Button button;
+    public MyPane canvas;
 
-    private final MyPane canvas = new MyPane();
-    private Controller controller;
+    private ControllerImpl controller;
 
     /**
      * Initialize the Game scene.
      */
     public void initialize() {
-
-        // button.setText(getTranslator().getValueOf("give up"));
-
-        anchorPane1.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;"
-                + "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
-
         canvas.prefWidth(anchorPane1.getPrefWidth());
-        canvas.prefHeight(anchorPane1.getPrefHeight() - button.getLayoutY());
-        anchorPane1.getChildren().add(canvas);
-        // getPage("Game").getScene().width
+        canvas.prefHeight(anchorPane1.getPrefHeight());
+        this.controller = (ControllerImpl) getController();
+        this.controller.initGame(this);
+    }
 
-        this.controller = new Controller(this);
+    @FXML
+    public void keyPressed(final KeyEvent event) {
+        final KeyCode code = event.getCode();
+        if (associator.contains(code)) {
+            this.controller.movePlayer(associator.getPlayer(code), associator.getDirection(code));
+        }
+    }
 
-        anchorPane1.setOnKeyPressed((key) -> {
-            final KeyCode code = key.getCode();
-            if (associator.contains(code)) {
-                this.controller.movePlayer(associator.getPlayer(code), associator.getDirection(code));
-            }
-        });
-
-        anchorPane1.setOnKeyReleased((key) -> {
-            final KeyCode code = key.getCode();
-            if (associator.contains(code)) {
-                this.controller.stopPlayer(associator.getPlayer(code), associator.getDirection(code));
-            }
-        });
-
+    @FXML
+    public void keyReleased(final KeyEvent event) {
+        final KeyCode code = event.getCode();
+        if (associator.contains(code)) {
+            this.controller.stopPlayer(associator.getPlayer(code), associator.getDirection(code));
+        }
     }
 
     /**
@@ -72,11 +63,8 @@ public class GameController extends GUIImpl {
      * @param height height to change
      */
     public void setWindowSize(final double width, final double height) {
-        anchorPane1.setPrefWidth(width);
-        anchorPane1.setPrefHeight(height);
         canvas.prefWidth(width);
         canvas.prefHeight(height);
-        // set scene width
     }
 
     /**
@@ -104,7 +92,6 @@ public class GameController extends GUIImpl {
      * 
      * @return a pair that contains the dimensions of the panel game
      */
-    @Override
     public Pair<Double, Double> getSizes() {
         return new Pair<Double, Double>(canvas.getWidth(), canvas.getHeight());
     }
@@ -127,26 +114,9 @@ public class GameController extends GUIImpl {
         this.blockSpacing = spacing;
     }
 
-    /**
-     * Set the border offset from the window border.
-     * 
-     * @param offset offset
-     */
-    public void setBorderOffset(final int offset) {
-        this.borderOffset = offset;
-    }
-
     private Pair<Integer, Integer> computeWindowSize(final Integer row, final Integer col) {
-        return new Pair<Integer, Integer>(blockDimension * row + 2 * borderOffset,
-                blockDimension * col + 2 * borderOffset);
-    }
-
-    /**
-     * An event occurs when the button is pressed.
-     */
-    @FXML
-    public void buttonPressed() {
-        loadPage("MainMenu");
+        return new Pair<Integer, Integer>(blockDimension * row,
+                blockDimension * col);
     }
 
     /**
@@ -161,7 +131,7 @@ public class GameController extends GUIImpl {
             final Image image = new Image(path, blockDimension - blockSpacing, blockDimension - blockSpacing, false,
                     false);
             final ImageView view = new ImageView(image);
-            view.relocate(blockDimension * row + borderOffset, blockDimension * col + borderOffset);
+            view.relocate(blockDimension * row, blockDimension * col);
             canvas.addNode(view, row, col);
         }
     }
@@ -174,8 +144,8 @@ public class GameController extends GUIImpl {
     public void drawPlayers(final List<Player> players) {
         for (final Player player : players) {
             this.draw(player.getImagePath(), player.getInitialPosition().getX(), player.getInitialPosition().getY());
-            player.setPosition(new Pair<>(blockDimension * player.getInitialPosition().getX() + borderOffset,
-                    blockDimension * player.getInitialPosition().getY() + borderOffset));
+            player.setPosition(new Pair<>(blockDimension * player.getInitialPosition().getX(),
+                    blockDimension * player.getInitialPosition().getY()));
             associator.associatePlayer(player);
         }
     }

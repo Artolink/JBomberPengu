@@ -6,10 +6,60 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.StackPane?>
+<?import view.game.MyPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.geometry.Insets?>
 
-<AnchorPane fx:id="anchorPane1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="495.0" prefWidth="611.0" style="-fx-background-color: lightcyan;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.game.GameController">
-   <children>
-      <Button fx:id="button" layoutX="285.0" layoutY="458.0" mnemonicParsing="false" text="Button" onAction="#buttonPressed" />
-   </children>
-</AnchorPane>
+<HBox fx:id="anchorPane1" onKeyPressed="#keyPressed" onKeyReleased="#keyReleased" stylesheets="view/game.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.game.GameController">
+   	<children>
+   	<VBox fx:id="border">
+	   	<children>
+	   	   <MyPane fx:id="canvas"></MyPane>
+	   	</children>
+   	</VBox>
+	<VBox alignment="TOP_CENTER">
+	   	<children>
+	       	<VBox alignment="TOP_LEFT" style="-fx-padding: 10;-fx-border-style: solid inside;-fx-border-width: 2;-fx-border-radius: 5;-fx-border-color: blue;">
+	          	 <children>
+	           	    <Label text="Player1"></Label>
+	            	   <Label text="Score: 12800"></Label>
+	            	   <HBox fx:id="lifeCounter1" alignment="TOP_LEFT">
+		         	      <children>
+		          	         <!-- Da inserire tramite codice java -->
+		         		          <ImageView fitHeight="50.0" fitWidth="50.0">
+		             	          <image>
+		              	             <Image url="@view/bomba gialla.png"/>
+	                          	 </image>
+	                       </ImageView>
+		               </children>
+	               </HBox>
+	               <HBox fx:id="bombCounter1" alignment="TOP_LEFT">
+		               <children>
+	                       <!-- Da inserire tramite codice java -->
+	                       <ImageView fitHeight="50.0" fitWidth="50.0">
+	                           <image>
+	                               <Image url="@view/bomba rossa.png"/>
+	                           </image>
+	                       </ImageView>
+	                   </children>
+                   </HBox>
+	           </children>
+	       </VBox>
+	       <VBox alignment="TOP_LEFT"  style="-fx-padding: 10;-fx-border-style: solid inside;-fx-border-width: 2;-fx-border-insets: 5;-fx-border-radius: 5;-fx-border-color: blue;">
+               <children>
+                   <Label text="Player2"></Label>
+                   <Label text="Score: 86800"></Label>
+                   <HBox fx:id="lifeCounter2" alignment="TOP_LEFT">
+	                   <children>
+	                   </children>
+                   </HBox>
+                   <HBox fx:id="bombCounter2" alignment="TOP_LEFT">
+	                   <children>
+	                   </children>
+                   </HBox>
+               </children>
+           </VBox>
+	   </children>
+   </VBox>
+	</children>
+</HBox>
