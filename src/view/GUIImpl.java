@@ -117,10 +117,10 @@ public class GUIImpl extends Application implements GUI {
                 page = (Page) new FxmlFileLoader("view" + File.separator + "mainMenu", "MainMenu");
                 break;
             case GAME:
-                page = (Page) new FxmlFileLoader("view", "Game");
+                page = (Page) new FxmlFileLoader("view" + File.separator + "game", "Game");
                 break;
             case GAMENDED:
-                page = (Page) new FxmlFileLoader("view" + File.separator + "mainMenu", "GameEnded");
+                page = (Page) new FxmlFileLoader("view" + File.separator + "game", "GameEnded");
                 break;
             case SETTINGS:
                 page = (Page) new FxmlFileLoader("view" + File.separator + "settings", "SettingsMenu");
