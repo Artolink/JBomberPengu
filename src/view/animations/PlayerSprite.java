@@ -36,28 +36,29 @@ public class PlayerSprite extends AbstractDynamicSprites {
         final int cont = start + SPRITES_TO_STAY;
 
         for (int i = start; i <= toMove; i++) {
-            if (i <= cont) {
+            if (i < cont) {
                 super.getStayLeftSprites().add(new Sprite(sheet, 0, i));
             }
-            if (i >= cont && (i <= (cont + SPRITES_TO_STAY))) {
+            if (i >= cont && (i < (cont + SPRITES_TO_STAY))) {
                 super.getStayRightSprites().add(new Sprite(sheet, 0, i));
             }
-            if (i >= (cont + SPRITES_TO_STAY) && (i <= (cont + SPRITES_TO_RUN + SPRITES_TO_STAY))) {
+            if (i > (cont + SPRITES_TO_STAY) && (i < (cont + SPRITES_TO_RUN + SPRITES_TO_STAY))) {
                 super.getRunLeftSprites().add(new Sprite(sheet, 0, i));
             }
-            if (i >= (cont + SPRITES_TO_STAY + SPRITES_TO_RUN)
-                    && (i <= (cont + (SPRITES_TO_RUN * 2) + SPRITES_TO_STAY))) {
+            if (i > (cont + SPRITES_TO_STAY + SPRITES_TO_RUN)
+                    && (i < (cont + (SPRITES_TO_RUN * 2) + SPRITES_TO_STAY))) {
                 super.getRunRightSprites().add(new Sprite(sheet, 0, i));
             }
             if (i >= (cont + (SPRITES_TO_RUN * 2) + SPRITES_TO_STAY)
-                    && (i <= (cont + (SPRITES_TO_RUN * 2) + SPRITES_TO_STAY + SPRITES_TO_UP))) {
-                super.getDownSprites().add(new Sprite(sheet, 0, i));
-            }
-            if (i >= (cont + (SPRITES_TO_RUN * 2) + SPRITES_TO_STAY + SPRITES_TO_UP)
-                    && (i <= (cont + (SPRITES_TO_RUN * 2) + SPRITES_TO_STAY + (SPRITES_TO_UP * 2)))) {
+                    && (i < (cont + (SPRITES_TO_RUN * 2) + SPRITES_TO_STAY + SPRITES_TO_UP))) {
                 super.getUpSprites().add(new Sprite(sheet, 0, i));
             }
+            if (i >= (cont + (SPRITES_TO_RUN * 2) + SPRITES_TO_STAY + SPRITES_TO_UP)
+                    && (i < (cont + (SPRITES_TO_RUN * 2) + SPRITES_TO_STAY + (SPRITES_TO_UP * 2)))) {
+                super.getDownSprites().add(new Sprite(sheet, 0, i));
+            }
         }
+
         super.getLoseSprites().add(new Sprite(sheet, 0, SPRITES_TO_LOSE));
         super.getLoseSprites().add(new Sprite(sheet, 0, SPRITES_TO_LOSE + 1));
     }
