@@ -16,7 +16,7 @@ public class Animations implements Runnable {
     private static final int SHEET_ROWS = 1;
     private static final int SHEET_COLUMNS = 38;
     private Directions lastHorizontalDir;
-    private final SpriteSheet sheet = new SpriteSheet("sheet.png", SHEET_ROWS, SHEET_COLUMNS);
+    private final SpriteSheet sheet = new SpriteSheet("/view/sheet.png", SHEET_ROWS, SHEET_COLUMNS);
     private Integer nextFrame = 0;
     private long timeToSleep;
     private boolean isDead = false;
