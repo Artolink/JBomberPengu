@@ -1,5 +1,6 @@
 package controller;
 
+import model.Model;
 import view.GUIImpl;
 
 public class Launcher {
@@ -12,16 +13,10 @@ public class Launcher {
      * @param args arguments
      */
     public static void main(final String[] args) {
-        /*
-        Model m = new Model();
-        View v = new View(m);
-        Controller c = new Controller(m);
-        MainGUI gui = new MainGUI(v, c);
-         */
-
-        //initialize controller here
-
+        
+        Model model = new Model();
         gui = new GUIImpl();
+        ControllerImpl controller = new ControllerImpl(model, gui);
 
         //Sinchronyze GUI and Controller
         //gui.setController(/*controller here*/);

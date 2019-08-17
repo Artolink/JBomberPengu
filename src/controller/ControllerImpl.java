@@ -107,7 +107,7 @@ public class ControllerImpl implements Controller {
 
     @Override
     public void actionPerformedBackBtn() {
-        //this.gui.loadPage(GUI.PageNames.GAME);
+        this.gui.loadPage(GUI.PageNames.MAINMENU);
     }
 
     @Override
@@ -117,12 +117,12 @@ public class ControllerImpl implements Controller {
 
     @Override
     public void actionPerformedMapEditorBtn() {
-        this.gui.loadPage(GUI.PageNames.MAPEDITOR);
+        //this.gui.loadPage(GUI.PageNames.MAPEDITOR);
     }
 
     @Override
     public void actionPerformedEditorBtn() {
-        //this.gui.loadPage(GUI.PageNames);
+        //this.gui.loadPage(GUI.PageNames.MAPEDITOR);
     }
 
     @Override
