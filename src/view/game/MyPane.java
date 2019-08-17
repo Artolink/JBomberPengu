@@ -15,7 +15,7 @@ public class MyPane extends Pane {
     private final Map<Pair<Integer, Integer>, Node> gridMap = new HashMap<>();
 
     /**
-     * Add a node in the general Pane.
+     * Adds a node in the general Pane.
      * @param child node to add to the pane
      * @param row row
      * @param column column
@@ -26,7 +26,7 @@ public class MyPane extends Pane {
     }
 
     /**
-     * Get the node in specified position.
+     * Gets the node in specified position.
      * @param row row
      * @param column column
      * @return Node associated to specified parameters, null if not present
@@ -36,7 +36,7 @@ public class MyPane extends Pane {
     }
 
     /**
-     * Remove the Node from the View.
+     * Removes the Node from the View.
      * @param row row
      * @param column column
      */

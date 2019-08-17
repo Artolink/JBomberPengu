@@ -8,7 +8,6 @@ package view.animations;
 public class PlayerSprite extends AbstractDynamicSprites {
 
     private int start;
-    private int cont;
     private int toMove;
     private static final int START_RED = 0;
     private static final int START_YELLOW = 18;
@@ -34,7 +33,7 @@ public class PlayerSprite extends AbstractDynamicSprites {
             this.toMove = START_YELLOW + start;
         }
 
-        cont = start + SPRITES_TO_STAY;
+        final int cont = start + SPRITES_TO_STAY;
 
         for (int i = start; i <= toMove; i++) {
             if (i <= cont) {
