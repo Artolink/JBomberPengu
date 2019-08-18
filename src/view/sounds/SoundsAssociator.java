@@ -69,4 +69,13 @@ public class SoundsAssociator {
     public Sound getStartMatchSound() {
         return this.startMatch;
     }
+    
+    /**
+     * Gets start game sound.
+     * 
+     * @return start match sound
+     */
+    public Sound getStartGameSound() {
+        return this.startGame;
+    }
 }
