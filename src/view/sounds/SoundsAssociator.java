@@ -16,6 +16,7 @@ public class SoundsAssociator {
     private final Sound explosion;
     private final Sound takeItem;
     private final Sound startMatch;
+    private final Sound startGame;
 
     /**
      * 
@@ -29,7 +30,8 @@ public class SoundsAssociator {
             this.bombPlaced = new SoundImpl("");
             this.explosion = new SoundImpl("");
             this.takeItem = new SoundImpl("");
-            this.startMatch = new SoundImpl("");
+            this.startMatch = new SoundImpl("/view/start_game_menu.waav");
+            this.startGame = new SoundImpl("/view/start_game.wav");
     }
 
     /**
