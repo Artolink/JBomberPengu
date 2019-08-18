@@ -16,7 +16,8 @@ import model.utils.Pair;
  */
 public class Model {
 
-    public static final int BLOCKDIMENSION = 50;
+    public static final int VELOCITY = 4;
+    public static final int BLOCKDIMENSION = 40;
     public static final int BLOCKSPACING = 0;
     public static final int PANEOFFSET = 10;
     private static final int MAPROWS = 15;
@@ -50,9 +51,16 @@ public class Model {
             this.map = new MapGenerator(this.level, new Pair<Integer, Integer>(MAPROWS, MAPCOLUMN)).get();
         }
 
-        this.players.add(new Player(0, "Marco", new Pair<Integer, Integer>(0, 0)));
-        this.players.add(new Player(1, "Andrea",
-                new Pair<Integer, Integer>(this.map.getDimensions().getX() - 1, this.map.getDimensions().getY() - 1)));
+        Player player = new Player(0, "Marco", new Pair<Integer, Integer>(0, 0));
+        player.setHeight(BLOCKDIMENSION);
+        player.setWidth(BLOCKDIMENSION);
+        player.setVelocity(VELOCITY);
+        this.players.add(player);
+        Player player2 = new Player(1, "Andrea", new Pair<Integer, Integer>(this.map.getDimensions().getX() - 1, this.map.getDimensions().getY() - 1));
+        player2.setHeight(BLOCKDIMENSION);
+        player2.setWidth(BLOCKDIMENSION);
+        player2.setVelocity(VELOCITY);
+        this.players.add(player2);
     }
 
     /**

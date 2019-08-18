@@ -1,17 +1,20 @@
 package controller;
 
+
+
 import model.Model;
+import model.map.GameMap;
 import model.player.Player;
 import model.utils.Directions;
-import model.utils.Pair;
 import view.game.GameController;
 
 public class ViewUpdater implements Runnable {
 
-    private static final int TIMETOSLEEP = 100;
+    private static final int TIMETOSLEEP = 75;
     private int velocity;
     private Model model;
     private GameController view;
+    private GameMap map;
 
     @Override
     public void run() {
@@ -19,31 +22,9 @@ public class ViewUpdater implements Runnable {
             for (Player player : this.model.getPlayers()) {
                 final Directions direction = player.getDirection();
                 if (!direction.equals(Directions.STATIONARY)) {
-                    switch (direction) {
-                    case DOWN:
-                        // controllo collision
-                        player.setPosition(
-                                new Pair<>(player.getPosition().getX(), player.getPosition().getY() + velocity));
-                        break;
-                    case LEFT:
-                        // controllo collision
-                        player.setPosition(
-                                new Pair<>(player.getPosition().getX() - velocity, player.getPosition().getY()));
-                        break;
-                    case RIGHT:
-                        // controllo collision
-                        player.setPosition(
-                                new Pair<>(player.getPosition().getX() + velocity, player.getPosition().getY()));
-                        break;
-                    case UP:
-                        // controllo collision
-                        player.setPosition(
-                                new Pair<>(player.getPosition().getX(), player.getPosition().getY() - velocity));
-                        break;
-                    default:
-                        break;
+                    if(player.move(direction)) {
+                        this.view.movePlayer(player, player.getPosition().getX(), player.getPosition().getY());
                     }
-                    this.view.movePlayer(player, player.getPosition().getX(), player.getPosition().getY());
                 }
             }
             try {
@@ -70,7 +51,7 @@ public class ViewUpdater implements Runnable {
         this.view = view;
     }
 
-    public void setVelocity(final int velocity) {
-        this.velocity = velocity;
+    public void setMap(GameMap map) {
+        this.map = map;
     }
 }

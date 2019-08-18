@@ -34,7 +34,7 @@ public class GameMap implements GameMapInterface {
     public final void setAllEmpty() {
         for (int a = 0; a < this.dimensions.getX(); a++) {
             for (int b = 0; b < this.dimensions.getY(); b++) {
-                this.map[a][b] = new Terrain(new Pair<Integer, Integer>(0, 0));
+                this.map[a][b] = new Terrain(new Pair<Integer, Integer>(a, b));
             }
         }
     }
