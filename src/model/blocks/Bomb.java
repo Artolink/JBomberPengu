@@ -18,7 +18,7 @@ public class Bomb extends AbstractEntity {
     private static final int DEFAULT_RANGE = 2;
     private static final long EXPLOSION_TIME = 3000L;
 
-    private final Timer timer;
+    private final long explosionTime;
     private final Player playerInfo;
     private int range;
 
@@ -33,18 +33,12 @@ public class Bomb extends AbstractEntity {
         this.playerInfo = pinfo;
         this.setStatus(false);
         this.range = DEFAULT_RANGE;
+        this.explosionTime = EXPLOSION_TIME;
         if (pinfo.getColor().equals(PlayerColor.RED)) {
             this.setImagePath(ClassLoader.getSystemClassLoader().getResource("view") + File.separator + "bomba_rossa.png");
         } else if (pinfo.getColor().equals(PlayerColor.YELLOW)) {
             this.setImagePath(ClassLoader.getSystemClassLoader().getResource("view") + File.separator + "bomba_gialla.png");
         }
-        this.timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                setStatus(true);
-            }
-        }, EXPLOSION_TIME);
     }
 
     /**
@@ -76,6 +70,15 @@ public class Bomb extends AbstractEntity {
             throw new IllegalArgumentException("Range must be a positive number");
         }
         this.range = range;
+    }
+
+    /**
+     * Gets the bomb explosion time.
+     * 
+     * @return bomb explosion time
+     */
+    public static long getExplosionTime() {
+        return EXPLOSION_TIME;
     }
 
     @Override
