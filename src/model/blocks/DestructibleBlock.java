@@ -20,7 +20,7 @@ public final class DestructibleBlock extends AbstractEntity {
      * @param pos defines the initial position of the block
      */
     public DestructibleBlock(final Pair<Integer, Integer> pos) {
-        super(pos);
+        super(pos, true);
         this.powerup = this.hasPowerUp();
         this.setImagePath(ClassLoader.getSystemClassLoader().getResource("view") + File.separator + "destructible_block.png");
 

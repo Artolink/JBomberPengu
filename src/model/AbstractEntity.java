@@ -1,48 +1,51 @@
 package model;
 
-import java.util.Optional;
-import model.utils.Pair;
 import model.utils.Rectangle;
+import model.utils.Pair;
 
 /**
  * Abstract implementation of {@link Entity}.
  */
 public abstract class AbstractEntity implements Entity {
 
-    private Optional<Rectangle> hitbox;
-    private Pair<Integer, Integer> position;
     private String path;
     private int width;
     private int height;
+    private final boolean solid;
     private boolean destroyed;
+    private final Pair<Integer, Integer> initialPosition;
+    private Pair<Integer, Integer> realPosition;
 
     /**
      * AbstractMovableEntity builder.
      * 
      * @param pos defines the initial position of the entity.
+     * @param isSolid if this block is solid
      */
-    public AbstractEntity(final Pair<Integer, Integer> pos) {
-        this.position = pos;
-    }
-
-    @Override
-    public final Pair<Integer, Integer> getPosition() {
-        return this.position;
+    public AbstractEntity(final Pair<Integer, Integer> pos, final boolean isSolid) {
+        this.initialPosition = pos;
+        this.solid = isSolid;
     }
 
     @Override
     public final void setPosition(final Pair<Integer, Integer> position) {
-        this.position = position;
+        this.realPosition = position;
+    }
+
+    /**
+     * This method can be overridden by dynamic entities like players to get a more specific hitbox.
+     */
+    @Override
+    public Rectangle getCollisionBox() {
+        return new Rectangle(new Pair<Integer, Integer>(getPosition().getX(), getPosition().getY()), getWidth(), getHeight());
     }
 
     @Override
-    public final Optional<Rectangle> getCollisionBox() {
-        return this.hitbox;
-    }
-
-    @Override
-    public final void setCollisionBox() {
-        this.hitbox = Optional.of(new Rectangle(this.getPosition(), this.getWidth(), this.getHeight()));
+    public final Pair<Integer, Integer> getPosition() {
+        if (this.realPosition == null) {
+            this.realPosition = new Pair<Integer, Integer>(this.getInitialPosition().getX() * this.getWidth(), this.getInitialPosition().getY() * this.getHeight());
+        }
+        return this.realPosition;
     }
 
     @Override
@@ -83,5 +86,19 @@ public abstract class AbstractEntity implements Entity {
     @Override
     public final void setWidth(final int width) {
         this.width = width;
+    }
+
+    @Override
+    public final boolean isSolid() {
+        return this.solid;
+    }
+
+    /**
+     * Gets the initial position of the player, useful for the view.
+     * 
+     * @return the initial position of the player
+     */
+    public Pair<Integer, Integer> getInitialPosition() {
+        return this.initialPosition;
     }
 }

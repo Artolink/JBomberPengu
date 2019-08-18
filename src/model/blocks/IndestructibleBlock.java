@@ -16,7 +16,7 @@ public final class IndestructibleBlock extends AbstractEntity {
      * @param pos defines the initial position of the block
      */
     public IndestructibleBlock(final Pair<Integer, Integer> pos) {
-        super(pos);
+        super(pos, true);
         this.setImagePath(ClassLoader.getSystemClassLoader().getResource("view") + File.separator + "indestructible_block.png");
     }
 

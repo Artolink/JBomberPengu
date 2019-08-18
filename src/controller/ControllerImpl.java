@@ -1,10 +1,9 @@
 package controller;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import model.AbstractEntity;
 import model.Model;
+import model.collisions.CollisionImpl;
 import model.language.ApplicationStrings;
 import model.map.GameMap;
 import model.player.Player;
@@ -16,7 +15,6 @@ import view.game.GameController;
 
 public class ControllerImpl implements Controller {
 
-    public static final int VELOCITY = 5;
 
     private final Model model;
     private final GUIImpl gui;
@@ -25,7 +23,7 @@ public class ControllerImpl implements Controller {
     public ControllerImpl(Model model, GUIImpl gui) {
         this.model = model;
         this.gui = gui;
-        gui.setController(this);
+        this.gui.setController(this);
     }
 
     // global data utilities
@@ -57,17 +55,21 @@ public class ControllerImpl implements Controller {
         // first render of map in view
         for (int a = 0; a < map.getDimensions().getX(); a++) {
             for (int b = 0; b < map.getDimensions().getY(); b++) {
-                final AbstractEntity block = map.getBlock(b, a);
-                view.draw(block.getImagePath(), b, a);
+                final AbstractEntity block = map.getBlock(a, b);
+                block.setHeight(Model.BLOCKDIMENSION);
+                block.setWidth(Model.BLOCKDIMENSION);
+                view.draw(block.getImagePath(), a, b);
             }
         }
 
         // render players
         view.drawPlayers(model.getPlayers());
-
+        for (final Player player : model.getPlayers()) {
+            player.setCollision(new CollisionImpl(player, map));
+        }
         this.viewUpdater.setModel(this.model);
         this.viewUpdater.setView(view);
-        this.viewUpdater.setVelocity(VELOCITY);
+        this.viewUpdater.setMap(map);
         new Thread(this.viewUpdater).start();
     }
 

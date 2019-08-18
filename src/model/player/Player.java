@@ -1,14 +1,12 @@
 package model.player;
 
 import java.io.File;
-import java.util.Set;
 
+import model.utils.Rectangle;
 import model.AbstractEntity;
-import model.collisions.Collision;
 import model.collisions.CollisionImpl;
 import model.utils.Directions;
 import model.utils.Pair;
-import model.utils.Rectangle;
 
 /**
  * The player that the user will control.
@@ -22,8 +20,8 @@ public final class Player extends AbstractEntity {
     private Integer bombNumber;
     private final String name;
     private Directions direction;
-    private final Collision playerCollisions;
-    private final Pair<Integer, Integer> initialPosition;
+    private int velocity;
+    private CollisionImpl collision;
 
     /**
      * Player builder.
@@ -33,14 +31,12 @@ public final class Player extends AbstractEntity {
      * @param pos  the initial position of the player
      */
     public Player(final Integer id, final String name, final Pair<Integer, Integer> pos) {
-        super(pos);
+        super(pos, true);
         this.id = id;
         this.name = name;
         this.score = 0;
-        this.initialPosition = pos;
         this.bombNumber = INITIAL_BOMB_NUMBER;
         this.direction = Directions.STATIONARY;
-        this.playerCollisions = new CollisionImpl(this);
         this.setImagePath(ClassLoader.getSystemClassLoader().getResource("view") + File.separator + "bomba gialla.png");
     }
 
@@ -90,15 +86,6 @@ public final class Player extends AbstractEntity {
     }
 
     /**
-     * Gets the initial position of the player, useful for the view.
-     * 
-     * @return the initial position of the player
-     */
-    public Pair<Integer, Integer> getInitialPosition() {
-        return this.initialPosition;
-    }
-
-    /**
      * Gets the number of bombs the player can place.
      * 
      * @return the number of bombs player can place.
@@ -119,66 +106,68 @@ public final class Player extends AbstractEntity {
     /**
      * Sets the directions to move.
      * 
-     * @param direction is the direction where the player wants to move
-
+     * @param direction is the enumeration containing all the possible directions to
+     *                  move
      */
     public void setDirection(final Directions direction) {
         this.direction = direction;
     }
 
     /**
-     * Gets the directions where the player wants to move.
-     * 
-     * @return the direction where the player wants to move
+     * Gets the directions enumeration.
+     * @return the
      */
     public Directions getDirection() {
         return this.direction;
     }
 
-    /**
-     * Method that checks if the player can move in a particular direction.
-     * 
-     * @param dir          is the direction where the player wants to move
-     * @param blockSet     is the set of blocks surrounding the player
-     * @param bombSet      is the set of bombs surrounding the player
-     * @param explosionSet is the set of explosions in the game map
-     * @return a position
-     */
-    public boolean canMove(final Directions dir, final Set<Rectangle> blockSet, final Set<Rectangle> bombSet,
-            final Set<Rectangle> explosionSet) {
-        this.setCollisionBox();
+    public int getVelocity() {
+        return velocity;
+    }
 
-        if (this.playerCollisions.explosionCollision(explosionSet)) {
-            this.setStatus(true);
+    public void setVelocity(int velocity) {
+        this.velocity = velocity;
+    }
+
+    @Override
+    public Rectangle getCollisionBox() {
+        return new Rectangle(
+                new Pair<Integer, Integer>(getPosition().getX(), getPosition().getY()),
+                getWidth(),
+                getHeight());
+    }
+    
+    public void setCollision(final CollisionImpl collision) {
+        this.collision = collision;
+    }
+
+    public boolean move(final Directions direction) {
+        if(collision.blocksCollided()) {
             return false;
-        }
-
-        switch (dir) {
-        case UP:
-            if (blockSet.stream().anyMatch((block) -> this.getCollisionBox().get().hasCollidedUp(block)) 
-                    && bombSet.stream().anyMatch((bomb) -> this.getCollisionBox().get().hasCollidedUp(bomb))) {
-                return false;
+        } else {
+            int x = 0;
+            int y = 0;
+            switch (direction) {
+                case DOWN:
+                    x = getPosition().getX();
+                    y = getPosition().getY() + getVelocity();
+                    break;
+                case LEFT:
+                    x = getPosition().getX() - getVelocity();
+                    y = getPosition().getY();
+                    break;
+                case RIGHT:
+                    x = getPosition().getX() + getVelocity();
+                    y = getPosition().getY();
+                    break;
+                case UP:
+                    x = getPosition().getX();
+                    y = getPosition().getY() - getVelocity();
+                    break;
+                default:
+                    break;
             }
-            return true;
-        case DOWN:
-            if (blockSet.stream().anyMatch((block) -> this.getCollisionBox().get().hasCollidedDown(block)) 
-                    && bombSet.stream().anyMatch((bomb) -> this.getCollisionBox().get().hasCollidedDown(bomb))) {
-                return false;
-            }
-            return true;
-        case LEFT:
-            if (blockSet.stream().anyMatch((block) -> this.getCollisionBox().get().hasCollidedLeft(block)) 
-                    && bombSet.stream().anyMatch((bomb) -> this.getCollisionBox().get().hasCollidedLeft(bomb))) {
-                return false;
-            }
-            return true;
-        case RIGHT:
-            if (blockSet.stream().anyMatch((block) -> this.getCollisionBox().get().hasCollidedRight(block)) 
-                    && bombSet.stream().anyMatch((bomb) -> this.getCollisionBox().get().hasCollidedRight(bomb))) {
-                return false;
-            }
-            return true;
-        default: 
+            this.setPosition(new Pair<>(x, y));
             return true;
         }
     }

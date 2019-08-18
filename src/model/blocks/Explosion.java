@@ -14,7 +14,7 @@ public class Explosion extends AbstractEntity {
      * @param pos defines the initial position of the explosion
      */
     public Explosion(final Pair<Integer, Integer> pos) {
-        super(pos);
+        super(pos, true);
         this.setImagePath("");
     }
 }
