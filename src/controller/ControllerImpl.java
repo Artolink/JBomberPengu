@@ -20,6 +20,7 @@ public class ControllerImpl implements Controller {
     private final Model model;
     private final GUIImpl gui;
     private ViewUpdater viewUpdater;
+    private GameController gameView;
 
     public ControllerImpl(Model model, GUIImpl gui) {
         this.model = model;
@@ -44,14 +45,14 @@ public class ControllerImpl implements Controller {
     public void initGame(final GameController controller) {
         this.model.initGameData();
         final GameMap map = model.getGameMap();
-        final GameController view = controller;
+        this.gameView = controller;
         this.viewUpdater = new ViewUpdater();
 
         // set game dimensions
-        view.setDimensions(new Pair<Integer, Integer>(map.getDimensions().getX(), map.getDimensions().getY()));
-        view.setBlockDimension(Model.BLOCKDIMENSION);
-        view.setBlockSpacing(Model.BLOCKSPACING);
-        view.resizeToMap();
+        gameView.setDimensions(new Pair<Integer, Integer>(map.getDimensions().getX(), map.getDimensions().getY()));
+        gameView.setBlockDimension(Model.BLOCKDIMENSION);
+        gameView.setBlockSpacing(Model.BLOCKSPACING);
+        gameView.resizeToMap();
 
         // first render of map in view
         for (int a = 0; a < map.getDimensions().getX(); a++) {
@@ -59,17 +60,17 @@ public class ControllerImpl implements Controller {
                 final AbstractEntity block = map.getBlock(a, b);
                 block.setHeight(Model.BLOCKDIMENSION);
                 block.setWidth(Model.BLOCKDIMENSION);
-                view.draw(block.getImagePath(), a, b);
+                gameView.draw(block.getImagePath(), a, b);
             }
         }
 
         // render players
-        view.drawPlayers(model.getPlayers());
+        gameView.drawPlayers(model.getPlayers());
         for (final Player player : model.getPlayers()) {
             player.setCollision(new CollisionImpl(player, map));
         }
         this.viewUpdater.setModel(this.model);
-        this.viewUpdater.setView(view);
+        this.viewUpdater.setView(gameView);
         new Thread(this.viewUpdater).start();
     }
 
@@ -99,10 +100,11 @@ public class ControllerImpl implements Controller {
     
 
     public void releaseBomb(Player player) {
-        final int bombX = (player.getPosition().getX() + (player.getWidth()/2)) / player.getWidth();
-        final int bombY = (player.getPosition().getY() + (player.getHeight()/2)) / player.getHeight();
-        this.model.getGameMap().setBlock(new Bomb(new Pair<>(bombX, bombY), player), bombX, bombY);
-        
+        final int bombX = (player.getPosition().getX() + (player.getWidth() / 2)) / player.getWidth();
+        final int bombY = (player.getPosition().getY() + (player.getHeight() / 2)) / player.getHeight();
+        Bomb bomb = new Bomb(new Pair<>(bombX, bombY), player);
+        this.model.getGameMap().setBlock(bomb, bombX, bombY);
+        this.gameView.draw(bomb.getImagePath(), bomb.getPosition().getX(), bomb.getPosition().getY());
     }
 
     @Override

@@ -9,6 +9,7 @@ import model.map.GameMap;
 import model.map.MapGenerator;
 import model.map.MapOnFile;
 import model.player.Player;
+import model.player.PlayerColor;
 import model.utils.Pair;
 
 /**
@@ -51,12 +52,12 @@ public class Model {
             this.map = new MapGenerator(this.level, new Pair<Integer, Integer>(MAPROWS, MAPCOLUMN)).get();
         }
 
-        Player player = new Player(0, "Marco", new Pair<Integer, Integer>(0, 0));
+        Player player = new Player(0, "Marco", new Pair<Integer, Integer>(0, 0), PlayerColor.RED);
         player.setHeight(BLOCKDIMENSION);
         player.setWidth(BLOCKDIMENSION);
         player.setVelocity(VELOCITY);
         this.players.add(player);
-        Player player2 = new Player(1, "Andrea", new Pair<Integer, Integer>(this.map.getDimensions().getX() - 1, this.map.getDimensions().getY() - 1));
+        Player player2 = new Player(1, "Andrea", new Pair<Integer, Integer>(this.map.getDimensions().getX() - 1, this.map.getDimensions().getY() - 1), PlayerColor.YELLOW);
         player2.setHeight(BLOCKDIMENSION);
         player2.setWidth(BLOCKDIMENSION);
         player2.setVelocity(VELOCITY);
