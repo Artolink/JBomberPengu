@@ -15,6 +15,7 @@
       	<children>
       		<ComboBox fx:id="languageChoiceBox" onAction="#languageChoiceBoxPressed" prefWidth="150.0" />
             <CheckBox fx:id="fullscreenCB" disable="true" onAction="#fullscreenPressed" mnemonicParsing="false" text="Fullscreen" />
+            <CheckBox fx:id="soundsCB" disable="false" onAction="#soundsPressed" mnemonicParsing="true" text="sounds" />
       	</children>
          <opaqueInsets>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
