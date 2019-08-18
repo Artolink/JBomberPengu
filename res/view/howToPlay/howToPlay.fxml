@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.image.Image?>
 
-<VBox alignment="TOP_CENTER" style="-fx-scale-shape: true;" stylesheets="view/mainMenu/mainMenuStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.mainMenu.MainMenuController">
+<VBox alignment="TOP_CENTER" style="-fx-scale-shape: true;" stylesheets="view/howToPlay/howToPlay.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" -fx:controller: "view.howToPlay.howToPlayController">
    <children>
        <ImageView fitHeight="100.0" fitWidth="800.0" style="-fx-scale-x: 100%; -fx-scale-y: 100%;">
 	       <image>
@@ -45,13 +45,7 @@
 		              <Insets bottom="50.0" />
 		          </padding>
              </Label>
-             <Button fx:id="spBtn" disable="true" mnemonicParsing="false" onAction="#singlePlayerBtPressed" text="Singleplayer" />
-             <Button fx:id="mpBtn" mnemonicParsing="false" onAction="#multiPlayerBtPressed" text="Multiplayer" />
-             <Button fx:id="mapEditorBtn" disable="true" mnemonicParsing="false" onAction="#mapEditorPressed" text="Map editor" />
-             <Button fx:id="langEditorBtn" mnemonicParsing="false" onAction="#languageEditorPressed" text="Language editor" />
-             <Button fx:id="settingsBtn" mnemonicParsing="false" onAction="#settingsBtPressed" text="Settings" />
-             <Button fx:id="howToPlayBtn" mnemonicParsing="false" onAction="#howToPlayBtPressed" text="How to play" />
-             <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#closeGameBtPressed" text="Exit" />
+             <Button fx:id="backBtn" mnemonicParsing="false" onAction="#backBtnPressed" text="Back to menu" />
           </children>
           <padding>
              <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
