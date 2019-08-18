@@ -1,7 +1,5 @@
 package model.player;
 
-import java.io.File;
-
 import model.utils.Rectangle;
 import model.AbstractEntity;
 import model.collisions.CollisionImpl;
@@ -21,6 +19,7 @@ public final class Player extends AbstractEntity {
     private final String name;
     private Directions direction;
     private int velocity;
+    private final PlayerColor color;
     private CollisionImpl collision;
 
     /**
@@ -29,15 +28,16 @@ public final class Player extends AbstractEntity {
      * @param id   the ID of the player
      * @param name the name of the player
      * @param pos  the initial position of the player
+     * @param color color of this player
      */
-    public Player(final Integer id, final String name, final Pair<Integer, Integer> pos) {
+    public Player(final Integer id, final String name, final Pair<Integer, Integer> pos, final PlayerColor color) {
         super(pos, true);
         this.id = id;
         this.name = name;
         this.score = 0;
         this.bombNumber = INITIAL_BOMB_NUMBER;
         this.direction = Directions.STATIONARY;
-        this.setImagePath(ClassLoader.getSystemClassLoader().getResource("view") + File.separator + "bomba gialla.png");
+        this.color = color;
     }
 
     /**
@@ -121,12 +121,31 @@ public final class Player extends AbstractEntity {
         return this.direction;
     }
 
+    /**
+     * Gets the player velocity.
+     * 
+     * @return player speed.
+     */
     public int getVelocity() {
         return velocity;
     }
 
-    public void setVelocity(int velocity) {
+    /**
+     * Sets the player velocity. 
+     * 
+     * @param velocity defines the player speed
+     */
+    public void setVelocity(final int velocity) {
         this.velocity = velocity;
+    }
+
+    /**
+     * Gets the color of the player.
+     * 
+     * @return RED if player is red, YELLOW if it's yellow
+     */
+    public PlayerColor getColor() {
+        return color;
     }
 
     @Override
@@ -136,13 +155,24 @@ public final class Player extends AbstractEntity {
                 getWidth(),
                 getHeight());
     }
-    
+
+    /**
+     * Sets the player collision system.
+     * 
+     * @param collision defines the system containing all the collisions
+     */
     public void setCollision(final CollisionImpl collision) {
         this.collision = collision;
     }
 
+    /**
+     * Method that defines and sets the new position of the player.
+     * 
+     * @param direction is the player direction where he wants to move
+     * @return true if player can move, false if it collides with something
+     */
     public boolean move(final Directions direction) {
-        if(collision.blocksCollided()) {
+        if (collision.blocksCollided()) {
             return false;
         } else {
             int x = 0;

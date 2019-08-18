@@ -11,7 +11,7 @@ import javafx.scene.input.KeyEvent;
 import model.player.Player;
 import model.utils.Pair;
 import view.GUIImpl;
-import view.animations.Animations;
+import view.animations.PlayerAnimations;
 
 /**
  * Controller of Game.fxml. It draws the game interface.
@@ -154,7 +154,7 @@ public class GameController extends GUIImpl {
             view.setFitWidth(blockDimension - blockSpacing);
             view.relocate(blockDimension * player.getInitialPosition().getX(), blockDimension * player.getInitialPosition().getY());
             canvas.addNode(view, player.getInitialPosition().getX(), player.getInitialPosition().getY());
-            final Animations animation = new Animations();
+            final PlayerAnimations animation = new PlayerAnimations();
             animation.setImageView(view);
             animation.setPlayer(player);
             new Thread(animation).start();

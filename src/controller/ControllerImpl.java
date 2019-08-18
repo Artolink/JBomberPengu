@@ -3,6 +3,7 @@ package controller;
 
 import model.AbstractEntity;
 import model.Model;
+import model.blocks.Bomb;
 import model.collisions.CollisionImpl;
 import model.language.ApplicationStrings;
 import model.map.GameMap;
@@ -69,7 +70,6 @@ public class ControllerImpl implements Controller {
         }
         this.viewUpdater.setModel(this.model);
         this.viewUpdater.setView(view);
-        this.viewUpdater.setMap(map);
         new Thread(this.viewUpdater).start();
     }
 
@@ -96,14 +96,17 @@ public class ControllerImpl implements Controller {
             this.viewUpdater.setDirection(player, Directions.STATIONARY);
         }
     }
+    
 
-    @Override
-    public void actionPerformedSingleplayerBtn() {
-        //this.gui.loadPage(GUI.PageNames.GAME);
+    public void releaseBomb(Player player) {
+        final int bombX = (player.getPosition().getX() + (player.getWidth()/2)) / player.getWidth();
+        final int bombY = (player.getPosition().getY() + (player.getHeight()/2)) / player.getHeight();
+        this.model.getGameMap().setBlock(new Bomb(new Pair<>(bombX, bombY), player), bombX, bombY);
+        
     }
 
     @Override
-    public void actionPerformedLanguageChanged(String language) {
+    public void actionPerformedSingleplayerBtn() {
         //this.gui.loadPage(GUI.PageNames.GAME);
     }
 
@@ -138,10 +141,18 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
+    public void actionPerformedLanguageChanged(String language) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
     public void actionPerformedCloseBtn() {
         System.out.println("Closing application...");
         this.gui.stop();
         System.exit(0); //HOW am I supposed to close it???  //TODO
     }
 
+
+>>>>>>> 23133f7f6e5cba07393ea0264ccbc3c6a89f873d
 }

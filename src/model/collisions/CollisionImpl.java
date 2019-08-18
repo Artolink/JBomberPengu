@@ -16,7 +16,7 @@ import model.utils.Rectangle;
  */
 public final class CollisionImpl implements Collision {
 
-    private Rectangle entityHitbox;
+    //private Rectangle entityHitbox;
     private final Player player;
     private final GameMap map;
 
