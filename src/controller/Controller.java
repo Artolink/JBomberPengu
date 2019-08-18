@@ -15,7 +15,7 @@ public interface Controller {
 
     public void actionPerformedSingleplayerBtn();
 
-    public void actionPerformedLanguageChanged(String string);
+    public void actionPerformedLanguageChanged(String language);
 
     public void actionPerformedBackBtn();
 

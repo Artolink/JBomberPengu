@@ -15,7 +15,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  */
 public class SoundImpl implements Sound {
 
-    private final Clip clip;
+    private Clip clip;
     private static final int SONG_FRAME = 0;
 
 
@@ -27,9 +27,13 @@ public class SoundImpl implements Sound {
      * @throws LineUnavailableException lue
      */
     public SoundImpl(final String path) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        final AudioInputStream ais = AudioSystem.getAudioInputStream(this.getClass().getResource(path));
-        this.clip = AudioSystem.getClip();
-        this.clip.open(ais);
+        try {
+            final AudioInputStream ais = AudioSystem.getAudioInputStream(this.getClass().getResource(path));
+            this.clip = AudioSystem.getClip();
+            this.clip.open(ais);
+        } catch (Exception e) {
+            System.out.println("Audio file " + path + " not found");
+        }
     }
 
     /**

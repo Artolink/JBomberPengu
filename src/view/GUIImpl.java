@@ -4,11 +4,13 @@ import java.io.File;
 import controller.Controller;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import model.language.ApplicationStrings;
 import model.utils.Pair;
 import view.sounds.SoundsAssociator;
@@ -59,6 +61,7 @@ public class GUIImpl extends Application implements GUI {
 
         //Load main menu FXML as default
         loadPage(PageNames.MAINMENU);
+
         //start sound
         StObjCont.setSoundsAssociator(new SoundsAssociator());
         getSounds().getStartGameSound().play();
@@ -245,6 +248,15 @@ public class GUIImpl extends Application implements GUI {
             modifiedSizes = getStageSizes();
             //actualFrame = new Rectangle2D(GUIImpl.stage.getX(), GUIImpl.stage.getX(), GUIImpl.stage.getWidth(), GUIImpl.stage.getHeight());
         });
+
+        StObjCont.getStage().setOnCloseRequest((new EventHandler<WindowEvent>(){
+
+            @Override
+            public void handle(final WindowEvent arg0) {
+                arg0.consume();
+                getController().actionPerformedCloseBtn();
+            }
+        }));
     }
 
 

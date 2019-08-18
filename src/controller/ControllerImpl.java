@@ -103,7 +103,7 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
-    public void actionPerformedLanguageChanged() {
+    public void actionPerformedLanguageChanged(String language) {
         //this.gui.loadPage(GUI.PageNames.GAME);
     }
 
@@ -135,6 +135,13 @@ public class ControllerImpl implements Controller {
     @Override
     public void actionPerformedSaveBtn() {
         //this.gui.loadPage(GUI.PageNames.GAME);
+    }
+
+    @Override
+    public void actionPerformedCloseBtn() {
+        System.out.println("Closing application...");
+        this.gui.stop();
+        System.exit(0); //HOW am I supposed to close it???  //TODO
     }
 
 }
