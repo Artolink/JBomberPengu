@@ -36,12 +36,7 @@ public final class CollisionImpl implements Collision {
         return getCollisionBlock(player, player.getDirection()).stream().anyMatch((block) -> player.getCollisionBox().intersectsWith(block));
     }
 
-    /**
-     * 
-     * @param player            is the player you want to check for collisions
-     * @param direction         is the direction where the player wants to move
-     * @return a list of hitboxes to check for collisions
-     */
+    @Override
     public List<Rectangle> getCollisionBlock(final Player player, final Directions direction) {
         final List<Rectangle> collisionBlock = new ArrayList<Rectangle>();
         final int relativeTLPlayerWidth = player.getPosition().getX() / player.getWidth();

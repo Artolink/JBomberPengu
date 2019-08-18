@@ -27,7 +27,7 @@ public class WakeSprite {
             this.start = START_RED;
             this.toMove = START_YELLOW;
         } else if (color.equals("yellow")) {
-            this.start = START_YELLOW - 1;
+            this.start = START_YELLOW;
             this.toMove = (START_YELLOW * 2);
         }
 

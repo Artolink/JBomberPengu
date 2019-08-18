@@ -1,5 +1,11 @@
 package model.collisions;
 
+import java.util.List;
+
+import model.player.Player;
+import model.utils.Directions;
+import model.utils.Rectangle;
+
 /**
  * Class that models collisions with different game elements.
  *
@@ -12,4 +18,12 @@ public interface Collision {
      */
     boolean blocksCollided();
 
+    /**
+     * Gets a list of hitboxes to check for collisions.
+     * 
+     * @param player            is the player you want to check for collisions
+     * @param direction         is the direction where the player wants to move
+     * @return a list of hitboxes to check for collisions
+     */
+    List<Rectangle> getCollisionBlock(Player player, Directions direction);
 }

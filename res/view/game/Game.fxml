@@ -22,7 +22,7 @@
 	   	<children>
 	       	<VBox alignment="TOP_LEFT" style="-fx-padding: 10;-fx-border-style: solid inside;-fx-border-width: 2;-fx-border-radius: 5;-fx-border-color: blue;">
 	          	 <children>
-	           	    <Label text="Player1"></Label>
+	           	    <Label text="Player red"></Label>
 	            	   <Label text="Score: 12800"></Label>
 	            	   <HBox fx:id="lifeCounter1" alignment="TOP_LEFT">
 		         	      <children>
@@ -48,7 +48,7 @@
 	       </VBox>
 	       <VBox alignment="TOP_LEFT"  style="-fx-padding: 10;-fx-border-style: solid inside;-fx-border-width: 2;-fx-border-insets: 5;-fx-border-radius: 5;-fx-border-color: blue;">
                <children>
-                   <Label text="Player2"></Label>
+                   <Label text="Player yellow"></Label>
                    <Label text="Score: 86800"></Label>
                    <HBox fx:id="lifeCounter2" alignment="TOP_LEFT">
 	                   <children>
