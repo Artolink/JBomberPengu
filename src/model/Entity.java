@@ -1,8 +1,7 @@
 package model;
 
-import java.util.Optional;
-import model.utils.Pair;
 import model.utils.Rectangle;
+import model.utils.Pair;
 
 /**
  * Main interface of the game, used for every generic entity.
@@ -28,13 +27,7 @@ public interface Entity {
      * 
      * @return the collision box for each entity.
      */
-    Optional<Rectangle> getCollisionBox();
-
-    /**
-     * Sets the hitbox position of the entity.
-     * 
-     */
-    void setCollisionBox();
+    Rectangle getCollisionBox();
 
     /**
      * Gets the path of the image that will be used by the view. 
@@ -91,4 +84,10 @@ public interface Entity {
      * @param height defines the new entity width
      */
     void setHeight(int height);
+
+    /**
+     * Return the state of the block, if it is solid or not.
+     * @return {@link Boolean} associated at the state of solidity
+     */
+    boolean isSolid();
 }
