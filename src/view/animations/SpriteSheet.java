@@ -26,6 +26,7 @@ public class SpriteSheet {
 
     /**
      * Creates a SpriteSheet.
+     * 
      * @param path the path of the sheet
      * @param rows how many rows are in the sheet
      * @param cols how many cols are in the sheet
@@ -40,8 +41,8 @@ public class SpriteSheet {
         this.row = rows;
         this.col = cols;
 
-        this.width = this.sheet.getWidth(null) / cols;
-        this.height = this.sheet.getHeight(null) / rows;
+        this.width = this.sheet.getWidth() / cols;
+        this.height = this.sheet.getHeight() / rows;
 
     }
 
@@ -64,7 +65,9 @@ public class SpriteSheet {
     }
 
     /**
-     * A method that gets the specified sprites and converts it from a BufferedImage into JavaFX image.
+     * A method that gets the specified sprites and converts it from a BufferedImage
+     * into JavaFX image.
+     * 
      * @param x the row
      * @param y the col
      * @return a JavaFX image
@@ -76,6 +79,7 @@ public class SpriteSheet {
 
     /**
      * It provides a list of JavaFX images with all the Sprites.
+     * 
      * @return the list
      */
     public List<WritableImage> getSpriteList() {
@@ -90,13 +94,20 @@ public class SpriteSheet {
     }
 
     /**
-     * It provides a sub image from the original sheet. It takes the sub images as a table.
+     * It provides a sub image from the original sheet. It takes the sub images as a
+     * table.
+     * 
      * @param x the row
      * @param y the column
      * @return a BufferedImage that is the sub image
      */
     private BufferedImage getSprite(final int x, final int y) {
 
-        return this.sheet.getSubimage(y * getWidth() + OFFSET_SHEET, x * getHeight(), getWidth(), getHeight());
+        int support = y;
+        if (support * getWidth() + OFFSET_SHEET > this.sheet.getWidth() - getWidth()) {
+            support = 3;
+        }
+
+        return this.sheet.getSubimage(support * getWidth() + OFFSET_SHEET, x * getHeight(), getWidth(), getHeight());
     }
 }

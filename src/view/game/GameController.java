@@ -8,7 +8,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.HBox;
 import model.player.Player;
 import model.utils.Pair;
 import view.GUIImpl;
@@ -25,8 +24,6 @@ public class GameController extends GUIImpl {
     private final KeyAssociator associator = new KeyAssociator();
 
     @FXML
-    private HBox anchorPane1;
-    @FXML
     private MyPane canvas;
 
     private ControllerImpl controller;
@@ -35,8 +32,6 @@ public class GameController extends GUIImpl {
      * Initialize the Game scene.
      */
     public void initialize() {
-        canvas.prefWidth(anchorPane1.getPrefWidth());
-        canvas.prefHeight(anchorPane1.getPrefHeight());
         this.controller = (ControllerImpl) getController();
         this.controller.initGame(this);
     }
