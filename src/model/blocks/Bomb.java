@@ -77,8 +77,8 @@ public class Bomb extends AbstractEntity {
      * 
      * @return bomb explosion time
      */
-    public static long getExplosionTime() {
-        return EXPLOSION_TIME;
+    public final long getExplosionTime() {
+        return this.explosionTime;
     }
 
     @Override
