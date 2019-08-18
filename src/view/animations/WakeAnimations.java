@@ -2,6 +2,7 @@ package view.animations;
 
 import javafx.scene.image.ImageView;
 import model.player.Player;
+import model.player.PlayerColor;
 
 /**
  * Class that run the bomb wake animations.
@@ -29,14 +30,7 @@ public class WakeAnimations implements Animation {
 
         while (run) {
 
-            // this.updateFrame(sprite.getWakeEsplosionList().size());
             this.imageView.setImage(sprite.getWakeEsplosionList().get(nextFrame).getImage());
-
-            System.out.println("sono nel player: " + player.getColor());
-
-            System.out.println(sprite.getWakeEsplosionList().size());
-            
-            System.out.println(sprite.getWakeEsplosionList().get(0));
             timeToSleep = WAKE_TIME;
 
             try {
@@ -48,7 +42,6 @@ public class WakeAnimations implements Animation {
                 }
 
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -75,17 +68,10 @@ public class WakeAnimations implements Animation {
 
     private void setSprite() {
 
-        if (this.player.getID().equals(0)) {
-            this.sprite = new WakeSprite("red", sheet);
+        if (this.player.getColor().equals(PlayerColor.RED)) {
+            this.sprite = new WakeSprite(PlayerColor.RED, sheet);
         } else {
-            this.sprite = new WakeSprite("yellow", sheet);
+            this.sprite = new WakeSprite(PlayerColor.YELLOW, sheet);
         }
     }
-
-    private void updateFrame(final int size) {
-        if (this.nextFrame.equals(size)) {
-            this.nextFrame = 0;
-        }
-    }
-
 }
