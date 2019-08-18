@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.image.Image?>
 
-<VBox alignment="TOP_CENTER" style="-fx-scale-shape: 100%;" stylesheets="view/mainMenu/mainMenuStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.mainMenu.MainMenuController">
+<VBox alignment="TOP_CENTER" style="-fx-scale-shape: true;" stylesheets="view/mainMenu/mainMenuStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.mainMenu.MainMenuController">
    <children>
        <ImageView fitHeight="100.0" fitWidth="800.0" style="-fx-scale-x: 100%; -fx-scale-y: 100%;">
 	       <image>

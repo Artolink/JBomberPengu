@@ -56,6 +56,11 @@ public interface GUI {
      */
     void loadPage(PageNames pageName);
 
+    /**
+     * @return A Pair representing screen dimensions
+     */
+    Pair<Double, Double> getMaxScreenDimensions();
+
 }
 
 

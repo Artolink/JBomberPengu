@@ -16,6 +16,6 @@ public class Terrain extends AbstractEntity {
      */
     public Terrain(final Pair<Integer, Integer> pos) {
         super(pos);
-        setImagePath("");
+        this.setImagePath("");
     }
 }

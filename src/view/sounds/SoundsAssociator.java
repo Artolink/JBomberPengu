@@ -16,6 +16,7 @@ public class SoundsAssociator {
     private final Sound explosion;
     private final Sound takeItem;
     private final Sound startMatch;
+    private final Sound startGame;
 
     /**
      * 
@@ -26,10 +27,11 @@ public class SoundsAssociator {
      */
     public SoundsAssociator() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 
-            this.bombPlaced = new SoundImpl("");
-            this.explosion = new SoundImpl("");
-            this.takeItem = new SoundImpl("");
-            this.startMatch = new SoundImpl("");
+            this.bombPlaced = new SoundImpl("/view/sounds/place_bomb.wav");
+            this.explosion = new SoundImpl("/view/sounds/bomb_explosion.wav");
+            this.takeItem = new SoundImpl("/view/sounds/take_item.wav");
+            this.startMatch = new SoundImpl("/view/sounds/start_game.wav");
+            this.startGame = new SoundImpl("/view/sounds/start_game_menu.wav");
     }
 
     /**
@@ -66,5 +68,35 @@ public class SoundsAssociator {
      */
     public Sound getStartMatchSound() {
         return this.startMatch;
+    }
+    
+    /**
+     * Gets start game sound.
+     * 
+     * @return start match sound
+     */
+    public Sound getStartGameSound() {
+        return this.startGame;
+    }
+    
+    /**
+     * stops all the sounds still playing.
+     */
+    public void stopSounds() {
+        if(getBombPlacedSound().isPlaying()) {
+            getBombPlacedSound().stop();
+        }
+        if(getExplosionSound().isPlaying()) {
+            getExplosionSound().stop();
+        }
+        if(getTakeItemSound().isPlaying()) {
+            getTakeItemSound().stop();
+        }
+        if(getStartMatchSound().isPlaying()) {
+            getStartMatchSound().stop();
+        }
+        if(getStartGameSound().isPlaying()) {
+            getStartGameSound().stop();
+        }
     }
 }

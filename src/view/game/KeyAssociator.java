@@ -110,7 +110,6 @@ public class KeyAssociator {
 
     private List<KeyCode> getKeySet(final KeyCode code) {
         for (final List<KeyCode> keyCodes : this.availableControlSet) {
-            System.out.println(keyCodes.toString());
             if (keyCodes.contains(code)) {
                 return keyCodes;
             }

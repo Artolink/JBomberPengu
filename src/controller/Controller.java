@@ -12,10 +12,10 @@ public interface Controller {
      * @return
      */
     public ApplicationStrings getTranslator();
-    
+
     public void actionPerformedSingleplayerBtn();
 
-    public void actionPerformedLanguageChanged();
+    public void actionPerformedLanguageChanged(String string);
 
     public void actionPerformedBackBtn();
 
@@ -28,5 +28,7 @@ public interface Controller {
     public void actionPerformedSettingsBtn();
 
     public void actionPerformedSaveBtn();
+
+    public void actionPerformedCloseBtn();
 
 }

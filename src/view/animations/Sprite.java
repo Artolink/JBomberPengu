@@ -1,7 +1,6 @@
 package view.animations;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  * 
@@ -13,7 +12,6 @@ public class Sprite {
     private final Image image;
     private double width;
     private double height;
-    private final ImageView iv;
 
     /**
      * It creates a sprite.
@@ -25,7 +23,6 @@ public class Sprite {
         this.image = spriteSheet.getFxImageFromSheet(x, y);
         this.width = image.getWidth();
         this.height = image.getHeight();
-        iv = new ImageView(image);
     }
 
     /**
@@ -58,7 +55,6 @@ public class Sprite {
      * @param width width
      */
     public void setSpriteWidth(final double width) {
-        iv.setFitWidth(width);
         this.width = width;
     }
 
@@ -67,7 +63,6 @@ public class Sprite {
      * @param height height
      */
     public void setSpriteHeight(final double height) {
-        iv.setFitHeight(height);
         this.height = height;
     }
 }

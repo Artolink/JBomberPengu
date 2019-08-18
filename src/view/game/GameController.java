@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import model.player.Player;
 import model.utils.Pair;
 import view.GUIImpl;
+import view.animations.Animations;
 
 /**
  * Controller of Game.fxml. It draws the game interface.
@@ -26,7 +27,7 @@ public class GameController extends GUIImpl {
     @FXML
     private HBox anchorPane1;
     @FXML
-    public MyPane canvas;
+    private MyPane canvas;
 
     private ControllerImpl controller;
 
@@ -40,6 +41,10 @@ public class GameController extends GUIImpl {
         this.controller.initGame(this);
     }
 
+    /**
+     * It keeps moving while the key is pressed.
+     * @param event the keyPressed event
+     */
     @FXML
     public void keyPressed(final KeyEvent event) {
         final KeyCode code = event.getCode();
@@ -48,6 +53,10 @@ public class GameController extends GUIImpl {
         }
     }
 
+    /**
+     * It stops moving while the key is pressed.
+     * @param event the keyRelased event
+     */
     @FXML
     public void keyReleased(final KeyEvent event) {
         final KeyCode code = event.getCode();
@@ -143,7 +152,17 @@ public class GameController extends GUIImpl {
      */
     public void drawPlayers(final List<Player> players) {
         for (final Player player : players) {
-            this.draw(player.getImagePath(), player.getInitialPosition().getX(), player.getInitialPosition().getY());
+            player.setWidth(blockDimension - blockSpacing);
+            player.setHeight(blockDimension - blockSpacing);
+            final ImageView view = new ImageView();
+            view.setFitHeight(blockDimension - blockSpacing);
+            view.setFitWidth(blockDimension - blockSpacing);
+            view.relocate(blockDimension * player.getInitialPosition().getX(), blockDimension * player.getInitialPosition().getY());
+            canvas.addNode(view, player.getInitialPosition().getX(), player.getInitialPosition().getY());
+            final Animations animation = new Animations();
+            animation.setImageView(view);
+            animation.setPlayer(player);
+            new Thread(animation).start();
             player.setPosition(new Pair<>(blockDimension * player.getInitialPosition().getX(),
                     blockDimension * player.getInitialPosition().getY()));
             associator.associatePlayer(player);

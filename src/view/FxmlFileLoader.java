@@ -74,6 +74,7 @@ public class FxmlFileLoader extends Page {
             loader = new FXMLLoader(ClassLoader.getSystemClassLoader().getResource(path));
             final Parent root = loader.load();
             scene = new Scene(root);
+            root.requestFocus();
         } catch (Exception e) {
             e.printStackTrace();
         }
