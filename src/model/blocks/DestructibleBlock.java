@@ -1,5 +1,6 @@
 package model.blocks;
 
+import java.io.File;
 import java.util.Optional;
 import model.AbstractEntity;
 import model.utils.Pair;
@@ -21,7 +22,8 @@ public final class DestructibleBlock extends AbstractEntity {
     public DestructibleBlock(final Pair<Integer, Integer> pos) {
         super(pos);
         this.powerup = this.hasPowerUp();
-        setImagePath("");
+        this.setImagePath(ClassLoader.getSystemClassLoader().getResource("view") + File.separator + "destructible_block.png");
+
     }
 
     private Optional<Object> hasPowerUp() {

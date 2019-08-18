@@ -1,5 +1,8 @@
 package model.blocks;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import model.AbstractEntity;
 import model.player.Player;
 import model.utils.Pair;
@@ -10,9 +13,10 @@ import model.utils.Pair;
  */
 public class Bomb extends AbstractEntity { 
 
-    //TIMER
     private static final int DEFAULT_RANGE = 2;
+    private static final long EXPLOSION_TIME = 3000L;
 
+    private final Timer timer;
     private final Player playerInfo;
     private int range;
 
@@ -25,9 +29,16 @@ public class Bomb extends AbstractEntity {
     public Bomb(final Pair<Integer, Integer> pos, final Player pinfo) {
         super(pos);
         this.playerInfo = pinfo;
-        this.range = DEFAULT_RANGE;
         this.setStatus(false);
-        this.setImagePath("");
+        this.range = DEFAULT_RANGE;
+        this.timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                setStatus(true);
+            }
+        }, EXPLOSION_TIME);
+
     }
 
     /**
@@ -68,6 +79,8 @@ public class Bomb extends AbstractEntity {
                 .append(this.playerInfo.getName())
                 .append(" - Range is: ")
                 .append(this.getRange())
+                .append(" - Status (destroyed/not) is: ")
+                .append(this.isDestroyed())
                 .append("\n")
                 .append(super.toString())
                 .toString();

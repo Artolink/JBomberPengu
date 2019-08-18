@@ -15,6 +15,5 @@ public class Explosion extends AbstractEntity {
      */
     public Explosion(final Pair<Integer, Integer> pos) {
         super(pos);
-        setImagePath("");
     }
 }

@@ -119,17 +119,17 @@ public final class Player extends AbstractEntity {
     /**
      * Sets the directions to move.
      * 
-     * @param direction is the enumeration containing all the possible directions to
-     *                  move
+     * @param direction is the direction where the player wants to move
+
      */
     public void setDirection(final Directions direction) {
         this.direction = direction;
     }
 
     /**
-     * Gets the directions enumeration.
+     * Gets the directions where the player wants to move.
      * 
-     * @return the
+     * @return the direction where the player wants to move
      */
     public Directions getDirection() {
         return this.direction;

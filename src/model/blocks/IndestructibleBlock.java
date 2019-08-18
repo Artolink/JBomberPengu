@@ -1,5 +1,7 @@
 package model.blocks;
 
+import java.io.File;
+
 import model.AbstractEntity;
 import model.utils.Pair;
 
@@ -15,7 +17,7 @@ public final class IndestructibleBlock extends AbstractEntity {
      */
     public IndestructibleBlock(final Pair<Integer, Integer> pos) {
         super(pos);
-        setImagePath("");
+        this.setImagePath(ClassLoader.getSystemClassLoader().getResource("view") + File.separator + "indestructible_block.png");
     }
 
 }
