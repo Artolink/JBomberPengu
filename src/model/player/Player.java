@@ -21,6 +21,7 @@ public final class Player extends AbstractEntity {
     private final String name;
     private Directions direction;
     private int velocity;
+    private final PlayerColor color;
     private CollisionImpl collision;
 
     /**
@@ -29,14 +30,16 @@ public final class Player extends AbstractEntity {
      * @param id   the ID of the player
      * @param name the name of the player
      * @param pos  the initial position of the player
+     * @param color color of this player
      */
-    public Player(final Integer id, final String name, final Pair<Integer, Integer> pos) {
+    public Player(final Integer id, final String name, final Pair<Integer, Integer> pos, final PlayerColor color) {
         super(pos, true);
         this.id = id;
         this.name = name;
         this.score = 0;
         this.bombNumber = INITIAL_BOMB_NUMBER;
         this.direction = Directions.STATIONARY;
+        this.color = color;
         this.setImagePath(ClassLoader.getSystemClassLoader().getResource("view") + File.separator + "bomba gialla.png");
     }
 
@@ -129,6 +132,10 @@ public final class Player extends AbstractEntity {
         this.velocity = velocity;
     }
 
+    public PlayerColor getColor() {
+        return color;
+    }
+
     @Override
     public Rectangle getCollisionBox() {
         return new Rectangle(
@@ -184,4 +191,5 @@ public final class Player extends AbstractEntity {
                 .append(super.toString())
                 .toString();
     }
+
 }

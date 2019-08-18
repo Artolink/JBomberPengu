@@ -11,10 +11,8 @@ import view.game.GameController;
 public class ViewUpdater implements Runnable {
 
     private static final int TIMETOSLEEP = 75;
-    private int velocity;
     private Model model;
     private GameController view;
-    private GameMap map;
 
     @Override
     public void run() {
@@ -22,7 +20,7 @@ public class ViewUpdater implements Runnable {
             for (Player player : this.model.getPlayers()) {
                 final Directions direction = player.getDirection();
                 if (!direction.equals(Directions.STATIONARY)) {
-                    if(player.move(direction)) {
+                    if (player.move(direction)) {
                         this.view.movePlayer(player, player.getPosition().getX(), player.getPosition().getY());
                     }
                 }
@@ -49,9 +47,5 @@ public class ViewUpdater implements Runnable {
 
     public void setView(final GameController view) {
         this.view = view;
-    }
-
-    public void setMap(GameMap map) {
-        this.map = map;
     }
 }
