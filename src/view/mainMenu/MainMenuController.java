@@ -58,7 +58,7 @@ public class MainMenuController extends PageController {
     @FXML
     private void languageEditorPressed() {
         System.out.println("Language editor button pressed");   //TODO debug
-        getController().actionPerformedEditorBtn();
+        getController().actionPerformedLanguageEditorBtn();
     }
 
     /**

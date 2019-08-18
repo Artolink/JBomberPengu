@@ -126,8 +126,8 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
-    public void actionPerformedEditorBtn() {
-        //this.gui.loadPage(GUI.PageNames.MAPEDITOR);
+    public void actionPerformedLanguageEditorBtn() {
+        this.gui.loadPage(GUI.PageNames.LANGUAGEDITOR);
     }
 
     @Override
@@ -144,6 +144,11 @@ public class ControllerImpl implements Controller {
     public void actionPerformedLanguageChanged(String language) {
         // TODO Auto-generated method stub
 
+    }
+
+    @Override
+    public void actionPerformedLoseBtn() {
+        this.gui.loadPage(GUI.PageNames.GAMENDED);
     }
 
     @Override

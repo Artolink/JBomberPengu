@@ -23,7 +23,7 @@ public interface Controller {
 
     public void actionPerformedMapEditorBtn();
 
-    public void actionPerformedEditorBtn();
+    public void actionPerformedLanguageEditorBtn();
 
     public void actionPerformedSettingsBtn();
 
