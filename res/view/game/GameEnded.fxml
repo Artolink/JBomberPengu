@@ -26,27 +26,38 @@
        </ImageView>
        <HBox alignment="CENTER">
        <children>
-       <VBox alignment="CENTER">
+       <VBox alignment="CENTER" prefHeight="448.0" prefWidth="304.0">
           <children>
-             <ImageView fitHeight="250.0" fitWidth="250.0">
+             <ImageView fx:id="playerImage1" fitHeight="250.0" fitWidth="250.0">
                    <image>
                        <Image url="@view/penguin.png" />
                    </image>
              </ImageView>
+                  <Label fx:id="playerNameLabel1" alignment="CENTER" prefHeight="88.0" prefWidth="238.0" text="you win" textAlignment="CENTER">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="50.0" />
+                     </padding>
+                  </Label>
           </children>
        </VBox>
        <VBox alignment="CENTER" spacing="10.0">
           <children>
-             <Label fx:id="statusLabel" prefHeight="42.0" prefWidth="141.0" text="you win/lost">
-	             <font>
-		             <Font size="26.0" />
-		          </font>
-		          <padding>
-		              <Insets bottom="50.0" />
-		          </padding>
-             </Label>
-             <Button fx:id="mpBtn" mnemonicParsing="false" onAction="#multiPlayerBtPressed" text="Play again" />
-             <Button fx:id="backBtn" mnemonicParsing="false" onAction="#backBtPressed" text="Return to main menu" />
+                  <ImageView fx:id="playerImage2" fitHeight="250.0" fitWidth="250.0">
+                     <image>
+                        <Image url="@view/penguin.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="playerNameLabel2" alignment="CENTER" prefHeight="88.0" prefWidth="238.0" text="you lost" textAlignment="CENTER">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="50.0" />
+                     </padding>
+                  </Label>
           </children>
           <padding>
              <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
@@ -54,6 +65,12 @@
        </VBox>
        </children>
        </HBox>
+      <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="664.0" style="-fx-background-color: TRANSPARENT;">
+        <items>
+       <Button fx:id="mpBtn" mnemonicParsing="false" onAction="#multiPlayerBtPressed" text="Play again" textAlignment="CENTER" />
+       <Button fx:id="backBtn" mnemonicParsing="false" onAction="#backBtPressed" text="Return to main menu" textAlignment="CENTER" />
+        </items>
+      </ToolBar>
    </children>
    <padding>
         <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
