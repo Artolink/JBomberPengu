@@ -29,8 +29,14 @@ public class WakeAnimations implements Animation {
 
         while (run) {
 
-            this.updateFrame(sprite.getWakeEsplosionList().size());
+            // this.updateFrame(sprite.getWakeEsplosionList().size());
             this.imageView.setImage(sprite.getWakeEsplosionList().get(nextFrame).getImage());
+
+            System.out.println("sono nel player: " + player.getColor());
+
+            System.out.println(sprite.getWakeEsplosionList().size());
+            
+            System.out.println(sprite.getWakeEsplosionList().get(0));
             timeToSleep = WAKE_TIME;
 
             try {
