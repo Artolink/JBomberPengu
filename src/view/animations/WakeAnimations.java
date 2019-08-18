@@ -7,7 +7,7 @@ import model.player.Player;
  * Class that run the bomb wake animations.
  *
  */
-public class WakeAnimations implements Runnable {
+public class WakeAnimations implements Animation {
 
     private static final int SHEET_ROWS = 1;
     private static final int SHEET_COLUMNS = 8;

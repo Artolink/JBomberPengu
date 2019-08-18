@@ -1,11 +1,15 @@
+.root{
+    -fx-background-image: url(../sfondo.png);
+    -fx-background-size: stretch;
+    -fx-background-repeat: no-repeat;
+}
 #anchorPane1{
-    -fx-padding: 10;
-    -fx-background: paleturquoise;
+    -fx-padding: 5;
 }
 #border{
     -fx-padding: 2;
     -fx-border-style: solid inside;
     -fx-border-width: 3;
     -fx-border-radius: 5;
-    -fx-border-color: lightskyblue;
+    -fx-border-color: blue;
 }

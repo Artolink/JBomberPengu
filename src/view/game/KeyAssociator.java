@@ -20,6 +20,7 @@ public class KeyAssociator {
     private final Map<KeyCode, Directions> keyDirection = new HashMap<>();
     private final Map<List<KeyCode>, Player> keyPlayer = new HashMap<>();
     private final Iterator<List<KeyCode>> nextControlList;
+    private final List<KeyCode> bombKey = new ArrayList<>();
 
     /**
      * KeyAssociator stored.
@@ -31,6 +32,7 @@ public class KeyAssociator {
         tmp.add(KeyCode.D);
         tmp.add(KeyCode.W);
         tmp.add(KeyCode.SPACE);
+        bombKey.add(KeyCode.SPACE);
         this.availableControlSet.add(tmp);
         tmp = new ArrayList<>();
         tmp.add(KeyCode.UP);
@@ -38,6 +40,7 @@ public class KeyAssociator {
         tmp.add(KeyCode.LEFT);
         tmp.add(KeyCode.RIGHT);
         tmp.add(KeyCode.PLUS);
+        bombKey.add(KeyCode.PLUS);
         this.availableControlSet.add(tmp);
         this.keyDirection.put(KeyCode.UP, Directions.UP);
         this.keyDirection.put(KeyCode.DOWN, Directions.DOWN);
@@ -87,10 +90,13 @@ public class KeyAssociator {
      */
     public boolean contains(final KeyCode code) {
         if (code != null) {
-            return this.keyDirection.containsKey(code);
-        } else {
-            return false;
+            for (final List<KeyCode> codeList : availableControlSet) {
+                if (codeList.contains(code)) {
+                    return true;
+                }
+            }
         }
+        return false;
     }
 
     /**
@@ -105,6 +111,14 @@ public class KeyAssociator {
             return this.keyPlayer.get(tmp);
         } else {
             return null;
+        }
+    }
+
+    public boolean isBombControl(final KeyCode code) {
+        if(code != null) {
+            return this.bombKey.contains(code);
+        } else {
+            return false;
         }
     }
 

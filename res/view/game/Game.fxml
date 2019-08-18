@@ -9,6 +9,7 @@
 <?import view.game.MyPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 
 <HBox fx:id="anchorPane1" onKeyPressed="#keyPressed" onKeyReleased="#keyReleased" stylesheets="view/game/game.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.game.GameController">
    	<children>
@@ -57,6 +58,8 @@
 	                   <children>
 	                   </children>
                    </HBox>
+                   <Button text="give up" focusTraversable="false">
+                   </Button>
                </children>
            </VBox>
 	   </children>

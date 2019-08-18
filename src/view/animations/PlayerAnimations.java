@@ -8,7 +8,7 @@ import model.utils.Directions;
  * Class that run the players animations.
  *
  */
-public class Animations implements Runnable {
+public class PlayerAnimations implements Animation {
 
     private Player player;
     private ImageView imageView;
@@ -27,7 +27,7 @@ public class Animations implements Runnable {
     /**
      * Constructor.
      */
-    public Animations() {
+    public PlayerAnimations() {
         this.isDead = false;
     }
 
