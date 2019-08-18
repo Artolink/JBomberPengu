@@ -12,6 +12,7 @@ import model.utils.Pair;
 public final class Player extends AbstractEntity {
 
     private static final int INITIAL_BOMB_NUMBER = 1;
+    private static final int SCORE_VALUE = 200;
 
     private Integer id;
     private Integer score;
@@ -38,6 +39,7 @@ public final class Player extends AbstractEntity {
         this.bombNumber = INITIAL_BOMB_NUMBER;
         this.direction = Directions.STATIONARY;
         this.color = color;
+        this.setScoreValue(SCORE_VALUE);
     }
 
     /**
@@ -86,12 +88,12 @@ public final class Player extends AbstractEntity {
     }
 
     /**
-     * Gets the number of bombs the player can place.
+     * Return if the player can place bombs.
      * 
-     * @return the number of bombs player can place.
+     * @return true if a bomb can be placed, false otherwise.
      */
-    public Integer getBombNumber() {
-        return this.bombNumber;
+    public boolean canPlaceBomb() {
+        return this.bombNumber > 0 ? true : false;
     }
 
     /**
@@ -106,16 +108,16 @@ public final class Player extends AbstractEntity {
     /**
      * Sets the directions to move.
      * 
-     * @param direction is the enumeration containing all the possible directions to
-     *                  move
+     * @param direction is the enumeration containing all the possible directions to move
      */
     public void setDirection(final Directions direction) {
         this.direction = direction;
     }
 
     /**
-     * Gets the directions enumeration.
-     * @return the
+     * Gets the direction to move.
+     * 
+     * @return the player desired direction 
      */
     public Directions getDirection() {
         return this.direction;

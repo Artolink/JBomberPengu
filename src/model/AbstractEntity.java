@@ -11,6 +11,7 @@ public abstract class AbstractEntity implements Entity {
     private String path;
     private int width;
     private int height;
+    private int scoreValue;
     private final boolean solid;
     private boolean destroyed;
     private final Pair<Integer, Integer> initialPosition;
@@ -91,6 +92,16 @@ public abstract class AbstractEntity implements Entity {
     @Override
     public final boolean isSolid() {
         return this.solid;
+    }
+
+    @Override
+    public final void setScoreValue(final int scoreValue) {
+        this.scoreValue = scoreValue;
+    }
+
+    @Override
+    public final int getScoreValue() {
+        return scoreValue;
     }
 
     /**

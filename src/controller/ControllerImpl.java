@@ -128,8 +128,8 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
-    public void actionPerformedEditorBtn() {
-        //this.gui.loadPage(GUI.PageNames.MAPEDITOR);
+    public void actionPerformedLanguageEditorBtn() {
+        this.gui.loadPage(GUI.PageNames.LANGUAGEDITOR);
     }
 
     @Override
@@ -143,16 +143,21 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
-    public void actionPerformedLanguageChanged(String string) {
+    public void actionPerformedLanguageChanged(String language) {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void actionPerformedCloseBtn() {
-        // TODO Auto-generated method stub
-
+    public void actionPerformedLoseBtn() {
+        this.gui.loadPage(GUI.PageNames.GAMENDED);
     }
 
+    @Override
+    public void actionPerformedCloseBtn() {
+        System.out.println("Closing application...");
+        this.gui.stop();
+        System.exit(0); //HOW am I supposed to close it???  //TODO
+    }
 
 }

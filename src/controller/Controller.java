@@ -15,7 +15,7 @@ public interface Controller {
 
     public void actionPerformedSingleplayerBtn();
 
-    public void actionPerformedLanguageChanged(String string);
+    public void actionPerformedLanguageChanged(String language);
 
     public void actionPerformedBackBtn();
 
@@ -23,12 +23,14 @@ public interface Controller {
 
     public void actionPerformedMapEditorBtn();
 
-    public void actionPerformedEditorBtn();
+    public void actionPerformedLanguageEditorBtn();
 
     public void actionPerformedSettingsBtn();
 
     public void actionPerformedSaveBtn();
 
     public void actionPerformedCloseBtn();
+
+    public void actionPerformedLoseBtn();
 
 }

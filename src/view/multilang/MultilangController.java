@@ -27,11 +27,12 @@ import javafx.scene.layout.VBox;
 import model.language.ApplicationStrings;
 import model.language.LanguageSaver;
 import model.language.Translation;
+import view.PageController;
 
 /**
  * Controller of res.view.MultilangView.fxm.
  */
-public class MultilangController {
+public class MultilangController extends PageController{
 
     private ObservableList<String> languageList;
     private JSONArray languageKey;
@@ -73,6 +74,12 @@ public class MultilangController {
         renderTranslation();
     }
 
+    @FXML
+    private  void backBtPressed() {
+        System.out.println("Back button pressed");  //TODO debug
+        getController().actionPerformedBackBtn();
+    }
+    
     /**
      * Button save. Save translation into file.
      */
@@ -199,6 +206,12 @@ public class MultilangController {
         public String getTranslation() {
             return this.translatedText.getText();
         }
+    }
+
+    @Override
+    public void translate(ApplicationStrings t) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

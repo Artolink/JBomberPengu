@@ -12,6 +12,8 @@ import model.utils.Pair;
 public final class DestructibleBlock extends AbstractEntity {
 
     private static final double POWER_UP_CHANCE = 0.5;
+    private static final int SCORE_VALUE = 50;
+
     private final Optional<Object> powerup; //object has to change with a enum of powerup block type
 
     /**
@@ -22,6 +24,7 @@ public final class DestructibleBlock extends AbstractEntity {
     public DestructibleBlock(final Pair<Integer, Integer> pos) {
         super(pos, true);
         this.powerup = this.hasPowerUp();
+        this.setScoreValue(SCORE_VALUE);
         this.setImagePath(ClassLoader.getSystemClassLoader().getResource("view") + File.separator + "destructible_block.png");
 
     }

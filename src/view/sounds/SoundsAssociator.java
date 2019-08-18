@@ -26,7 +26,6 @@ public class SoundsAssociator {
      * @throws UnsupportedAudioFileException 
      */
     public SoundsAssociator() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-
             this.bombPlaced = new SoundImpl("/view/sounds/place_bomb.wav");
             this.explosion = new SoundImpl("/view/sounds/bomb_explosion.wav");
             this.takeItem = new SoundImpl("/view/sounds/take_item.wav");
@@ -69,7 +68,7 @@ public class SoundsAssociator {
     public Sound getStartMatchSound() {
         return this.startMatch;
     }
-    
+
     /**
      * Gets start game sound.
      * 
@@ -78,24 +77,24 @@ public class SoundsAssociator {
     public Sound getStartGameSound() {
         return this.startGame;
     }
-    
+
     /**
      * stops all the sounds still playing.
      */
     public void stopSounds() {
-        if(getBombPlacedSound().isPlaying()) {
+        if (getBombPlacedSound().isPlaying()) {
             getBombPlacedSound().stop();
         }
-        if(getExplosionSound().isPlaying()) {
+        if (getExplosionSound().isPlaying()) {
             getExplosionSound().stop();
         }
-        if(getTakeItemSound().isPlaying()) {
+        if (getTakeItemSound().isPlaying()) {
             getTakeItemSound().stop();
         }
-        if(getStartMatchSound().isPlaying()) {
+        if (getStartMatchSound().isPlaying()) {
             getStartMatchSound().stop();
         }
-        if(getStartGameSound().isPlaying()) {
+        if (getStartGameSound().isPlaying()) {
             getStartGameSound().stop();
         }
     }

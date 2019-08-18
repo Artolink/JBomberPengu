@@ -90,4 +90,18 @@ public interface Entity {
      * @return {@link Boolean} associated at the state of solidity
      */
     boolean isSolid();
+
+    /**
+     * Sets the score value of the entity.
+     * 
+     * @param scoreValue defines the value that will be given (added) to players score when the entity is destroyed
+     */
+    void setScoreValue(int scoreValue);
+
+    /**
+     * Gets the score value of the entity.
+     * 
+     * @return a score value that defines the value of the entity
+     */
+    int getScoreValue();
 }
