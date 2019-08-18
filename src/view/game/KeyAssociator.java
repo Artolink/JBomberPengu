@@ -114,8 +114,13 @@ public class KeyAssociator {
         }
     }
 
+    /**
+     * It control if the key pressed is the corret bomb key.
+     * @param code kecode
+     * @return true if the key is the key to release the bomb, false otherwise
+     */
     public boolean isBombControl(final KeyCode code) {
-        if(code != null) {
+        if (code != null) {
             return this.bombKey.contains(code);
         } else {
             return false;

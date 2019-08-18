@@ -58,10 +58,10 @@
 	                   <children>
 	                   </children>
                    </HBox>
-                   <Button text="give up" focusTraversable="false">
-                   </Button>
                </children>
            </VBox>
+           <Button fx:id="button" text="give up" focusTraversable="false" onAction="#buttonPressed">
+         </Button>
 	   </children>
    </VBox>
 	</children>

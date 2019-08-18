@@ -25,8 +25,9 @@ public class WakeAnimations implements Animation {
     public void run() {
 
         long timeToSleep = 0;
+        boolean run = true;
 
-        while (true) {
+        while (run) {
 
             this.updateFrame(sprite.getWakeEsplosionList().size());
             this.imageView.setImage(sprite.getWakeEsplosionList().get(nextFrame).getImage());
@@ -35,7 +36,7 @@ public class WakeAnimations implements Animation {
             try {
                 Thread.sleep(timeToSleep);
                 if (nextFrame.equals(3)) {
-                    nextFrame = 0;
+                    run = false;
                 } else {
                     nextFrame++;
                 }

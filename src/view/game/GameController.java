@@ -1,9 +1,14 @@
 package view.game;
 
 import java.util.List;
+import java.util.Optional;
 
 import controller.ControllerImpl;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -25,7 +30,10 @@ public class GameController extends GUIImpl {
 
     @FXML
     private MyPane canvas;
+    @FXML
+    private Button button;
 
+    private final Alert alert = new Alert(AlertType.CONFIRMATION);
     private ControllerImpl controller;
 
     /**
@@ -38,6 +46,7 @@ public class GameController extends GUIImpl {
 
     /**
      * It keeps moving while the key is pressed.
+     * 
      * @param event the keyPressed event
      */
     @FXML
@@ -50,6 +59,7 @@ public class GameController extends GUIImpl {
 
     /**
      * It stops moving while the key is pressed.
+     * 
      * @param event the keyRelased event
      */
     @FXML
@@ -119,8 +129,7 @@ public class GameController extends GUIImpl {
     }
 
     private Pair<Integer, Integer> computeWindowSize(final Integer row, final Integer col) {
-        return new Pair<Integer, Integer>(blockDimension * row,
-                blockDimension * col);
+        return new Pair<Integer, Integer>(blockDimension * row, blockDimension * col);
     }
 
     /**
@@ -152,7 +161,8 @@ public class GameController extends GUIImpl {
             final ImageView view = new ImageView();
             view.setFitHeight(blockDimension - blockSpacing);
             view.setFitWidth(blockDimension - blockSpacing);
-            view.relocate(blockDimension * player.getInitialPosition().getX(), blockDimension * player.getInitialPosition().getY());
+            view.relocate(blockDimension * player.getInitialPosition().getX(),
+                    blockDimension * player.getInitialPosition().getY());
             canvas.addNode(view, player.getInitialPosition().getX(), player.getInitialPosition().getY());
             final PlayerAnimations animation = new PlayerAnimations();
             animation.setImageView(view);
@@ -173,5 +183,21 @@ public class GameController extends GUIImpl {
      */
     public void movePlayer(final Player player, final int row, final int col) {
         this.canvas.getNode(player.getInitialPosition().getX(), player.getInitialPosition().getY()).relocate(row, col);
+    }
+
+    /**
+     * An event occurs when the button is pressed.
+     */
+    @FXML
+    private void buttonPressed() {
+        alert.setTitle("AAA");
+        alert.setHeaderText("do you really want to give up?");
+        alert.setContentText("umh...");
+        final Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            getController().actionPerformedLoseBtn();
+        } else {
+            alert.close();
+        }
     }
 }

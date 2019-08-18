@@ -13,3 +13,13 @@
     -fx-border-radius: 5;
     -fx-border-color: blue;
 }
+.button{
+	-fx-background-image: url(../Empty_Button.png);
+	-fx-pref-width: 150px;
+	-fx-background-color: transparent;
+    -fx-background-size: stretch;
+	-fx-text-fill: white;
+}
+.button:hover{
+    -fx-background-image: url(../Empty_Button_Glowing.png);
+}

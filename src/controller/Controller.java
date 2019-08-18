@@ -31,4 +31,6 @@ public interface Controller {
 
     public void actionPerformedCloseBtn();
 
+    public void actionPerformedLoseBtn();
+
 }
