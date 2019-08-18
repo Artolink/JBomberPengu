@@ -76,6 +76,7 @@ public class MainMenuController extends PageController {
     @FXML
     private void closeGameBtPressed() {
         System.out.println("Close button pressed");  //TODO debug
+        stop();
         getController().actionPerformedCloseBtn();
     }
 

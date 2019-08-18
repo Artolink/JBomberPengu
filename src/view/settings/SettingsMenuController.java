@@ -42,7 +42,7 @@ public class SettingsMenuController extends PageController {
     @FXML
     private void initialize() {
 
-        fullscreenCB.setSelected(getFullscreenState());
+        fullscreenCB.setSelected(isFullscreen());
 
         // Init ComboBox items.
         languageChoiceBox.setItems(languageComboBoxData);
