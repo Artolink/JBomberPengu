@@ -153,6 +153,4 @@ public class ControllerImpl implements Controller {
         System.exit(0); //HOW am I supposed to close it???  //TODO
     }
 
-
->>>>>>> 23133f7f6e5cba07393ea0264ccbc3c6a89f873d
 }
