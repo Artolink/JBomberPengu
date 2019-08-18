@@ -1,8 +1,6 @@
 package model.blocks;
 
 import java.io.File;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import model.AbstractEntity;
 import model.player.Player;
