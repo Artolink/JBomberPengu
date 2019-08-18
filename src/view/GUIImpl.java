@@ -10,6 +10,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.language.ApplicationStrings;
 import model.utils.Pair;
+import view.sounds.SoundsAssociator;
 
 /**
  *  The Application entry point, contains the Page control mechanism.
@@ -31,6 +32,7 @@ public class GUIImpl extends Application implements GUI {
     private static Stage stage;
     private static Page page;
     private static Controller controller;
+    private static SoundsAssociator sounds;
 
  // application creation methods ------------------------------------------------------------------------------------------- 
 
@@ -61,6 +63,9 @@ public class GUIImpl extends Application implements GUI {
 
         //Load main menu FXML as default
         loadPage(PageNames.MAINMENU);
+        //start sound
+        sounds = new SoundsAssociator();
+        getSounds().getStartGameSound().play();
 
         this.stage.show();
     }
@@ -118,6 +123,9 @@ public class GUIImpl extends Application implements GUI {
                 break;
             case GAME:
                 page = (Page) new FxmlFileLoader("view" + File.separator + "game", "Game");
+                //start match sound
+                getSounds().stopSounds();
+                getSounds().getStartMatchSound().play();
                 break;
             case GAMENDED:
                 page = (Page) new FxmlFileLoader("view" + File.separator + "game", "GameEnded");
@@ -137,6 +145,11 @@ public class GUIImpl extends Application implements GUI {
         }
 
         switchScene(page.getScene());
+    }
+    
+    @Override
+    public Pair<Double, Double> getMaxScreenDimensions(){
+        return new Pair<Double, Double>(primaryScreenBounds.getWidth(), primaryScreenBounds.getHeight());
     }
 
     // Protected methods -------------------------------------------------------------------------------------------
@@ -170,6 +183,11 @@ public class GUIImpl extends Application implements GUI {
      */
     protected final Page getCurrentPage() {
         return page;
+    }
+
+    
+    protected SoundsAssociator getSounds() {
+        return sounds;
     }
 
     // Private methods -------------------------------------------------------------------------------------------
@@ -208,8 +226,8 @@ public class GUIImpl extends Application implements GUI {
         }
         //set the app title
         this.stage.setTitle("jbomberpengu");
-        this.stage.setMaxHeight(primaryScreenBounds.getHeight());
-        this.stage.setMaxWidth(primaryScreenBounds.getWidth());
+        this.stage.setMaxWidth(getMaxScreenDimensions().getX());
+        this.stage.setMaxHeight(getMaxScreenDimensions().getY());
 
         //this.stage.centerOnScreen();
         //this.stage.initStyle(StageStyle.UNDECORATED);
