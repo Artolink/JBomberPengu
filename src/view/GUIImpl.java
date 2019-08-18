@@ -186,8 +186,7 @@ public class GUIImpl extends Application implements GUI {
     }
 
     /**
-     * 
-     * @return
+     * @return the SoundsAssociator
      */
     protected SoundsAssociator getSounds() {
         return StObjCont.getSoundsAssociator();

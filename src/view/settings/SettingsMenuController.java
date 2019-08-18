@@ -33,6 +33,7 @@ public class SettingsMenuController extends PageController {
      * 
      */
     public SettingsMenuController() {
+        super();
         languageComboBoxData.addAll(getTranslator().getAvailableLanguages());
     }
 

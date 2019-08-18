@@ -62,7 +62,7 @@ public interface GUI {
      * @return A Pair representing screen dimensions
      */
     Pair<Double, Double> getMaxScreenDimensions();
-    
+
     /**
      * terminates the window.
      */
