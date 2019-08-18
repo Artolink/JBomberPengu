@@ -1,10 +1,12 @@
 package model.blocks;
 
+import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import model.AbstractEntity;
 import model.player.Player;
+import model.player.PlayerColor;
 import model.utils.Pair;
 
 /**
@@ -31,6 +33,11 @@ public class Bomb extends AbstractEntity {
         this.playerInfo = pinfo;
         this.setStatus(false);
         this.range = DEFAULT_RANGE;
+        if (pinfo.getColor().equals(PlayerColor.RED)) {
+            this.setImagePath(ClassLoader.getSystemClassLoader().getResource("view") + File.separator + "bomba_rossa.png");
+        } else if (pinfo.getColor().equals(PlayerColor.YELLOW)) {
+            this.setImagePath(ClassLoader.getSystemClassLoader().getResource("view") + File.separator + "bomba_gialla.png");
+        }
         this.timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -38,7 +45,6 @@ public class Bomb extends AbstractEntity {
                 setStatus(true);
             }
         }, EXPLOSION_TIME);
-
     }
 
     /**

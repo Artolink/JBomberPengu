@@ -1,7 +1,5 @@
 package model.player;
 
-import java.io.File;
-
 import model.utils.Rectangle;
 import model.AbstractEntity;
 import model.collisions.CollisionImpl;
@@ -40,7 +38,6 @@ public final class Player extends AbstractEntity {
         this.bombNumber = INITIAL_BOMB_NUMBER;
         this.direction = Directions.STATIONARY;
         this.color = color;
-        this.setImagePath(ClassLoader.getSystemClassLoader().getResource("view") + File.separator + "bomba gialla.png");
     }
 
     /**
@@ -124,14 +121,29 @@ public final class Player extends AbstractEntity {
         return this.direction;
     }
 
+    /**
+     * Gets the player velocity.
+     * 
+     * @return player speed.
+     */
     public int getVelocity() {
         return velocity;
     }
 
-    public void setVelocity(int velocity) {
+    /**
+     * Sets the player velocity. 
+     * 
+     * @param velocity defines the player speed
+     */
+    public void setVelocity(final int velocity) {
         this.velocity = velocity;
     }
 
+    /**
+     * Gets the color of the player.
+     * 
+     * @return RED if player is red, YELLOW if it's yellow
+     */
     public PlayerColor getColor() {
         return color;
     }
@@ -143,13 +155,24 @@ public final class Player extends AbstractEntity {
                 getWidth(),
                 getHeight());
     }
-    
+
+    /**
+     * Sets the player collision system.
+     * 
+     * @param collision defines the system containing all the collisions
+     */
     public void setCollision(final CollisionImpl collision) {
         this.collision = collision;
     }
 
+    /**
+     * Method that defines and sets the new position of the player.
+     * 
+     * @param direction is the player direction where he wants to move
+     * @return true if player can move, false if it collides with something
+     */
     public boolean move(final Directions direction) {
-        if(collision.blocksCollided()) {
+        if (collision.blocksCollided()) {
             return false;
         } else {
             int x = 0;
@@ -191,5 +214,4 @@ public final class Player extends AbstractEntity {
                 .append(super.toString())
                 .toString();
     }
-
 }
