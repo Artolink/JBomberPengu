@@ -103,9 +103,9 @@ public final class Rectangle {
         ye1 = e.getPosition().getY();
         ye2 = e.getPosition().getY() + e.getHeight();
 
-        if ((x1 >= xe1 && x1 <= xe2) && (y1 <= ye2 && y1 >= ye1)) {
+        if ((x1 >= xe1 && x1 <= xe2) && (y1 < ye2 && y1 > ye1)) {
             return true;
-        } else if ((x2 >= xe1 && x2 <= xe2) && (y1 <= ye1 && y1 >= ye1)) {
+        } else if ((x2 >= xe1 && x2 <= xe2) && (y1 < ye2 && y1 > ye1)) {
             return true;
         }
         return false;
@@ -128,9 +128,9 @@ public final class Rectangle {
         ye1 = e.getPosition().getY();
         ye2 = e.getPosition().getY() + e.getHeight();
 
-        if ((x1 >= xe1 && x1 <= xe2) && (y1 >= ye1 && y1 <= ye2)) {
+        if ((x1 >= xe1 && x1 <= xe2) && (y1 > ye1 && y1 < ye2)) {
             return true;
-        } else if ((x2 >= xe1 && x2 <= xe2) && (y1 >= ye1 && y1 <= ye2)) {
+        } else if ((x2 >= xe1 && x2 <= xe2) && (y1 > ye1 && y1 < ye2)) {
             return true;
         }
         return false;
@@ -153,9 +153,9 @@ public final class Rectangle {
         ye1 = e.getPosition().getY();
         ye2 = e.getPosition().getY() + e.getHeight();
 
-        if ((y1 >= ye1 && y1 <= ye2) && (x1 <= xe2 && x1 >= xe1)) {
+        if ((y1 > ye1 && y1 < ye2) && (x1 < xe2 && x1 > xe1)) {
             return true;
-        } else if ((y2 >= ye1 && y2 <= ye2) && (x1 <= xe2 && x1 >= xe1)) {
+        } else if ((y2 > ye1 && y2 < ye2) && (x1 < xe2 && x1 > xe1)) {
             return true;
         }
         return false;
@@ -178,9 +178,9 @@ public final class Rectangle {
         ye1 = e.getPosition().getY();
         ye2 = e.getPosition().getY() + e.getHeight();
 
-        if ((y1 >= ye1 && y1 <= ye2) && (x1 >= xe1 && x1 <= xe2)) {
+        if ((y1 > ye1 && y1 < ye2) && (x1 > xe1 && x1 < xe2)) {
             return true;
-        } else if ((y2 >= ye1 && y2 <= ye2) && (x1 >= xe1 && x1 <= xe2)) {
+        } else if ((y2 > ye1 && y2 < ye2) && (x1 > xe1 && x1 < xe2)) {
             return true;
         }
         return false;
@@ -203,10 +203,9 @@ public final class Rectangle {
         final double wr2 = rectangle.getWidth();
         final double hr2 = rectangle.getHeight();
 
-        return xr1 + this.width >= xr2 && // if the first rectangle right edge goes past the second rectangle left edge
-                xr1 <= xr2 + wr2 && // if the first rectangle left edge goes past the second rectangle right edge
-                yr1 + this.height >= yr2 && // if the first rectangle top edge goes past the second rectangle bottom
-                                            // edge
-                yr1 <= yr2 + hr2; // if the first rectangle bottom edge goes past the second rectangle top edge
+        return xr1 + this.width >= xr2 &&       // if the first rectangle right edge goes past the second rectangle left edge
+                xr1 <= xr2 + wr2 &&             // if the first rectangle left edge goes past the second rectangle right edge
+                yr1 + this.height >= yr2 &&     // if the first rectangle top edge goes past the second rectangle bottom edge
+                yr1 <= yr2 + hr2;               // if the first rectangle bottom edge goes past the second rectangle top edge
     }
 }

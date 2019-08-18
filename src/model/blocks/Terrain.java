@@ -15,7 +15,7 @@ public class Terrain extends AbstractEntity {
      * @param pos defines the initial position of the block
      */
     public Terrain(final Pair<Integer, Integer> pos) {
-        super(pos);
+        super(pos, false);
         this.setImagePath("");
     }
 }

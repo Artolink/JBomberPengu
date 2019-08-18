@@ -27,7 +27,7 @@ public class Bomb extends AbstractEntity {
      * @param pinfo     defines all the player's informations associated with the bomb 
      */
     public Bomb(final Pair<Integer, Integer> pos, final Player pinfo) {
-        super(pos);
+        super(pos, true);
         this.playerInfo = pinfo;
         this.setStatus(false);
         this.range = DEFAULT_RANGE;
