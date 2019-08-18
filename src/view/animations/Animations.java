@@ -5,7 +5,7 @@ import model.player.Player;
 import model.utils.Directions;
 
 /**
- * Class that run the animations.
+ * Class that run the players animations.
  *
  */
 public class Animations implements Runnable {
@@ -18,8 +18,18 @@ public class Animations implements Runnable {
     private Directions lastHorizontalDir;
     private final SpriteSheet sheet = new SpriteSheet("/view/sheet.png", SHEET_ROWS, SHEET_COLUMNS);
     private Integer nextFrame = 0;
-    private long timeToSleep;
-    private boolean isDead = false;
+    private boolean isDead;
+    private static final int VERTICAL = 300;
+    private static final int HORIZONTAL = 120;
+    private static final int DEAD = 250;
+    private static final int STATIONARY = 280;
+
+    /**
+     * Constructor.
+     */
+    public Animations() {
+        this.isDead = false;
+    }
 
     /**
      * Runs the animations.
@@ -27,30 +37,32 @@ public class Animations implements Runnable {
     @Override
     public void run() {
 
+        long timeToSleep = 0;
+
         while (true) {
 
             switch (player.getDirection()) {
             case UP:
                 this.updateFrame(sprite.getUpSprites().size());
                 this.imageView.setImage(sprite.getUpSprites().get(nextFrame).getImage());
-                timeToSleep = 300;
+                timeToSleep = VERTICAL;
                 break;
             case RIGHT:
                 this.updateFrame(sprite.getRunRightSprites().size());
                 this.imageView.setImage(sprite.getRunRightSprites().get(nextFrame).getImage());
                 lastHorizontalDir = Directions.RIGHT;
-                timeToSleep = 120;
+                timeToSleep = HORIZONTAL;
                 break;
             case LEFT:
                 this.updateFrame(sprite.getRunLeftSprites().size());
                 this.imageView.setImage(sprite.getRunLeftSprites().get(nextFrame).getImage());
                 lastHorizontalDir = Directions.LEFT;
-                timeToSleep = 120;
+                timeToSleep = HORIZONTAL;
                 break;
             case DOWN:
                 this.updateFrame(sprite.getDownSprites().size());
                 this.imageView.setImage(sprite.getDownSprites().get(nextFrame).getImage());
-                timeToSleep = 300;
+                timeToSleep = VERTICAL;
                 break;
             case STATIONARY:
                 if (lastHorizontalDir.equals(Directions.LEFT)) {
@@ -61,7 +73,7 @@ public class Animations implements Runnable {
                     this.updateFrame(sprite.getStayRightSprites().size());
                     this.imageView.setImage(sprite.getStayRightSprites().get(nextFrame).getImage());
                 }
-                timeToSleep = 280;
+                timeToSleep = STATIONARY;
                 break;
             default:
                 break;
@@ -70,7 +82,7 @@ public class Animations implements Runnable {
             if (isDead) {
                 this.updateFrame(sprite.getLoseSprites().size());
                 this.imageView.setImage(sprite.getLoseSprites().get(nextFrame).getImage());
-                timeToSleep = 250;
+                timeToSleep = DEAD;
             }
 
             try {
@@ -78,7 +90,7 @@ public class Animations implements Runnable {
                 if (nextFrame == 2) {
                     nextFrame = 0;
                 } else {
-                    nextFrame++; 
+                    nextFrame++;
                 }
 
             } catch (InterruptedException e) {
