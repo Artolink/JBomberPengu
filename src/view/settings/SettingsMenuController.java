@@ -33,6 +33,7 @@ public class SettingsMenuController extends PageController {
      * 
      */
     public SettingsMenuController() {
+        super();
         languageComboBoxData.addAll(getTranslator().getAvailableLanguages());
     }
 
@@ -42,7 +43,7 @@ public class SettingsMenuController extends PageController {
     @FXML
     private void initialize() {
 
-        fullscreenCB.setSelected(getFullscreenState());
+        fullscreenCB.setSelected(isFullscreen());
 
         // Init ComboBox items.
         languageChoiceBox.setItems(languageComboBoxData);

@@ -1,6 +1,7 @@
 package view.animations;
 
-import model.player.Player;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class stores a wake bomb sprites.
@@ -8,24 +9,39 @@ import model.player.Player;
  */
 public class WakeSprite {
 
-    private static final String RED_WAKE = "esplosione rossa.png";
-    private static final String YELLOW_WAKE = "esplosione gialla.png";
+    private final List<Sprite> wake = new ArrayList<>();
+    private int toMove;
+    private static final int START_RED = 0;
+    private static final int START_YELLOW = 4;
+    private int start;
 
     /**
-     * It takes the right wake image based on the color.
+     * Makes the wake animation list.
      * 
-     * @param player the player
-     * @return the wake path
+     * @param color the color of the player
+     * @param sheet the sheet
      */
-    public String drawWake(final Player player) {
-        String path = " ";
+    public WakeSprite(final String color, final SpriteSheet sheet) {
 
-        if (player.getID().equals(0)) {
-            path = RED_WAKE;
-        } else {
-            path = YELLOW_WAKE;
+        if (color.equals("red")) {
+            this.start = START_RED;
+            this.toMove = START_YELLOW;
+        } else if (color.equals("yellow")) {
+            this.start = START_YELLOW - 1;
+            this.toMove = (START_YELLOW * 2);
         }
-        return path;
+
+        for (int i = start; i < toMove; i++) {
+            this.wake.add(new Sprite(sheet, 0, i));
+        }
     }
 
+    /**
+     * Gets the explosion sprite list.
+     * 
+     * @return the list
+     */
+    public List<Sprite> getWakeEsplosionList() {
+        return this.wake;
+    }
 }

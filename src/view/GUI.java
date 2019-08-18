@@ -22,9 +22,10 @@ public interface GUI {
     void setFullscreenMode(boolean fullscreen);
 
     /**
+     * Checks the fullscreen state.
      * @return the fullscreen state as boolean
      */
-    boolean getFullscreenState();
+    boolean isFullscreen();
 
     /**
      * Get stage sizes.
@@ -33,7 +34,7 @@ public interface GUI {
     Pair<Double, Double> getStageSizes();
 
     /**
-     * 
+     * gets the multiplier created to compensate user change the windows size.
      * @return the values needed for window scaling in the form x = width, y = height
      */
     Pair<Double, Double> getDimensionsMultipliers();
@@ -57,15 +58,14 @@ public interface GUI {
     void loadPage(PageNames pageName);
 
     /**
+     * gets the maximum screen sizes.
      * @return A Pair representing screen dimensions
      */
     Pair<Double, Double> getMaxScreenDimensions();
 
+    /**
+     * terminates the window.
+     */
+    void stop();
+
 }
-
-
-/**
- * Closes the game, equivalent to System.exit(0).
- *
-void closeGame();
-*/
