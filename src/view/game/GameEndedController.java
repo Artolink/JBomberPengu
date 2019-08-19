@@ -15,9 +15,9 @@ import view.PageController;
 public class GameEndedController extends PageController {
 
     @FXML
-    private Label playerNameLabel1;
+    private Label playerNameLabelred;
     @FXML
-    private Label playerNameLabel2;
+    private Label playerNameLabelyellow;
     @FXML
     private Button mpBtn;
     @FXML
@@ -42,8 +42,8 @@ public class GameEndedController extends PageController {
      * @param text - the text you want to display
      * @param path - th path of the image you want to display
      */
-    public void leftPlayerSet(final String text, final String path) {
-        playerNameLabel1.setText(text);
+    public void redPlayerSet(final String text, final String path) {
+        playerNameLabelred.setText(text);
         playerImage1.setImage(new Image(path));
     }
 
@@ -52,8 +52,8 @@ public class GameEndedController extends PageController {
      * @param text - the text you want to display
      * @param path - th path of the image you want to display
      */
-    public void rightPlayerSet(final String text, final String path) {
-        playerNameLabel2.setText(text);
+    public void yellowPlayerSet(final String text, final String path) {
+        playerNameLabelyellow.setText(text);
         playerImage2.setImage(new Image(path));
     }
 

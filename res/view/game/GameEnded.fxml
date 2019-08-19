@@ -34,7 +34,7 @@
                        <Image url="@view/iu.gif" />
                    </image>
              </ImageView>
-                  <Label fx:id="playerNameLabel1" alignment="CENTER" prefHeight="99.0" prefWidth="304.0" text="you win" textAlignment="CENTER" textFill="WHITE">
+                  <Label fx:id="playerNameLabelred" alignment="CENTER" prefHeight="99.0" prefWidth="304.0" text="you win" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="46.0" />
                      </font>
@@ -54,7 +54,7 @@
                         <Image url="@view/penguin.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="playerNameLabel2" alignment="CENTER" prefHeight="119.0" prefWidth="351.0" text="you lost" textAlignment="CENTER" textFill="WHITE">
+                  <Label fx:id="playerNameLabelyellow" alignment="CENTER" prefHeight="119.0" prefWidth="351.0" text="you lost" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="46.0" />
                      </font>

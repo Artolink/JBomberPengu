@@ -4,6 +4,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
+import java.util.stream.Collectors;
 
 import model.AbstractEntity;
 import model.Model;
@@ -13,6 +14,7 @@ import model.collisions.CollisionImpl;
 import model.language.ApplicationStrings;
 import model.map.GameMap;
 import model.player.Player;
+import model.player.PlayerColor;
 import model.utils.Directions;
 import model.utils.Pair;
 import view.GUI;
@@ -28,7 +30,7 @@ public class ControllerImpl implements Controller {
     private ViewUpdater viewUpdater;
     private GameController gameView;
     final Timer timer;
-
+    private ScoreController scoreController;
     /**
      * 
      * @param model
@@ -72,6 +74,9 @@ public class ControllerImpl implements Controller {
         final GameMap map = model.getGameMap();
         this.gameView = controller;
         this.viewUpdater = new ViewUpdater();
+        scoreController = new ScoreController(model.getPlayers().stream()
+                                                                .map( e -> e.getColor())
+                                                                .collect(Collectors.toCollection(ArrayList::new)));
 
         // set game dimensions
         gameView.setDimensions(new Pair<Integer, Integer>(map.getDimensions().getX(), map.getDimensions().getY()));
@@ -254,13 +259,26 @@ public class ControllerImpl implements Controller {
      * @param gameEndedController - controller of GameEnded.fxml
      */
     public final void gameEnded(final GameEndedController gameEndedController) {
-        // TODO use score to determine who won
-        if (true) {
-            gameEndedController.leftPlayerSet("Player 1 WON!!!", "view/penguin.png");
-            gameEndedController.rightPlayerSet("Player 2 Lost...", "view/loser_gif.gif");
+        if ((scoreController.getAlivePlayers().contains(PlayerColor.RED)) 
+                && (scoreController.getAlivePlayers().size() == 1) 
+                || (scoreController.getWinnerByScore().isPresent()
+                && (scoreController.getWinnerByScore().get().equals(PlayerColor.RED) 
+                && (scoreController.getAlivePlayers().size() > 1)))) {
+
+            gameEndedController.redPlayerSet("RED WON!!!", "view/winner.png");
+            gameEndedController.yellowPlayerSet("YELLOW LOST...", "view/loser_gif.gif");
+
+        } else if ((scoreController.getAlivePlayers().contains(PlayerColor.YELLOW)) 
+                && (scoreController.getAlivePlayers().size() == 1) 
+                || (scoreController.getWinnerByScore().isPresent() 
+                && (scoreController.getWinnerByScore().get().equals(PlayerColor.RED) 
+                && (scoreController.getAlivePlayers().size() > 1)))) {
+
+            gameEndedController.redPlayerSet("RED LOST...", "view/loser_gif.gif");
+            gameEndedController.yellowPlayerSet("YELLOW WON!!!", "view/winner.gif"); 
         } else {
-            gameEndedController.leftPlayerSet("Player 1 Lost...", "view/loser_gif.gif");
-            gameEndedController.rightPlayerSet("Player 2 WON!!!", "view/penguin.png"); 
+            gameEndedController.redPlayerSet("match draw", "view/draw.gif");
+            gameEndedController.yellowPlayerSet("match draw", "view/draw.gif");
         }
     }
 
