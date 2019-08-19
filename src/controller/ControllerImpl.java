@@ -2,6 +2,7 @@ package controller;
 
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.stream.Collectors;
 
@@ -93,7 +94,7 @@ public class ControllerImpl implements Controller {
         // render players
         gameView.drawPlayers(model.getPlayers());
         for (final Player player : model.getPlayers()) {
-            player.setCollision(new CollisionImpl(player, map));
+            player.setCollision(new CollisionImpl(player).setMap(map));
         }
         this.viewUpdater.setModel(this.model);
         this.viewUpdater.setView(gameView);
@@ -218,7 +219,7 @@ public class ControllerImpl implements Controller {
                 && (scoreController.getAlivePlayers().size() > 1)))) {
 
             gameEndedController.redPlayerSet("RED WON!!!", "view/winner.png");
-            gameEndedController.yellowPlayerSet("YELLOW LOST...", "view/loser_gif.gif");
+            gameEndedController.yellowPlayerSet("YELLOW LOST...", "view/loser.gif");
 
         } else if ((scoreController.getAlivePlayers().contains(PlayerColor.YELLOW)) 
                 && (scoreController.getAlivePlayers().size() == 1) 
@@ -226,12 +227,25 @@ public class ControllerImpl implements Controller {
                 && (scoreController.getWinnerByScore().get().equals(PlayerColor.RED) 
                 && (scoreController.getAlivePlayers().size() > 1)))) {
 
-            gameEndedController.redPlayerSet("RED LOST...", "view/loser_gif.gif");
+            gameEndedController.redPlayerSet("RED LOST...", "view/loser.gif");
             gameEndedController.yellowPlayerSet("YELLOW WON!!!", "view/winner.gif"); 
         } else {
             gameEndedController.redPlayerSet("match draw", "view/draw.gif");
             gameEndedController.yellowPlayerSet("match draw", "view/draw.gif");
         }
+    }
+
+    public void notifyKilledPlayers(List<Player> killedPlayer) {
+        scoreController.killPlayer(killedPlayer.get(killedPlayer.size()-1).getColor());
+        /*if(scoreController.getAlivePlayers().size() <= 1) {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            //this.gui.loadPage(GUI.PageNames.GAMENDED);
+            //this.gui.getActivePageController().translate(getTranslator());
+        }*/
     }
 
 

@@ -1,4 +1,4 @@
-package view.howtoplay;
+package view.howToPlay;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

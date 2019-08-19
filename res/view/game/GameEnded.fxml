@@ -30,9 +30,6 @@
        <VBox alignment="CENTER" prefHeight="448.0" prefWidth="304.0">
           <children>
              <ImageView fx:id="playerImage1" fitHeight="216.0" fitWidth="366.0">
-                   <image>
-                       <Image url="@view/iu.gif" />
-                   </image>
              </ImageView>
                   <Label fx:id="playerNameLabelred" alignment="CENTER" prefHeight="99.0" prefWidth="304.0" text="you win" textAlignment="CENTER" textFill="WHITE">
                      <font>
