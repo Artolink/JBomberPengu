@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
@@ -28,22 +29,25 @@
        <children>
        <VBox alignment="CENTER">
                <children>
-             <ImageView fitHeight="250.0" fitWidth="250.0">
+             <ImageView fitHeight="486.0" fitWidth="550.0">
                    <image>
-                       <Image url="@view/penguin.png" />
+                       <Image url="@view/iu.gif" />
                    </image>
              </ImageView>
                </children>
        </VBox>
        <VBox alignment="CENTER" spacing="10.0">
           <children>
-             <Label text="A Glacial War">
+             <Label text="A GLACIAL WAR">
 	             <font>
-		             <Font size="26.0" />
+		             <Font size="35.0" />
 		          </font>
 		          <padding>
 		              <Insets bottom="50.0" />
 		          </padding>
+                     <effect>
+                        <Blend mode="DIFFERENCE" />
+                     </effect>
              </Label>
              <Button fx:id="spBtn" disable="true" mnemonicParsing="false" onAction="#singlePlayerBtPressed" text="Singleplayer" />
              <Button fx:id="mpBtn" mnemonicParsing="false" onAction="#multiPlayerBtPressed" text="Multiplayer" />

@@ -39,8 +39,8 @@ public class KeyAssociator {
         tmp.add(KeyCode.DOWN);
         tmp.add(KeyCode.LEFT);
         tmp.add(KeyCode.RIGHT);
-        tmp.add(KeyCode.PLUS);
-        bombKey.add(KeyCode.PLUS);
+        tmp.add(KeyCode.ADD);
+        bombKey.add(KeyCode.ADD);
         this.availableControlSet.add(tmp);
         this.keyDirection.put(KeyCode.UP, Directions.UP);
         this.keyDirection.put(KeyCode.DOWN, Directions.DOWN);

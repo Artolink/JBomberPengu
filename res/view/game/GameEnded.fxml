@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
@@ -17,46 +18,52 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.image.Image?>
 
-<VBox alignment="TOP_CENTER" stylesheets="view/game/GameStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.game.GameEndedController">
+<VBox alignment="TOP_CENTER" prefHeight="621.0" prefWidth="796.0" stylesheets="view/game/GameStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.game.GameEndedController">
    <children>
        <ImageView fitHeight="100.0" fitWidth="800.0">
 	       <image>
 	           <Image url="@view/logo.png" />
 	       </image>
        </ImageView>
-       <HBox alignment="CENTER">
+       <HBox alignment="CENTER" prefHeight="223.0" prefWidth="455.0">
        <children>
        <VBox alignment="CENTER" prefHeight="448.0" prefWidth="304.0">
           <children>
-             <ImageView fx:id="playerImage1" fitHeight="250.0" fitWidth="250.0">
+             <ImageView fx:id="playerImage1" fitHeight="216.0" fitWidth="366.0">
                    <image>
-                       <Image url="@view/penguin.png" />
+                       <Image url="@view/iu.gif" />
                    </image>
              </ImageView>
-                  <Label fx:id="playerNameLabel1" alignment="CENTER" prefHeight="88.0" prefWidth="238.0" text="you win" textAlignment="CENTER">
+                  <Label fx:id="playerNameLabel1" alignment="CENTER" prefHeight="99.0" prefWidth="304.0" text="you win" textAlignment="CENTER" textFill="WHITE">
                      <font>
-                        <Font size="26.0" />
+                        <Font size="46.0" />
                      </font>
                      <padding>
                         <Insets bottom="50.0" />
                      </padding>
+                     <effect>
+                        <Blend mode="DIFFERENCE" />
+                     </effect>
                   </Label>
           </children>
        </VBox>
-       <VBox alignment="CENTER" spacing="10.0">
+       <VBox alignment="CENTER" prefHeight="432.0" prefWidth="337.0" spacing="10.0">
           <children>
-                  <ImageView fx:id="playerImage2" fitHeight="250.0" fitWidth="250.0">
+                  <ImageView fx:id="playerImage2" fitHeight="213.0" fitWidth="311.0">
                      <image>
                         <Image url="@view/penguin.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="playerNameLabel2" alignment="CENTER" prefHeight="88.0" prefWidth="238.0" text="you lost" textAlignment="CENTER">
+                  <Label fx:id="playerNameLabel2" alignment="CENTER" prefHeight="119.0" prefWidth="351.0" text="you lost" textAlignment="CENTER" textFill="WHITE">
                      <font>
-                        <Font size="26.0" />
+                        <Font size="46.0" />
                      </font>
                      <padding>
                         <Insets bottom="50.0" />
                      </padding>
+                     <effect>
+                        <Blend mode="DIFFERENCE" />
+                     </effect>
                   </Label>
           </children>
           <padding>
@@ -65,12 +72,13 @@
        </VBox>
        </children>
        </HBox>
-      <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="664.0" style="-fx-background-color: TRANSPARENT;">
-        <items>
+      <HBox prefHeight="35.0" prefWidth="808.0">
+         <children>
+            <ImageView fitHeight="25.0" fitWidth="199.0" pickOnBounds="true" preserveRatio="true" />
+       <Button fx:id="backBtn" mnemonicParsing="false" onAction="#backBtPressed" prefHeight="31.0" prefWidth="223.0" text="Main menu" textAlignment="CENTER" />
        <Button fx:id="mpBtn" mnemonicParsing="false" onAction="#multiPlayerBtPressed" text="Play again" textAlignment="CENTER" />
-       <Button fx:id="backBtn" mnemonicParsing="false" onAction="#backBtPressed" text="Return to main menu" textAlignment="CENTER" />
-        </items>
-      </ToolBar>
+         </children>
+      </HBox>
    </children>
    <padding>
         <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
