@@ -136,7 +136,9 @@ public class GUIImpl extends Application implements GUI {
                 }
                 break;
             case GAMENDED:
-                StObjCont.setPage((Page) new FxmlFileLoader("view" + File.separator + "game", "GameEnded"));
+                Platform.runLater(() -> {
+                    StObjCont.setPage((Page) new FxmlFileLoader("view" + File.separator + "game", "GameEnded"));
+                });
                 break;
             case SETTINGS:
                 StObjCont.setPage((Page) new FxmlFileLoader("view" + File.separator + "settings", "SettingsMenu"));
@@ -240,19 +242,14 @@ public class GUIImpl extends Application implements GUI {
      */
     private void switchScene(final Scene scene) {
         if (scene != null) {
-            StObjCont.getStage().setScene(scene);
-
-            /*
-            GUIImpl.stage.setX(actualFrame.getMinX());
-            GUIImpl.stage.setY(actualFrame.getMinY());
-            GUIImpl.stage.setWidth(actualFrame.getWidth());
-            GUIImpl.stage.setHeight(actualFrame.getHeight());
-            GUIImpl.stage.setFullScreen(fullscreen);
-            */
-
-            StObjCont.getStage().sizeToScene();
-            preferredSizes = new Pair<>(scene.getWidth(), scene.getHeight());
-            modifiedSizes = getStageSizes();
+            Platform.runLater(new Runnable() {
+                public void run() {
+                    StObjCont.getStage().setScene(scene);
+                    StObjCont.getStage().sizeToScene();
+                    preferredSizes = new Pair<>(scene.getWidth(), scene.getHeight());
+                    modifiedSizes = getStageSizes();
+                }
+            });
         }
     }
 

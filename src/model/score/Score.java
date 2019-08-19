@@ -4,7 +4,7 @@ import model.AbstractDestructibleEntity;
 import model.Level;
 
 /**
- * Class representing Score of a Player.
+ * Class representing Score of a Player.    OBSOLETE
  *
  */
 public class Score {

@@ -13,10 +13,11 @@ public class ViewUpdater implements Runnable {
     private static final int TIMETOSLEEP = 100;
     private Model model;
     private GameController view;
+    private boolean run = true;
 
     @Override
     public void run() {
-        while (true) {
+        while (run) {
             for (Player player : this.model.getPlayers()) {
                 final Directions direction = player.getDirection();
                 if (!direction.equals(Directions.STATIONARY)) {
@@ -24,6 +25,7 @@ public class ViewUpdater implements Runnable {
                         this.view.movePlayer(player, player.getPosition().getX(), player.getPosition().getY());
                     }
                 }
+                
             }
             try {
                 Thread.sleep(TIMETOSLEEP);
@@ -31,6 +33,10 @@ public class ViewUpdater implements Runnable {
                 e.printStackTrace();
             }
         }
+    }
+    
+    public void stop() {
+        run = false;
     }
 
     public Directions getDirection(final Player player) {

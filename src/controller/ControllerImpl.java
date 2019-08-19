@@ -1,10 +1,7 @@
 package controller;
 
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
-import java.util.stream.Collectors;
 
 import model.AbstractEntity;
 import model.Model;
@@ -14,6 +11,7 @@ import model.language.ApplicationStrings;
 import model.map.GameMap;
 import model.player.Player;
 import model.player.PlayerColor;
+import model.score.ScoreCompute;
 import model.utils.Directions;
 import model.utils.Pair;
 import view.GUI;
@@ -28,11 +26,11 @@ public class ControllerImpl implements Controller {
     private final GUIImpl gui;
     private ViewUpdater viewUpdater;
     private GameController gameView;
-    private ScoreController scoreController;
+    private ScoreCompute scoreCompute;
     /**
      * 
-     * @param model
-     * @param gui
+     * @param model 
+     * @param gui 
      */
     public ControllerImpl(final Model model, final GUIImpl gui) {
         this.model = model;
@@ -71,33 +69,57 @@ public class ControllerImpl implements Controller {
         final GameMap map = model.getGameMap();
         this.gameView = controller;
         this.viewUpdater = new ViewUpdater();
-        scoreController = new ScoreController(model.getPlayers().stream()
-                .map(e -> e.getColor())
-                .collect(Collectors.toCollection(ArrayList::new)));
-
+        scoreCompute = new ScoreCompute(model.getPlayers());
         // set game dimensions
         gameView.setDimensions(new Pair<Integer, Integer>(map.getDimensions().getX(), map.getDimensions().getY()));
         gameView.setBlockDimension(Model.BLOCKDIMENSION);
         gameView.setBlockSpacing(Model.BLOCKSPACING);
         gameView.resizeToMap();
 
-        // first render of map in view
-        for (int a = 0; a < map.getDimensions().getX(); a++) {
-            for (int b = 0; b < map.getDimensions().getY(); b++) {
-                final AbstractEntity block = map.getBlock(a, b);
-                block.setHeight(Model.BLOCKDIMENSION);
-                block.setWidth(Model.BLOCKDIMENSION);
-                gameView.draw(block.getImagePath(), a, b);
+        //Heavy calculations---------------------------------------------------------
+        //executing on thread 1
+        Thread renderMapThread = new Thread(new Runnable() {
+            public void run() {
+                // first render of map in view
+                for (int a = 0; a < map.getDimensions().getX(); a++) {
+                    for (int b = 0; b < map.getDimensions().getY(); b++) {
+                        final AbstractEntity block = map.getBlock(a, b);
+                        block.setHeight(Model.BLOCKDIMENSION);
+                        block.setWidth(Model.BLOCKDIMENSION);
+                        gameView.draw(block.getImagePath(), a, b);
+                    }
+                }
             }
-        }
+        }); 
+        renderMapThread.start();
 
+        //executed by javafx thread
         // render players
         gameView.drawPlayers(model.getPlayers());
-        for (final Player player : model.getPlayers()) {
-            CollisionImpl collision = new CollisionImpl(player);
-            collision.setMap(map);
-            player.setCollision(collision);
+
+        //executed on thread 2
+        Thread renderPlThread = new Thread(new Runnable() {
+            public void run() {
+                for (final Player player : model.getPlayers()) {
+                    player.setCollision(new CollisionImpl(player).setMap(map));
+                }
+            }
+        }); 
+        renderPlThread.start();
+
+        //thread join
+        try {
+            System.out.println("wait map render");
+            renderMapThread.join();
+            System.out.println("wait collision generation");
+            renderPlThread.join();
+            System.out.println("done");
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
+      //Heavy calculations ended---------------------------------------------------
+
         this.viewUpdater.setModel(this.model);
         this.viewUpdater.setView(gameView);
         new Thread(this.viewUpdater).start();
@@ -210,26 +232,26 @@ public class ControllerImpl implements Controller {
       this.gui.getActivePageController().translate(getTranslator());
     }
 
-
     /**
      * Called while loading GameEnded.fxml.
      * @param gameEndedController - controller of GameEnded.fxml
      */
     public final void gameEnded(final GameEndedController gameEndedController) {
-        if ((scoreController.getAlivePlayers().contains(PlayerColor.RED)) 
-                && (scoreController.getAlivePlayers().size() == 1) 
-                || (scoreController.getWinnerByScore().isPresent()
-                && (scoreController.getWinnerByScore().get().equals(PlayerColor.RED) 
-                && (scoreController.getAlivePlayers().size() > 1)))) {
+        viewUpdater.stop();
+        if ((scoreCompute.getAlivePlayers().stream().map(e -> e.getColor()).anyMatch(e -> e.compareTo(PlayerColor.RED) == 0)) 
+                && (scoreCompute.getAlivePlayers().size() == 1) 
+                || (scoreCompute.getWinnerByScore().isPresent()
+                && (scoreCompute.getWinnerByScore().get().getColor().equals(PlayerColor.RED) 
+                && (scoreCompute.getAlivePlayers().size() > 1)))) {
 
-            gameEndedController.redPlayerSet("RED WON!!!", "view/winner.png");
+            gameEndedController.redPlayerSet("RED WON!!!", "view/winner.gif");
             gameEndedController.yellowPlayerSet("YELLOW LOST...", "view/loser.gif");
 
-        } else if ((scoreController.getAlivePlayers().contains(PlayerColor.YELLOW)) 
-                && (scoreController.getAlivePlayers().size() == 1) 
-                || (scoreController.getWinnerByScore().isPresent() 
-                && (scoreController.getWinnerByScore().get().equals(PlayerColor.RED) 
-                && (scoreController.getAlivePlayers().size() > 1)))) {
+        } else if ((scoreCompute.getAlivePlayers().stream().map(e -> e.getColor()).anyMatch(e -> e.compareTo(PlayerColor.YELLOW) == 0))
+                && (scoreCompute.getAlivePlayers().size() == 1) 
+                || (scoreCompute.getWinnerByScore().isPresent() 
+                && (scoreCompute.getWinnerByScore().get().getColor().equals(PlayerColor.RED) 
+                && (scoreCompute.getAlivePlayers().size() > 1)))) {
 
             gameEndedController.redPlayerSet("RED LOST...", "view/loser.gif");
             gameEndedController.yellowPlayerSet("YELLOW WON!!!", "view/winner.gif"); 
@@ -238,18 +260,22 @@ public class ControllerImpl implements Controller {
             gameEndedController.yellowPlayerSet("match draw", "view/draw.gif");
         }
     }
-
-    public void notifyKilledPlayers(final List<Player> killedPlayer) {
-        scoreController.killPlayer(killedPlayer.get(killedPlayer.size() - 1).getColor());
-        /*if(scoreController.getAlivePlayers().size() <= 1) {
+    /**
+     * 
+     * @param killedPlayer 
+     */
+    public void notifyKilledPlayers() {
+        System.out.println(scoreCompute.getAlivePlayers());
+        if (scoreCompute.getAlivePlayers().size() <= 1) {
+            System.out.println("GAME ENDED NOW!!!");
             try {
-                Thread.sleep(2000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            //this.gui.loadPage(GUI.PageNames.GAMENDED);
-            //this.gui.getActivePageController().translate(getTranslator());
-        }*/
+            this.gui.loadPage(GUI.PageNames.GAMENDED);
+            this.gui.getActivePageController().translate(getTranslator());
+        }
     }
 
 
