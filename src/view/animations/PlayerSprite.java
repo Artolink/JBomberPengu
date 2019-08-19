@@ -1,5 +1,7 @@
 package view.animations;
 
+import model.player.PlayerColor;
+
 /**
  * 
  * This class store a player sprites.
@@ -22,13 +24,13 @@ public class PlayerSprite extends AbstractDynamicSprites {
      * @param color color of the player
      * @param sheet the sheet
      */
-    public PlayerSprite(final String color, final SpriteSheet sheet) {
+    public PlayerSprite(final PlayerColor color, final SpriteSheet sheet) {
 
         super();
-        if (color.equals("red")) {
+        if (color.equals(PlayerColor.RED)) {
             this.start = START_RED;
             this.toMove = START_YELLOW;
-        } else if (color.equals("yellow")) {
+        } else if (color.equals(PlayerColor.YELLOW)) {
             this.start = START_YELLOW;
             this.toMove = START_YELLOW + start;
         }

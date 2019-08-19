@@ -2,6 +2,7 @@ package view.animations;
 
 import javafx.scene.image.ImageView;
 import model.player.Player;
+import model.player.PlayerColor;
 import model.utils.Directions;
 
 /**
@@ -17,7 +18,8 @@ public class PlayerAnimations implements Animation {
     private static final int SHEET_COLUMNS = 38;
     private Directions lastHorizontalDir;
     private final SpriteSheet sheet = new SpriteSheet("/view/sheet.png", SHEET_ROWS, SHEET_COLUMNS);
-    private Integer nextFrame = 0;
+    private Integer nextFrameTwo = 0;
+    private Integer nextFrameThree = 0;
     private boolean isDead;
     private static final int VERTICAL = 300;
     private static final int HORIZONTAL = 120;
@@ -43,35 +45,35 @@ public class PlayerAnimations implements Animation {
 
             switch (player.getDirection()) {
             case UP:
-                this.updateFrame(sprite.getUpSprites().size());
-                this.imageView.setImage(sprite.getUpSprites().get(nextFrame).getImage());
+                this.updateFrame();
+                this.imageView.setImage(sprite.getUpSprites().get(nextFrameTwo).getImage());
                 timeToSleep = VERTICAL;
                 break;
             case RIGHT:
-                this.updateFrame(sprite.getRunRightSprites().size());
-                this.imageView.setImage(sprite.getRunRightSprites().get(nextFrame).getImage());
+                this.updateFrame();
+                this.imageView.setImage(sprite.getRunRightSprites().get(nextFrameThree).getImage());
                 lastHorizontalDir = Directions.RIGHT;
                 timeToSleep = HORIZONTAL;
                 break;
             case LEFT:
-                this.updateFrame(sprite.getRunLeftSprites().size());
-                this.imageView.setImage(sprite.getRunLeftSprites().get(nextFrame).getImage());
+                this.updateFrame();
+                this.imageView.setImage(sprite.getRunLeftSprites().get(nextFrameThree).getImage());
                 lastHorizontalDir = Directions.LEFT;
                 timeToSleep = HORIZONTAL;
                 break;
             case DOWN:
-                this.updateFrame(sprite.getDownSprites().size());
-                this.imageView.setImage(sprite.getDownSprites().get(nextFrame).getImage());
+                this.updateFrame();
+                this.imageView.setImage(sprite.getDownSprites().get(nextFrameTwo).getImage());
                 timeToSleep = VERTICAL;
                 break;
             case STATIONARY:
                 if (lastHorizontalDir.equals(Directions.LEFT)) {
-                    this.updateFrame(sprite.getStayLeftSprites().size());
-                    this.imageView.setImage(sprite.getStayLeftSprites().get(nextFrame).getImage());
+                    this.updateFrame();
+                    this.imageView.setImage(sprite.getStayLeftSprites().get(nextFrameThree).getImage());
 
                 } else {
-                    this.updateFrame(sprite.getStayRightSprites().size());
-                    this.imageView.setImage(sprite.getStayRightSprites().get(nextFrame).getImage());
+                    this.updateFrame();
+                    this.imageView.setImage(sprite.getStayRightSprites().get(nextFrameThree).getImage());
                 }
                 timeToSleep = STATIONARY;
                 break;
@@ -80,21 +82,25 @@ public class PlayerAnimations implements Animation {
             }
 
             if (isDead) {
-                this.updateFrame(sprite.getLoseSprites().size());
-                this.imageView.setImage(sprite.getLoseSprites().get(nextFrame).getImage());
+                this.updateFrame();
+                this.imageView.setImage(sprite.getLoseSprites().get(nextFrameTwo).getImage());
                 timeToSleep = DEAD;
             }
 
             try {
                 Thread.sleep(timeToSleep);
-                if (nextFrame == 2) {
-                    nextFrame = 0;
+                if (this.nextFrameTwo.equals(2)) {
+                    this.nextFrameTwo = 0;
                 } else {
-                    nextFrame++;
+                    nextFrameTwo++;
+                }
+                if (this.nextFrameThree.equals(3)) {
+                    this.nextFrameThree = 0;
+                } else {
+                    nextFrameThree++;
                 }
 
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -134,16 +140,19 @@ public class PlayerAnimations implements Animation {
 
     private void setSprite(final Player player) {
 
-        if (player.getID().equals(0)) {
-            this.sprite = new PlayerSprite("red", sheet);
+        if (player.getColor().equals(PlayerColor.RED)) {
+            this.sprite = new PlayerSprite(PlayerColor.RED, sheet);
         } else {
-            this.sprite = new PlayerSprite("yellow", sheet);
+            this.sprite = new PlayerSprite(PlayerColor.YELLOW, sheet);
         }
     }
 
-    private void updateFrame(final int size) {
-        if (this.nextFrame.equals(size)) {
-            this.nextFrame = 0;
+    private void updateFrame() {
+        if (this.nextFrameTwo.equals(2)) {
+            this.nextFrameTwo = 0;
+        }
+        if (this.nextFrameThree.equals(3)) {
+            this.nextFrameThree = 0;
         }
     }
 }

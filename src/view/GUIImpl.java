@@ -64,7 +64,9 @@ public class GUIImpl extends Application implements GUI {
 
         //start sound
         StObjCont.setSoundsAssociator(new SoundsAssociator());
-        getSounds().getStartGameSound().play();
+        if(isSoundEnabled()) {
+            getSounds().getStartGameSound().play();
+        }
 
         StObjCont.getStage().show();
     }
@@ -127,8 +129,10 @@ public class GUIImpl extends Application implements GUI {
             case GAME:
                 StObjCont.setPage((Page) new FxmlFileLoader("view" + File.separator + "game", "Game"));
                 //start match sound
-                getSounds().stopSounds();
-                getSounds().getStartMatchSound().play();
+                if(isSoundEnabled()) {
+                    getSounds().stopSounds();
+                    getSounds().getStartMatchSound().play();
+                }
                 break;
             case GAMENDED:
                 StObjCont.setPage((Page) new FxmlFileLoader("view" + File.separator + "game", "GameEnded"));
@@ -193,6 +197,25 @@ public class GUIImpl extends Application implements GUI {
      */
     protected SoundsAssociator getSounds() {
         return StObjCont.getSoundsAssociator();
+    }
+
+    /**
+     * 
+     * @param music
+     */
+    protected void setSound(Boolean music) {
+        StObjCont.setMusic(music);
+        if(!music) {
+            getSounds().stopSounds();
+        }
+    }
+
+    /**
+     * 
+     * @return
+     */
+    protected Boolean isSoundEnabled() {
+        return StObjCont.isMusicEnabled();
     }
 
     // Private methods -------------------------------------------------------------------------------------------
@@ -269,6 +292,7 @@ public class GUIImpl extends Application implements GUI {
         private static Page page;
         private static Controller controller;
         private static SoundsAssociator sounds;
+        private static Boolean music = true;
 
         public static void setStage(final Stage stage) {
             StObjCont.stage = stage;
@@ -302,6 +326,13 @@ public class GUIImpl extends Application implements GUI {
             return StObjCont.sounds;
         }
  
+        public static void setMusic(final Boolean music) {
+            StObjCont.music = music;
+        }
+
+        public static Boolean isMusicEnabled() {
+            return StObjCont.music;
+        }
     }
 
 }

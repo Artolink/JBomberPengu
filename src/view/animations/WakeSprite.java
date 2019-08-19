@@ -3,6 +3,8 @@ package view.animations;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.player.PlayerColor;
+
 /**
  * This class stores a wake bomb sprites.
  *
@@ -21,13 +23,13 @@ public class WakeSprite {
      * @param color the color of the player
      * @param sheet the sheet
      */
-    public WakeSprite(final String color, final SpriteSheet sheet) {
+    public WakeSprite(final PlayerColor color, final SpriteSheet sheet) {
 
-        if (color.equals("red")) {
+        if (color.equals(PlayerColor.RED)) {
             this.start = START_RED;
             this.toMove = START_YELLOW;
-        } else if (color.equals("yellow")) {
-            this.start = START_YELLOW - 1;
+        } else if (color.equals(PlayerColor.YELLOW)) {
+            this.start = START_YELLOW;
             this.toMove = (START_YELLOW * 2);
         }
 
