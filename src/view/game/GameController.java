@@ -6,37 +6,60 @@ import java.util.Optional;
 
 import controller.ControllerImpl;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import model.AbstractEntity;
 import model.blocks.Bomb;
+import model.language.ApplicationStrings;
 import model.player.Player;
+import model.player.PlayerColor;
 import model.utils.Pair;
 import view.GUIImpl;
+import view.PageController;
 import view.animations.PlayerAnimations;
 import view.animations.WakeAnimations;
 
 /**
  * Controller of Game.fxml. It draws the game interface.
  */
-public class GameController extends GUIImpl {
+public class GameController extends PageController {
 
     private int blockDimension;
     private int blockSpacing;
     private Pair<Integer, Integer> dimensions;
     private final KeyAssociator associator = new KeyAssociator();
 
+    private String scoreString;
+
     @FXML
     private MyPane canvas;
     @FXML
     private Button button;
+
+    @FXML
+    private Label plRedScore;
+    @FXML
+    private HBox lifeCounterR;
+    @FXML
+    private HBox bombCounterR;
+    @FXML
+    private Label plYellScore;
+    @FXML
+    private HBox lifeCounterY;
+    @FXML
+    private HBox bombCounterY;
 
     private final Alert alert = new Alert(AlertType.CONFIRMATION);
     private ControllerImpl controller;
@@ -187,7 +210,7 @@ public class GameController extends GUIImpl {
             associator.associatePlayer(player);
         }
     }
-    
+
     /**
      * Move the specified player in the final specified position.
      * 
@@ -198,7 +221,7 @@ public class GameController extends GUIImpl {
     public void movePlayer(final Player player, final int row, final int col) {
         this.canvas.getPlayer(player.getInitialPosition().getX(), player.getInitialPosition().getY()).relocate(row, col);
     }
-    
+
     /**
      * Draw the bomb on the game area.
      * 
@@ -225,8 +248,7 @@ public class GameController extends GUIImpl {
      * Draw the Explosion on the game area.
      * 
      * @param bomb bomb to explode
-     * @param row  row
-     * @param col  column
+     * @param interestedBlocks
      */
     public void explodeBomb(final Bomb bomb, final List<AbstractEntity> interestedBlocks) {
         final List<Thread> threads = new ArrayList<>();
@@ -246,16 +268,16 @@ public class GameController extends GUIImpl {
             animation.setImageView(image);
             threads.add(new Thread(animation));
         }
-        for(Thread thread : threads) {
+        for (Thread thread : threads) {
             thread.start();
             try {
-                Thread.sleep(5);
+                thread.sleep(5);
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
-        for(Thread thread : threads) {
+        for (Thread thread : threads) {
             try {
                 thread.join();
             } catch (InterruptedException e) {
@@ -268,8 +290,6 @@ public class GameController extends GUIImpl {
         }
         canvas.removeNode(bomb.getInitialPosition().getX(), bomb.getInitialPosition().getY());
     }
-
-    
 
     /**
      * An event occurs when the button is pressed.
@@ -286,4 +306,92 @@ public class GameController extends GUIImpl {
             alert.close();
         }
     }
+
+    /**
+     * Changes the score visualized for specified player.
+     * @param color - The color matching player
+     * @param score - The score you want to display
+     */
+    public void showScore(final PlayerColor color, final Integer score) {
+        switch (color) {
+        case RED:
+            plRedScore.setText(scoreString + ": " + score.toString());
+            break;
+        case YELLOW:
+            plYellScore.setText(scoreString + ": " + score.toString());
+            break;
+        default:
+        }
+    }
+
+    /*
+     * NOT USED
+     * @param color
+     * @param life
+     *
+    public void showLife(final PlayerColor color, final Integer life) {
+        switch (color) {
+        case RED:
+            lifeCounterR.getChildren().clear();
+            for (int i = 0; i < life; i++) {
+                ImageView img = new ImageView(new Image("/view/Heart.png"));
+                img.setFitWidth(blockDimension);
+                img.setFitHeight(blockDimension);
+                lifeCounterR.getChildren().add(img);
+            }
+            break;
+        case YELLOW:
+            lifeCounterY.getChildren().clear();
+            for (int i = 0; i < life; i++) {
+                ImageView img = new ImageView(new Image("/view/Heart.png"));
+                img.setFitWidth(blockDimension);
+                img.setFitHeight(blockDimension);
+                lifeCounterY.getChildren().add(img);
+            }
+            break;
+        default:
+        }
+    }*/
+
+    /**
+     * 
+     * @param color
+     * @param life
+     */
+    public void showAvailableBombs(final PlayerColor color, final Integer bombs) {
+        switch (color) {
+        case RED:
+            bombCounterR.getChildren().clear();
+            for (int i = 0; i < bombs; i++) {
+                ImageView img = new ImageView(new Image("/view/bomba_rossa.png"));
+                img.setFitWidth(blockDimension);
+                img.setFitHeight(blockDimension);
+                bombCounterR.getChildren().add(img);
+            }
+            break;
+        case YELLOW:
+            bombCounterY.getChildren().clear();
+            for (int i = 0; i < bombs; i++) {
+                ImageView img = new ImageView(new Image("/view/bomba_gialla.png"));
+                img.setFitWidth(blockDimension);
+                img.setFitHeight(blockDimension);
+                bombCounterY.getChildren().add(img);
+            }
+            break;
+        default:
+        }
+    }
+
+    @Override
+    public final void translate(final ApplicationStrings t) {
+        //translating score labels
+        String s = scoreString;
+        scoreString = t.getValueOf("score");
+        showScore(PlayerColor.RED, Integer.parseInt(plRedScore.getText().replace(s + ": ", "")));
+        showScore(PlayerColor.YELLOW, Integer.parseInt(plYellScore.getText().replace(s + ": ", "")));
+
+        //TODO add this key to ApplicatioStrings
+        button.setText(t.getValueOf("give up"));
+    }
 }
+

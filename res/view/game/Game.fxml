@@ -24,24 +24,12 @@
 	          	 <children>
 	           	    <Label text="Player red"></Label>
 	            	   <Label fx:id="plRedScore" text="12800"></Label>
-	            	   <HBox fx:id="lifeCounterR" alignment="TOP_LEFT">
+	            	   <!--<HBox fx:id="lifeCounterR" alignment="TOP_LEFT">
 		         	      <children>
-		          	         <!-- Da inserire tramite codice java -->
-		         		     <ImageView fitHeight="50.0" fitWidth="50.0">
-		             	          <image>
-		              	             <Image url="@view/bomba gialla.png"/>
-	                          	 </image>
-	                       </ImageView>
 		               </children>
-	               </HBox>
+	               </HBox> -->
 	               <HBox fx:id="bombCounterR" alignment="TOP_LEFT">
 		               <children>
-	                       <!-- Da inserire tramite codice java -->
-	                       <ImageView fitHeight="50.0" fitWidth="50.0">
-	                           <image>
-	                               <Image url="@view/bomba rossa.png"/>
-	                           </image>
-	                       </ImageView>
 	                   </children>
                    </HBox>
 	           </children>
@@ -50,10 +38,10 @@
                <children>
                    <Label text="Player yellow"></Label>
                    <Label fx:id="plYellScore" text="86800"></Label>
-                   <HBox fx:id="lifeCounterY" alignment="TOP_LEFT">
+                   <!--<HBox fx:id="lifeCounterY" alignment="TOP_LEFT">
 	                   <children>
 	                   </children>
-                   </HBox>
+                   </HBox> -->
                    <HBox fx:id="bombCounterY" alignment="TOP_LEFT">
 	                   <children>
 	                   </children>
