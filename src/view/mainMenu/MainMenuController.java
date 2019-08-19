@@ -21,6 +21,8 @@ public class MainMenuController extends PageController {
     @FXML
     private Button settingsBtn;
     @FXML
+    private Button howToPlayBtn;
+    @FXML
     private Button closeBtn;
 
     // Private methods -------------------------------------------------------------------------------------------
@@ -30,7 +32,6 @@ public class MainMenuController extends PageController {
      */
     @FXML
     private void singlePlayerBtPressed() {
-        System.out.println("Singleplayer button pressed");  //TODO debug
         getController().actionPerformedSingleplayerBtn();
     }
 
@@ -39,7 +40,6 @@ public class MainMenuController extends PageController {
      */
     @FXML
     private void multiPlayerBtPressed() {
-        System.out.println("Multiplayer button pressed");   //TODO debug
         getController().actionPerformedMultiplayerBtn();
     }
  
@@ -48,7 +48,6 @@ public class MainMenuController extends PageController {
      */
     @FXML
     private void mapEditorPressed() {
-        System.out.println("Map editor button pressed");    //TODO debug
         getController().actionPerformedMapEditorBtn();
     }
 
@@ -57,7 +56,6 @@ public class MainMenuController extends PageController {
      */
     @FXML
     private void languageEditorPressed() {
-        System.out.println("Language editor button pressed");   //TODO debug
         getController().actionPerformedLanguageEditorBtn();
     }
 
@@ -66,8 +64,15 @@ public class MainMenuController extends PageController {
      */
     @FXML
     private void settingsBtPressed() {
-        System.out.println("Settings button pressed");  //TODO debug
         getController().actionPerformedSettingsBtn();
+    }
+
+    /**
+     * Action executed when howToPlay button is pressed.
+     */
+    @FXML
+    private void howToPlayBtPressed() {
+        getController().actionPerformedHTPBtn();
     }
 
     /**
@@ -75,19 +80,18 @@ public class MainMenuController extends PageController {
      */
     @FXML
     private void closeGameBtPressed() {
-        System.out.println("Close button pressed");  //TODO debug
-        stop();
         getController().actionPerformedCloseBtn();
     }
 
     @Override
     public final void translate(final ApplicationStrings t) {
-        spBtn.setText(t.getValueOf("singleplayer"));
-        mpBtn.setText(t.getValueOf("multiplayer"));
-        //mapEditorBtn.setText(t.getValueOf("map editor"));
-        langEditorBtn.setText(t.getValueOf("language editor"));
-        settingsBtn.setText(t.getValueOf("settings"));
-        closeBtn.setText(t.getValueOf("close"));
+        spBtn.setText(t.getValueOf("singleplayer").toUpperCase());
+        mpBtn.setText(t.getValueOf("multiplayer").toUpperCase());
+        mapEditorBtn.setText(t.getValueOf("map editor").toUpperCase());
+        langEditorBtn.setText(t.getValueOf("language editor").toUpperCase());
+        settingsBtn.setText(t.getValueOf("settings").toUpperCase());
+        howToPlayBtn.setText(t.getValueOf("howtoplay").toUpperCase());
+        closeBtn.setText(t.getValueOf("close").toUpperCase());
     }
  
 }

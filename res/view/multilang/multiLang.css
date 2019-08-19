@@ -1,3 +1,9 @@
+.root{
+ -fx-background-image: url(../sfondo_finestre.jpg);
+  -fx-background-repeat: no-repeat; /* this applies to both images */
+  -fx-background-size: stretch;
+
+}
 .button{
     -fx-background-image: url(../Empty_Button.png);
     -fx-background-color: transparent;

@@ -1,7 +1,13 @@
 .root{
-    -fx-background-image: url(../sfondo.png);
-    -fx-background-size: stretch;
-    -fx-background-repeat: no-repeat;
+ -fx-background-image: 
+    url(../sfondo_iniziale.jpg),
+    url(../snow_falling3.gif);
+  -fx-background-position:
+    top right, /* this positions the first image */
+    bottom left; /* this positions the second image */
+  -fx-background-repeat: no-repeat; /* this applies to both images */
+  -fx-background-size: stretch;
+
 }
 .button{
     -fx-background-image: url(../Empty_Button.png);

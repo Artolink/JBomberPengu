@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
@@ -28,30 +29,33 @@
        <children>
        <VBox alignment="CENTER">
                <children>
-             <ImageView fitHeight="250.0" fitWidth="250.0">
+             <ImageView fitHeight="486.0" fitWidth="550.0">
                    <image>
-                       <Image url="@view/penguin.png" />
+                       <Image url="@view/initial_penguin.png" />
                    </image>
              </ImageView>
                </children>
        </VBox>
        <VBox alignment="CENTER" spacing="10.0">
           <children>
-             <Label text="A Glacial War">
+             <Label text="A GLACIAL WAR">
 	             <font>
-		             <Font size="26.0" />
+		             <Font size="35.0" />
 		          </font>
 		          <padding>
 		              <Insets bottom="50.0" />
 		          </padding>
+                     <effect>
+                        <Blend mode="DIFFERENCE" />
+                     </effect>
              </Label>
-             <Button fx:id="spBtn" disable="true" mnemonicParsing="false" onAction="#singlePlayerBtPressed" text="Singleplayer" />
-             <Button fx:id="mpBtn" mnemonicParsing="false" onAction="#multiPlayerBtPressed" text="Multiplayer" />
-             <Button fx:id="mapEditorBtn" disable="true" mnemonicParsing="false" onAction="#mapEditorPressed" text="Map editor" />
-             <Button fx:id="langEditorBtn" mnemonicParsing="false" onAction="#languageEditorPressed" text="Language editor" />
-             <Button fx:id="settingsBtn" mnemonicParsing="false" onAction="#settingsBtPressed" text="Settings" />
-             <Button fx:id="howToPlayBtn" mnemonicParsing="false" onAction="#howToPlayBtPressed" text="How to play" />
-             <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#closeGameBtPressed" text="Exit" />
+             <Button fx:id="spBtn" disable="true" mnemonicParsing="false" onAction="#singlePlayerBtPressed" text="SINGLEPLAYER" />
+             <Button fx:id="mpBtn" mnemonicParsing="false" onAction="#multiPlayerBtPressed" text="MULTIPLAYER" />
+             <Button fx:id="mapEditorBtn" disable="true" mnemonicParsing="false" onAction="#mapEditorPressed" text="MAP EDITOR" />
+             <Button fx:id="langEditorBtn" mnemonicParsing="false" onAction="#languageEditorPressed" text="LANGUAGE EDITOR" />
+             <Button fx:id="settingsBtn" mnemonicParsing="false" onAction="#settingsBtPressed" text="SETTINGS" />
+             <Button fx:id="howToPlayBtn" mnemonicParsing="false" onAction="#howToPlayBtPressed" text="HOW TO PLAY" />
+             <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#closeGameBtPressed" text="EXIT" />
           </children>
           <padding>
              <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />

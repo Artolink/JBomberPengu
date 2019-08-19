@@ -15,9 +15,9 @@ import view.PageController;
 public class GameEndedController extends PageController {
 
     @FXML
-    private Label playerNameLabel1;
+    private Label playerNameLabelred;
     @FXML
-    private Label playerNameLabel2;
+    private Label playerNameLabelyellow;
     @FXML
     private Button mpBtn;
     @FXML
@@ -26,22 +26,34 @@ public class GameEndedController extends PageController {
     private ImageView playerImage1;
     @FXML
     private ImageView playerImage2;
-    
-    
+
     private ControllerImpl controller;
 
+    /**
+     * Automatically called from FXML file.
+     */
     public void initialize() {
         this.controller = (ControllerImpl) getController();
-        this.controller.GameEnded(this);
+        this.controller.gameEnded(this);
     }
 
-    public void leftPlayerSet(String text, String path) {
-        playerNameLabel1.setText(text);
+    /**
+     * sets text and image for left player.
+     * @param text - the text you want to display
+     * @param path - th path of the image you want to display
+     */
+    public void redPlayerSet(final String text, final String path) {
+        playerNameLabelred.setText(text);
         playerImage1.setImage(new Image(path));
     }
 
-    public void rightPlayerSet(String text, String path) {
-        playerNameLabel2.setText(text);
+    /**
+     * sets text and image for right player.
+     * @param text - the text you want to display
+     * @param path - th path of the image you want to display
+     */
+    public void yellowPlayerSet(final String text, final String path) {
+        playerNameLabelyellow.setText(text);
         playerImage2.setImage(new Image(path));
     }
 
@@ -50,7 +62,6 @@ public class GameEndedController extends PageController {
      */
     @FXML
     private void multiPlayerBtPressed() {
-        System.out.println("Multiplayer button pressed");   //TODO debug
         getController().actionPerformedMultiplayerBtn();
     }
 
@@ -59,14 +70,13 @@ public class GameEndedController extends PageController {
      */
     @FXML
     private  void backBtPressed() {
-        System.out.println("Back button pressed");  //TODO debug
         getController().actionPerformedBackBtn();
     }
 
     @Override
     public final void translate(final ApplicationStrings t) {
         mpBtn.setText(t.getValueOf("multiplayer"));
-        backBtn.setText(t.getValueOf("back"));
+        backBtn.setText(t.getValueOf("main menu"));
     }
 
 }

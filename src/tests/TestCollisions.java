@@ -35,7 +35,6 @@ public class TestCollisions {
 
         block2.setHeight(50);
         block2.setWidth(50);
-        block2.getCollisionBox();
 
         block3.setHeight(50);
         block3.setWidth(50);

@@ -23,25 +23,13 @@
 	       	<VBox alignment="TOP_LEFT" style="-fx-padding: 10;-fx-border-style: solid inside;-fx-border-width: 2;-fx-border-radius: 5;-fx-border-color: blue;">
 	          	 <children>
 	           	    <Label text="Player red"></Label>
-	            	   <Label text="Score: 12800"></Label>
-	            	   <HBox fx:id="lifeCounter1" alignment="TOP_LEFT">
+	            	   <Label fx:id="plRedScore" text="12800"></Label>
+	            	   <!--<HBox fx:id="lifeCounterR" alignment="TOP_LEFT">
 		         	      <children>
-		          	         <!-- Da inserire tramite codice java -->
-		         		          <ImageView fitHeight="50.0" fitWidth="50.0">
-		             	          <image>
-		              	             <Image url="@view/bomba gialla.png"/>
-	                          	 </image>
-	                       </ImageView>
 		               </children>
-	               </HBox>
-	               <HBox fx:id="bombCounter1" alignment="TOP_LEFT">
+	               </HBox> -->
+	               <HBox fx:id="bombCounterR" alignment="TOP_LEFT">
 		               <children>
-	                       <!-- Da inserire tramite codice java -->
-	                       <ImageView fitHeight="50.0" fitWidth="50.0">
-	                           <image>
-	                               <Image url="@view/bomba rossa.png"/>
-	                           </image>
-	                       </ImageView>
 	                   </children>
                    </HBox>
 	           </children>
@@ -49,12 +37,12 @@
 	       <VBox alignment="TOP_LEFT"  style="-fx-padding: 10;-fx-border-style: solid inside;-fx-border-width: 2;-fx-border-insets: 5;-fx-border-radius: 5;-fx-border-color: blue;">
                <children>
                    <Label text="Player yellow"></Label>
-                   <Label text="Score: 86800"></Label>
-                   <HBox fx:id="lifeCounter2" alignment="TOP_LEFT">
+                   <Label fx:id="plYellScore" text="86800"></Label>
+                   <!--<HBox fx:id="lifeCounterY" alignment="TOP_LEFT">
 	                   <children>
 	                   </children>
-                   </HBox>
-                   <HBox fx:id="bombCounter2" alignment="TOP_LEFT">
+                   </HBox> -->
+                   <HBox fx:id="bombCounterY" alignment="TOP_LEFT">
 	                   <children>
 	                   </children>
                    </HBox>

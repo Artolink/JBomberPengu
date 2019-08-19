@@ -61,10 +61,11 @@ public class GUIImpl extends Application implements GUI {
 
         //Load main menu FXML as default
         loadPage(PageNames.MAINMENU);
+        getActivePageController().translate(getTranslator());
 
         //start sound
         StObjCont.setSoundsAssociator(new SoundsAssociator());
-        if(isSoundEnabled()) {
+        if (isSoundEnabled()) {
             getSounds().getStartGameSound().play();
         }
 
@@ -129,7 +130,7 @@ public class GUIImpl extends Application implements GUI {
             case GAME:
                 StObjCont.setPage((Page) new FxmlFileLoader("view" + File.separator + "game", "Game"));
                 //start match sound
-                if(isSoundEnabled()) {
+                if (isSoundEnabled()) {
                     getSounds().stopSounds();
                     getSounds().getStartMatchSound().play();
                 }
@@ -139,6 +140,9 @@ public class GUIImpl extends Application implements GUI {
                 break;
             case SETTINGS:
                 StObjCont.setPage((Page) new FxmlFileLoader("view" + File.separator + "settings", "SettingsMenu"));
+                break;
+            case HOWTOPLAY:
+                StObjCont.setPage((Page) new FxmlFileLoader("view" + File.separator + "howToPlay", "HowToPlay"));
                 break;
             case MAPEDITOR:
                 StObjCont.setPage((Page) new FxmlFileLoader("view" + File.separator + "mapEditor", "MapEditor"));
@@ -200,22 +204,32 @@ public class GUIImpl extends Application implements GUI {
     }
 
     /**
-     * 
-     * @param music
+     * set if sound is eneabled or not.
+     * @param music - boolean
      */
-    protected void setSound(Boolean music) {
+    protected void setSound(final Boolean music) {
         StObjCont.setMusic(music);
-        if(!music) {
+        if (!music) {
             getSounds().stopSounds();
         }
     }
 
     /**
-     * 
-     * @return
+     * Return sound state.
+     * @return  the state of sound boolean
      */
     protected Boolean isSoundEnabled() {
         return StObjCont.isMusicEnabled();
+    }
+    
+    /**
+     * Sets first character to UpperCase.
+     * @param str
+     * @return
+     */
+    protected String capitalize(String str)
+    {
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 
     // Private methods -------------------------------------------------------------------------------------------
@@ -272,8 +286,7 @@ public class GUIImpl extends Application implements GUI {
             //actualFrame = new Rectangle2D(GUIImpl.stage.getX(), GUIImpl.stage.getX(), GUIImpl.stage.getWidth(), GUIImpl.stage.getHeight());
         });
 
-        StObjCont.getStage().setOnCloseRequest((new EventHandler<WindowEvent>(){
-
+        StObjCont.getStage().setOnCloseRequest((new EventHandler<WindowEvent>() {
             @Override
             public void handle(final WindowEvent arg0) {
                 arg0.consume();
@@ -336,8 +349,3 @@ public class GUIImpl extends Application implements GUI {
     }
 
 }
-
-
-
-/*
-*/

@@ -3,6 +3,9 @@ package controller;
 import model.Model;
 import view.GUIImpl;
 
+/**
+ *Class that launches the game.
+ */
 public class Launcher {
 
     private static GUIImpl gui;
@@ -13,7 +16,7 @@ public class Launcher {
      * @param args arguments
      */
     public static void main(final String[] args) {
-        
+
         Model model = new Model();
         gui = new GUIImpl();
         ControllerImpl controller = new ControllerImpl(model, gui);

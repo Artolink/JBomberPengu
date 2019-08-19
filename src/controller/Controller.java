@@ -1,6 +1,7 @@
 package controller;
 
 import model.language.ApplicationStrings;
+import view.GUI;
 
 /**
  *
@@ -32,5 +33,7 @@ public interface Controller {
     public void actionPerformedCloseBtn();
 
     public void actionPerformedLoseBtn();
+
+    public void actionPerformedHTPBtn();
 
 }
