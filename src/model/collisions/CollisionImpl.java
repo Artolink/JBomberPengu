@@ -2,29 +2,30 @@ package model.collisions;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import model.AbstractEntity;
 import model.map.GameMap;
 import model.player.Player;
 import model.utils.Directions;
+import model.utils.Pair;
 import model.utils.Rectangle;
 
 /**
- * Implementation of {@link Collision}. 
+ * Implementation of {@link Collision}.
  *
  */
 public final class CollisionImpl implements Collision {
 
-    //private Rectangle entityHitbox;
+    // private Rectangle entityHitbox;
     private final Player player;
     private final GameMap map;
 
     /**
-     * Collision builder, initialize the entity that needs to be checked and its collision box.
+     * Collision builder, initialize the entity that needs to be checked and its
+     * collision box.
      * 
      * @param player player associated at this collision set
-     * @param map is the map of the entire game, used to know all blocks position
+     * @param map    is the map of the entire game, used to know all blocks position
      */
     public CollisionImpl(final Player player, final GameMap map) {
         this.player = player;
@@ -33,12 +34,14 @@ public final class CollisionImpl implements Collision {
 
     @Override
     public boolean blocksCollided() {
-        return getCollisionBlock(player, player.getDirection()).stream().anyMatch((block) -> player.getCollisionBox().intersectsWith(block));
+        return getCollisionBlock(player, player.getDirection()).stream()
+                .anyMatch((block) -> player.getCollisionBox().intersectsWith(block));
     }
 
     @Override
     public List<Rectangle> getCollisionBlock(final Player player, final Directions direction) {
         final List<Rectangle> collisionBlock = new ArrayList<Rectangle>();
+
         final int relativeTLPlayerWidth = player.getPosition().getX() / player.getWidth();
         final int relativeTLPlayerHeight = player.getPosition().getY() / player.getHeight();
         final boolean xRelative = player.getPosition().getX() % player.getWidth() == 0;
@@ -48,100 +51,191 @@ public final class CollisionImpl implements Collision {
         if (xRelative && yRelative) {
             try {
                 switch (direction) {
-                    case DOWN:
+                case DOWN:
+                    try {
                         entity0 = map.getBlock(relativeTLPlayerWidth, relativeTLPlayerHeight + 1);
                         hitBox0 = entity0.getCollisionBox();
+
                         if (entity0.isSolid()) {
                             collisionBlock.add(hitBox0);
                         }
-                        break;
-                    case LEFT:
+                    } catch (Exception e) {
+                        collisionBlock.add(new Rectangle(
+                                new Pair<Integer, Integer>(relativeTLPlayerWidth * player.getWidth(),
+                                        (relativeTLPlayerHeight + 1) * player.getHeight()),
+                                player.getWidth(), player.getHeight()));
+                    }
+                    break;
+                case LEFT:
+                    try {
                         entity0 = map.getBlock(relativeTLPlayerWidth - 1, relativeTLPlayerHeight);
                         hitBox0 = entity0.getCollisionBox();
                         if (entity0.isSolid()) {
                             collisionBlock.add(hitBox0);
                         }
-                        break;
-                    case RIGHT:
+                    } catch (Exception e) {
+                        collisionBlock.add(new Rectangle(
+                                new Pair<Integer, Integer>((relativeTLPlayerWidth - 1) * player.getWidth(),
+                                        relativeTLPlayerHeight * player.getHeight()),
+                                player.getWidth(), player.getHeight()));
+                    }
+                    break;
+                case RIGHT:
+                    try {
                         entity0 = map.getBlock(relativeTLPlayerWidth + 1, relativeTLPlayerHeight);
                         hitBox0 = entity0.getCollisionBox();
                         if (entity0.isSolid()) {
                             collisionBlock.add(hitBox0);
                         }
-                        break;
-                    case UP:
+                    } catch (Exception e) {
+                        collisionBlock.add(new Rectangle(
+                                new Pair<Integer, Integer>((relativeTLPlayerWidth + 1) * player.getWidth(),
+                                        relativeTLPlayerHeight * player.getHeight()),
+                                player.getWidth(), player.getHeight()));
+                    }
+                    break;
+                case UP:
+                    try {
                         entity0 = map.getBlock(relativeTLPlayerWidth, relativeTLPlayerHeight - 1);
                         hitBox0 = entity0.getCollisionBox();
                         if (entity0.isSolid()) {
                             collisionBlock.add(hitBox0);
                         }
-                        break;
-                    default:
-                        break;
+                    } catch (Exception e) {
+                        collisionBlock.add(new Rectangle(
+                                new Pair<Integer, Integer>(relativeTLPlayerWidth * player.getWidth(),
+                                        (relativeTLPlayerHeight - 1) * player.getHeight()),
+                                player.getWidth(), player.getHeight()));
+                    }
+                    break;
+                default:
+                    break;
                 }
-            } catch (Exception e) { }
+            } catch (Exception e) {
+                
+            }
         } else if (xRelative && !yRelative) {
             try {
                 switch (direction) {
-                    case LEFT:
+                case LEFT:
+                    try {
                         entity0 = map.getBlock(relativeTLPlayerWidth - 1, relativeTLPlayerHeight);
                         hitBox0 = entity0.getCollisionBox();
                         if (entity0.isSolid()) {
                             collisionBlock.add(hitBox0);
                         }
+                    } catch (Exception e) {
+                        collisionBlock.add(new Rectangle(
+                                new Pair<Integer, Integer>((relativeTLPlayerWidth - 1) * player.getWidth(),
+                                        relativeTLPlayerHeight * player.getHeight()),
+                                player.getWidth(), player.getHeight()));
+                    }
+                    try {
                         entity0 = map.getBlock(relativeTLPlayerWidth - 1, relativeTLPlayerHeight + 1);
                         hitBox0 = entity0.getCollisionBox();
                         if (entity0.isSolid()) {
                             collisionBlock.add(hitBox0);
                         }
-                        break;
-                    case RIGHT:
+                    } catch (Exception e) {
+                        collisionBlock.add(new Rectangle(
+                                new Pair<Integer, Integer>((relativeTLPlayerWidth - 1) * player.getWidth(),
+                                        (relativeTLPlayerHeight + 1) * player.getHeight()),
+                                player.getWidth(), player.getHeight()));
+                    }
+                    break;
+                case RIGHT:
+                    try {
                         entity0 = map.getBlock(relativeTLPlayerWidth + 1, relativeTLPlayerHeight);
                         hitBox0 = entity0.getCollisionBox();
                         if (entity0.isSolid()) {
                             collisionBlock.add(hitBox0);
                         }
+                    } catch (Exception e) {
+                        collisionBlock.add(new Rectangle(
+                                new Pair<Integer, Integer>((relativeTLPlayerWidth + 1) * player.getWidth(),
+                                        relativeTLPlayerHeight * player.getHeight()),
+                                player.getWidth(), player.getHeight()));
+                    }
+                    try {
                         entity0 = map.getBlock(relativeTLPlayerWidth + 1, relativeTLPlayerHeight + 1);
                         hitBox0 = entity0.getCollisionBox();
                         if (entity0.isSolid()) {
                             collisionBlock.add(hitBox0);
                         }
-                        break;
-                    default:
-                        break;
+                    } catch (Exception e) {
+                        collisionBlock.add(new Rectangle(
+                                new Pair<Integer, Integer>((relativeTLPlayerWidth + 1) * player.getWidth(),
+                                        (relativeTLPlayerHeight + 1) * player.getHeight()),
+                                player.getWidth(), player.getHeight()));
+                    }
+                    break;
+                default:
+                    break;
                 }
-            } catch (Exception e) { }
+            } catch (Exception e) {
+                
+            }
         } else if (!xRelative && yRelative) {
             try {
                 switch (direction) {
-                    case UP:
+                case UP:
+                    try {
                         entity0 = map.getBlock(relativeTLPlayerWidth, relativeTLPlayerHeight - 1);
                         hitBox0 = entity0.getCollisionBox();
                         if (entity0.isSolid()) {
                             collisionBlock.add(hitBox0);
                         }
+                    } catch (Exception e) {
+                        collisionBlock.add(new Rectangle(
+                                new Pair<Integer, Integer>(relativeTLPlayerWidth * player.getWidth(),
+                                        (relativeTLPlayerHeight - 1) * player.getHeight()),
+                                player.getWidth(), player.getHeight()));
+                    }
+                    try {
                         entity0 = map.getBlock(relativeTLPlayerWidth + 1, relativeTLPlayerHeight - 1);
                         hitBox0 = entity0.getCollisionBox();
                         if (entity0.isSolid()) {
                             collisionBlock.add(hitBox0);
                         }
-                        break;
-                    case DOWN:
+                    } catch (Exception e) {
+                        collisionBlock.add(new Rectangle(
+                                new Pair<Integer, Integer>((relativeTLPlayerWidth + 1) * player.getWidth(),
+                                        (relativeTLPlayerHeight - 1) * player.getHeight()),
+                                player.getWidth(), player.getHeight()));
+                    }
+                    break;
+                case DOWN:
+                    try {
                         entity0 = map.getBlock(relativeTLPlayerWidth, relativeTLPlayerHeight + 1);
                         hitBox0 = entity0.getCollisionBox();
                         if (entity0.isSolid()) {
                             collisionBlock.add(hitBox0);
                         }
+                    } catch (Exception e) {
+                        collisionBlock.add(new Rectangle(
+                                new Pair<Integer, Integer>(relativeTLPlayerWidth * player.getWidth(),
+                                        (relativeTLPlayerHeight + 1) * player.getHeight()),
+                                player.getWidth(), player.getHeight()));
+                    }
+                    try {
                         entity0 = map.getBlock(relativeTLPlayerWidth + 1, relativeTLPlayerHeight + 1);
                         hitBox0 = entity0.getCollisionBox();
                         if (entity0.isSolid()) {
                             collisionBlock.add(hitBox0);
                         }
-                        break;
-                    default:
-                        break;
+                    } catch (Exception e) {
+                        collisionBlock.add(new Rectangle(
+                                new Pair<Integer, Integer>((relativeTLPlayerWidth + 1) * player.getWidth(),
+                                        (relativeTLPlayerHeight + 1) * player.getHeight()),
+                                player.getWidth(), player.getHeight()));
+                    }
+                    break;
+                default:
+                    break;
                 }
-            } catch (Exception e) { }
+            } catch (Exception e) {
+                
+            }
         }
         return collisionBlock;
     }
