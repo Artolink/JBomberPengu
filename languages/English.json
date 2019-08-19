@@ -1,1 +1,24 @@
-{"file":"File","edit":"Edit","score":"Score","multilangViewMessage1":"Please, select a language","multilangViewMessage2":"Please, insert your language","multilangViewMessage3":"Please, fill all translations","singleplayer":"Single-Player","multiplayer":"Multi-Player","settings":"Settings","close":"Exit game"}
+{
+  "close": "Exit game",
+  "edit": "Edit",
+  "file": "File",
+  "multilangViewMessage1": "Please, select a language",
+  "multilangViewMessage2": "Please, insert your language",
+  "multilangViewMessage3": "Please, fill all translations",
+  "multiplayer": "Multi-Player",
+  "score": "Score",
+  "settings": "Settings",
+  "singleplayer": "Single-Player",
+  "main menu": "Main menu",
+  "language editor": "Language editor",
+  "howtoplay": "How to play",
+  "fullscreen": "Fullscreen",
+  "sounds": "Sounds",
+  "map editor": "Map editor",
+  "give up": "Give up",
+  "back": "Back",
+  "won": "won",
+  "win": "win",
+  "lost": "lost",
+  "lose": "lose"
+}

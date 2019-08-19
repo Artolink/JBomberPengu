@@ -1,1 +1,24 @@
-{"file":"File","edit":"Modifica","score":"Punteggio","multilangViewMessage1":"Selezionare una lingua","multilangViewMessage2":"Inserisci la tua lingua","multilangViewMessage3":"Riempire tutti i campi","singleplayer":"Gioca da solo","multiplayer":"Gioca con un amico","settings":"Impostazioni","close":"Chiudi il gioco"}
+{
+  "close": "Chiudi",
+  "edit": "Modifica",
+  "file": "File",
+  "multilangViewMessage1": "Selezionare una lingua",
+  "multilangViewMessage2": "Inserisci la tua lingua",
+  "multilangViewMessage3": "Riempire tutti i campi",
+  "multiplayer": "Gioca con un amico",
+  "score": "Punteggio",
+  "settings": "Impostazioni",
+  "singleplayer": "Gioca da solo",
+  "main menu": "Menu principale",
+  "language editor": "Editor di lingua",
+  "howtoplay": "Come giocare",
+  "fullscreen": "Schermo intero",
+  "sounds": "Suoni",
+  "map editor": "Editor di mappa",
+  "give up": "Arrenditi",
+  "back": "Indietro",
+  "won": "ha vinto",
+  "win": "vince",
+  "lost": "ha perso",
+  "lose": "perde"
+}

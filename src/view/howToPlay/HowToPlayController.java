@@ -30,7 +30,7 @@ public class HowToPlayController extends PageController {
 
     @Override
     public final void translate(final ApplicationStrings t) {
-        backBtn.setText(t.getValueOf("back"));
+        backBtn.setText(t.getValueOf("main menu"));
     }
 
 }

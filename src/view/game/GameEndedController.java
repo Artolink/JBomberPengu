@@ -76,7 +76,7 @@ public class GameEndedController extends PageController {
     @Override
     public final void translate(final ApplicationStrings t) {
         mpBtn.setText(t.getValueOf("multiplayer"));
-        backBtn.setText(t.getValueOf("back"));
+        backBtn.setText(t.getValueOf("main menu"));
     }
 
 }

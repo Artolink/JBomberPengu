@@ -21,6 +21,8 @@ public class MainMenuController extends PageController {
     @FXML
     private Button settingsBtn;
     @FXML
+    private Button howToPlayBtn;
+    @FXML
     private Button closeBtn;
 
     // Private methods -------------------------------------------------------------------------------------------
@@ -85,9 +87,10 @@ public class MainMenuController extends PageController {
     public final void translate(final ApplicationStrings t) {
         spBtn.setText(t.getValueOf("singleplayer"));
         mpBtn.setText(t.getValueOf("multiplayer"));
-        //mapEditorBtn.setText(t.getValueOf("map editor"));
+        mapEditorBtn.setText(t.getValueOf("map editor"));
         langEditorBtn.setText(t.getValueOf("language editor"));
         settingsBtn.setText(t.getValueOf("settings"));
+        howToPlayBtn.setText(t.getValueOf("howtoplay"));
         closeBtn.setText(t.getValueOf("close"));
     }
  

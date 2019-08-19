@@ -84,7 +84,7 @@ public class ApplicationStrings implements ApplicationStringsInterface {
         try {
             return this.languageInfo.getString(key);
         } catch (Exception e) {
-            throw new IllegalArgumentException("Parametro key non valido");
+            throw new IllegalArgumentException("Parametro key non valido: " + key + " in lingua: " + getSelectedLanguage());
         }
     }
 
