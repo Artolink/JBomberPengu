@@ -14,6 +14,7 @@ import model.language.ApplicationStrings;
 import model.map.GameMap;
 import model.player.Player;
 import model.player.PlayerColor;
+import model.score.ScoreCompute;
 import model.utils.Directions;
 import model.utils.Pair;
 import view.GUI;
@@ -28,7 +29,7 @@ public class ControllerImpl implements Controller {
     private final GUIImpl gui;
     private ViewUpdater viewUpdater;
     private GameController gameView;
-    private ScoreController scoreController;
+    private ScoreCompute scoreCompute;
     /**
      * 
      * @param model
@@ -71,9 +72,7 @@ public class ControllerImpl implements Controller {
         final GameMap map = model.getGameMap();
         this.gameView = controller;
         this.viewUpdater = new ViewUpdater();
-        scoreController = new ScoreController(model.getPlayers().stream()
-                                                                .map( e -> e.getColor())
-                                                                .collect(Collectors.toCollection(ArrayList::new)));
+        scoreCompute = new ScoreCompute(model.getPlayers());
 
         // set game dimensions
         gameView.setDimensions(new Pair<Integer, Integer>(map.getDimensions().getX(), map.getDimensions().getY()));
@@ -206,26 +205,25 @@ public class ControllerImpl implements Controller {
       this.gui.getActivePageController().translate(getTranslator());
     }
 
-
     /**
      * Called while loading GameEnded.fxml.
      * @param gameEndedController - controller of GameEnded.fxml
      */
     public final void gameEnded(final GameEndedController gameEndedController) {
-        if ((scoreController.getAlivePlayers().contains(PlayerColor.RED)) 
-                && (scoreController.getAlivePlayers().size() == 1) 
-                || (scoreController.getWinnerByScore().isPresent()
-                && (scoreController.getWinnerByScore().get().equals(PlayerColor.RED) 
-                && (scoreController.getAlivePlayers().size() > 1)))) {
+        if ((scoreCompute.getAlivePlayers().contains(PlayerColor.RED)) 
+                && (scoreCompute.getAlivePlayers().size() == 1) 
+                || (scoreCompute.getWinnerByScore().isPresent()
+                && (scoreCompute.getWinnerByScore().get().equals(PlayerColor.RED) 
+                && (scoreCompute.getAlivePlayers().size() > 1)))) {
 
             gameEndedController.redPlayerSet("RED WON!!!", "view/winner.png");
             gameEndedController.yellowPlayerSet("YELLOW LOST...", "view/loser.gif");
 
-        } else if ((scoreController.getAlivePlayers().contains(PlayerColor.YELLOW)) 
-                && (scoreController.getAlivePlayers().size() == 1) 
-                || (scoreController.getWinnerByScore().isPresent() 
-                && (scoreController.getWinnerByScore().get().equals(PlayerColor.RED) 
-                && (scoreController.getAlivePlayers().size() > 1)))) {
+        } else if ((scoreCompute.getAlivePlayers().contains(PlayerColor.YELLOW)) 
+                && (scoreCompute.getAlivePlayers().size() == 1) 
+                || (scoreCompute.getWinnerByScore().isPresent() 
+                && (scoreCompute.getWinnerByScore().get().equals(PlayerColor.RED) 
+                && (scoreCompute.getAlivePlayers().size() > 1)))) {
 
             gameEndedController.redPlayerSet("RED LOST...", "view/loser.gif");
             gameEndedController.yellowPlayerSet("YELLOW WON!!!", "view/winner.gif"); 
@@ -236,16 +234,14 @@ public class ControllerImpl implements Controller {
     }
 
     public void notifyKilledPlayers(List<Player> killedPlayer) {
-        scoreController.killPlayer(killedPlayer.get(killedPlayer.size()-1).getColor());
-        /*if(scoreController.getAlivePlayers().size() <= 1) {
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            //this.gui.loadPage(GUI.PageNames.GAMENDED);
-            //this.gui.getActivePageController().translate(getTranslator());
-        }*/
+        for(Player p: killedPlayer) {
+            p.setStatus(true);
+            System.out.println(p.getColor().toString() + " killed");
+        }
+        if(scoreCompute.getAlivePlayers().size() <= 1){
+            this.gui.loadPage(GUI.PageNames.GAMENDED);
+            this.gui.getActivePageController().translate(getTranslator());
+        }
     }
 
 

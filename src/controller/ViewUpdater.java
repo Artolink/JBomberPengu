@@ -24,6 +24,7 @@ public class ViewUpdater implements Runnable {
                         this.view.movePlayer(player, player.getPosition().getX(), player.getPosition().getY());
                     }
                 }
+                
             }
             try {
                 Thread.sleep(TIMETOSLEEP);
