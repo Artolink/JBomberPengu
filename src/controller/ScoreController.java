@@ -25,7 +25,7 @@ public class ScoreController {
         }
     }
 
-    /**
+    /**pull
      * 
      * @param p
      */
