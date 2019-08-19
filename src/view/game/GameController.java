@@ -241,6 +241,9 @@ public class GameController extends PageController {
                 view.setImage(image);
             }
             view.relocate(blockDimension * row, blockDimension * col);
+            if (isSoundEnabled()) {
+                getSounds().getBombPlacedSound().play();
+            }
         }
     }
 
@@ -272,6 +275,9 @@ public class GameController extends PageController {
             thread.start();
             try {
                 thread.sleep(5);
+                if (isSoundEnabled()) {
+                    getSounds().getExplosionSound().play();
+                }
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
