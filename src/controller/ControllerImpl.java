@@ -26,13 +26,11 @@ public class ControllerImpl implements Controller {
     private final GUIImpl gui;
     private ViewUpdater viewUpdater;
     private GameController gameView;
-    final Timer timer;
 
     public ControllerImpl(Model model, GUIImpl gui) {
         this.model = model;
         this.gui = gui;
         this.gui.setController(this);
-        this.timer = new Timer();
     }
 
     // global data utilities
@@ -74,7 +72,7 @@ public class ControllerImpl implements Controller {
         // render players
         gameView.drawPlayers(model.getPlayers());
         for (final Player player : model.getPlayers()) {
-            player.setCollision(new CollisionImpl(player, map));
+            player.setCollision(new CollisionImpl(player).setMap(map));
         }
         this.viewUpdater.setModel(this.model);
         this.viewUpdater.setView(gameView);
@@ -109,55 +107,18 @@ public class ControllerImpl implements Controller {
     public void releaseBomb(Player player) {
         final int bombX = (player.getPosition().getX() + (player.getWidth() / 2)) / player.getWidth();
         final int bombY = (player.getPosition().getY() + (player.getHeight() / 2)) / player.getHeight();
-        Bomb bomb = new Bomb(new Pair<>(bombX, bombY), player);
+        final Bomb bomb = new Bomb(new Pair<>(bombX, bombY), player);
         this.model.getGameMap().setBlock(bomb, bombX, bombY);
         this.gameView.drawBomb(bomb.getImagePath(), bomb.getInitialPosition().getX(), bomb.getInitialPosition().getY());
-        BombTimer bombTimer = new BombTimer(bomb, getExplosionBlocks(bomb.getRange(), bombX, bombY), this.model.getGameMap(), this.gameView);
-        this.timer.schedule(bombTimer, bomb.getExplosionTime());
+        final BombTimer bombTimer = new BombTimer(bomb, this.model.getPlayers(), this.model.getGameMap(), this, this.gameView);
+        new Timer().schedule(bombTimer, bomb.getExplosionTime());
     }
     
-    private List<AbstractEntity> getExplosionBlocks(final int range, final int row, final int column) {
-        final List<AbstractEntity> blocks = new ArrayList<>();
-        boolean canGoUp = true;
-        boolean canGoDown = true;
-        boolean canGoLeft = true;
-        boolean canGoRight = true;
-        AbstractEntity block;
-        for(int level = 1; level <= range; level++) {
-            try {
-                block = this.model.getGameMap().getBlock(row, column - level);
-                if(!block.getClass().getCanonicalName().equals(IndestructibleBlock.class.getCanonicalName()) && canGoUp) {
-                    blocks.add(block);
-                } else {
-                    canGoUp = false;
-                }
-            } catch (Exception e) { }
-            try {
-                block = this.model.getGameMap().getBlock(row, column + level);
-                if(!block.getClass().getCanonicalName().equals(IndestructibleBlock.class.getCanonicalName()) && canGoDown) {
-                    blocks.add(block);
-                } else {
-                    canGoDown = false;
-                }
-            } catch (Exception e) { }
-            try {
-                block = this.model.getGameMap().getBlock(row - level, column);
-                if(!block.getClass().getCanonicalName().equals(IndestructibleBlock.class.getCanonicalName()) && canGoLeft) {
-                    blocks.add(block);
-                } else {
-                    canGoLeft = false;
-                }
-            } catch (Exception e) { }
-            try {
-                block = this.model.getGameMap().getBlock(row + level, column);
-                if(!block.getClass().getCanonicalName().equals(IndestructibleBlock.class.getCanonicalName()) && canGoRight) {
-                    blocks.add(block);
-                } else {
-                    canGoRight = false;
-                }
-            } catch (Exception e) { }
+
+    public void notifyKilledPlayers(List<Player> killedPlayer) {
+        for(final Player player : killedPlayer) {
+            System.out.println("è morto " + player.getName());
         }
-        return blocks;
     }
 
     @Override
@@ -212,5 +173,6 @@ public class ControllerImpl implements Controller {
         this.gui.stop();
         System.exit(0); //HOW am I supposed to close it???  //TODO
     }
+
 
 }

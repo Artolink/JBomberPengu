@@ -5,11 +5,9 @@ import java.util.List;
 import java.util.Optional;
 
 import controller.ControllerImpl;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -28,6 +26,7 @@ import view.animations.WakeAnimations;
  */
 public class GameController extends GUIImpl {
 
+    private static final long EXPLOSIONSDELAY = 15;
     private int blockDimension;
     private int blockSpacing;
     private Pair<Integer, Integer> dimensions;
@@ -35,8 +34,6 @@ public class GameController extends GUIImpl {
 
     @FXML
     private MyPane canvas;
-    @FXML
-    private Button button;
 
     private final Alert alert = new Alert(AlertType.CONFIRMATION);
     private ControllerImpl controller;
@@ -57,10 +54,8 @@ public class GameController extends GUIImpl {
     @FXML
     public void keyPressed(final KeyEvent event) {
         final KeyCode code = event.getCode();
-        if (associator.contains(code)) {
-            if (!associator.isBombControl(code)) {
-                this.controller.movePlayer(associator.getPlayer(code), associator.getDirection(code));
-            }
+        if (associator.contains(code) && !associator.isBombControl(code)) {
+            this.controller.movePlayer(associator.getPlayer(code), associator.getDirection(code));
         }
     }
 
@@ -187,7 +182,7 @@ public class GameController extends GUIImpl {
             associator.associatePlayer(player);
         }
     }
-    
+
     /**
      * Move the specified player in the final specified position.
      * 
@@ -198,7 +193,7 @@ public class GameController extends GUIImpl {
     public void movePlayer(final Player player, final int row, final int col) {
         this.canvas.getPlayer(player.getInitialPosition().getX(), player.getInitialPosition().getY()).relocate(row, col);
     }
-    
+
     /**
      * Draw the bomb on the game area.
      * 
@@ -225,14 +220,13 @@ public class GameController extends GUIImpl {
      * Draw the Explosion on the game area.
      * 
      * @param bomb bomb to explode
-     * @param row  row
-     * @param col  column
+     * @param interestedBlocks interested block from explosion
      */
     public void explodeBomb(final Bomb bomb, final List<AbstractEntity> interestedBlocks) {
         final List<Thread> threads = new ArrayList<>();
         final WakeAnimations animationBomb = new WakeAnimations();
         animationBomb.setPlayer(bomb.getPlayerInfo());
-        ImageView imageBomb = (ImageView) canvas.getNode(bomb.getInitialPosition().getX(), bomb.getInitialPosition().getY());
+        final ImageView imageBomb = (ImageView) canvas.getNode(bomb.getInitialPosition().getX(), bomb.getInitialPosition().getY());
         imageBomb.setFitHeight(blockDimension - blockSpacing);
         imageBomb.setFitWidth(blockDimension - blockSpacing);
         animationBomb.setImageView(imageBomb);
@@ -240,26 +234,24 @@ public class GameController extends GUIImpl {
         for (final AbstractEntity block : interestedBlocks) {
             final WakeAnimations animation = new WakeAnimations();
             animation.setPlayer(bomb.getPlayerInfo());
-            ImageView image = (ImageView) canvas.getNode(block.getInitialPosition().getX(), block.getInitialPosition().getY());
+            final ImageView image = (ImageView) canvas.getNode(block.getInitialPosition().getX(), block.getInitialPosition().getY());
             image.setFitHeight(blockDimension - blockSpacing);
             image.setFitWidth(blockDimension - blockSpacing);
             animation.setImageView(image);
             threads.add(new Thread(animation));
         }
-        for(Thread thread : threads) {
+        for (final Thread thread : threads) {
             thread.start();
             try {
-                Thread.sleep(5);
+                Thread.sleep(EXPLOSIONSDELAY);
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
-        for(Thread thread : threads) {
+        for (final Thread thread : threads) {
             try {
                 thread.join();
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -269,13 +261,11 @@ public class GameController extends GUIImpl {
         canvas.removeNode(bomb.getInitialPosition().getX(), bomb.getInitialPosition().getY());
     }
 
-    
-
     /**
      * An event occurs when the button is pressed.
      */
     @FXML
-    private void buttonPressed() {
+    public void buttonPressed() {
         alert.setTitle("AAA");
         alert.setHeaderText("do you really want to give up?");
         alert.setContentText("umh...");
