@@ -72,8 +72,8 @@ public class ControllerImpl implements Controller {
         this.gameView = controller;
         this.viewUpdater = new ViewUpdater();
         scoreController = new ScoreController(model.getPlayers().stream()
-                                                                .map( e -> e.getColor())
-                                                                .collect(Collectors.toCollection(ArrayList::new)));
+                .map(e -> e.getColor())
+                .collect(Collectors.toCollection(ArrayList::new)));
 
         // set game dimensions
         gameView.setDimensions(new Pair<Integer, Integer>(map.getDimensions().getX(), map.getDimensions().getY()));
@@ -137,6 +137,8 @@ public class ControllerImpl implements Controller {
         final int bombY = (player.getPosition().getY() + (player.getHeight() / 2)) / player.getHeight();
         final Bomb bomb = new Bomb(new Pair<>(bombX, bombY), player);
         this.model.getGameMap().setBlock(bomb, bombX, bombY);
+        this.model.getGameMap().getBlock(bombX, bombY).setWidth(player.getWidth());
+        this.model.getGameMap().getBlock(bombX, bombY).setHeight(player.getHeight());
         this.gameView.drawBomb(bomb.getImagePath(), bomb.getInitialPosition().getX(), bomb.getInitialPosition().getY());
         final BombTimer bombTimer = new BombTimer(bomb, this.model.getPlayers(), this.model.getGameMap(), this, this.gameView);
         new Timer().schedule(bombTimer, bomb.getExplosionTime());
@@ -237,8 +239,8 @@ public class ControllerImpl implements Controller {
         }
     }
 
-    public void notifyKilledPlayers(List<Player> killedPlayer) {
-        scoreController.killPlayer(killedPlayer.get(killedPlayer.size()-1).getColor());
+    public void notifyKilledPlayers(final List<Player> killedPlayer) {
+        scoreController.killPlayer(killedPlayer.get(killedPlayer.size() - 1).getColor());
         /*if(scoreController.getAlivePlayers().size() <= 1) {
             try {
                 Thread.sleep(2000);
