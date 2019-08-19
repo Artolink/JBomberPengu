@@ -271,13 +271,13 @@ public class GameController extends PageController {
             animation.setImageView(image);
             threads.add(new Thread(animation));
         }
+        if (isSoundEnabled()) {
+            getSounds().getExplosionSound().play();
+        }
         for (Thread thread : threads) {
             thread.start();
             try {
-                thread.sleep(5);
-                if (isSoundEnabled()) {
-                    getSounds().getExplosionSound().play();
-                }
+                Thread.sleep(5);
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
