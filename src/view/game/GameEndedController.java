@@ -26,21 +26,33 @@ public class GameEndedController extends PageController {
     private ImageView playerImage1;
     @FXML
     private ImageView playerImage2;
-    
-    
+
     private ControllerImpl controller;
 
+    /**
+     * Automatically called from FXML file.
+     */
     public void initialize() {
         this.controller = (ControllerImpl) getController();
-        this.controller.GameEnded(this);
+        this.controller.gameEnded(this);
     }
 
-    public void leftPlayerSet(String text, String path) {
+    /**
+     * sets text and image for left player.
+     * @param text - the text you want to display
+     * @param path - th path of the image you want to display
+     */
+    public void leftPlayerSet(final String text, final String path) {
         playerNameLabel1.setText(text);
         playerImage1.setImage(new Image(path));
     }
 
-    public void rightPlayerSet(String text, String path) {
+    /**
+     * sets text and image for right player.
+     * @param text - the text you want to display
+     * @param path - th path of the image you want to display
+     */
+    public void rightPlayerSet(final String text, final String path) {
         playerNameLabel2.setText(text);
         playerImage2.setImage(new Image(path));
     }
@@ -50,7 +62,6 @@ public class GameEndedController extends PageController {
      */
     @FXML
     private void multiPlayerBtPressed() {
-        System.out.println("Multiplayer button pressed");   //TODO debug
         getController().actionPerformedMultiplayerBtn();
     }
 
@@ -59,7 +70,6 @@ public class GameEndedController extends PageController {
      */
     @FXML
     private  void backBtPressed() {
-        System.out.println("Back button pressed");  //TODO debug
         getController().actionPerformedBackBtn();
     }
 

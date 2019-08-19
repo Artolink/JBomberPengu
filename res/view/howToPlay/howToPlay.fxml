@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.image.Image?>
 
-<VBox alignment="TOP_CENTER" style="-fx-scale-shape: true;" stylesheets="view/howToPlay/howToPlay.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" -fx:controller: "view.howToPlay.howToPlayController">
+<VBox alignment="TOP_CENTER" style="-fx-scale-shape: true;" stylesheets="view/howToPlay/howToPlay.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.howToPlay.HowToPlayController">
    <children>
        <ImageView fitHeight="100.0" fitWidth="800.0" style="-fx-scale-x: 100%; -fx-scale-y: 100%;">
 	       <image>

@@ -30,7 +30,6 @@ public class MainMenuController extends PageController {
      */
     @FXML
     private void singlePlayerBtPressed() {
-        System.out.println("Singleplayer button pressed");  //TODO debug
         getController().actionPerformedSingleplayerBtn();
     }
 
@@ -39,7 +38,6 @@ public class MainMenuController extends PageController {
      */
     @FXML
     private void multiPlayerBtPressed() {
-        System.out.println("Multiplayer button pressed");   //TODO debug
         getController().actionPerformedMultiplayerBtn();
     }
  
@@ -48,7 +46,6 @@ public class MainMenuController extends PageController {
      */
     @FXML
     private void mapEditorPressed() {
-        System.out.println("Map editor button pressed");    //TODO debug
         getController().actionPerformedMapEditorBtn();
     }
 
@@ -57,7 +54,6 @@ public class MainMenuController extends PageController {
      */
     @FXML
     private void languageEditorPressed() {
-        System.out.println("Language editor button pressed");   //TODO debug
         getController().actionPerformedLanguageEditorBtn();
     }
 
@@ -66,7 +62,6 @@ public class MainMenuController extends PageController {
      */
     @FXML
     private void settingsBtPressed() {
-        System.out.println("Settings button pressed");  //TODO debug
         getController().actionPerformedSettingsBtn();
     }
 
@@ -75,7 +70,6 @@ public class MainMenuController extends PageController {
      */
     @FXML
     private void howToPlayBtPressed() {
-        System.out.println("howToPlayBtPressed button pressed");  //TODO debug
         getController().actionPerformedHTPBtn();
     }
 
@@ -84,8 +78,6 @@ public class MainMenuController extends PageController {
      */
     @FXML
     private void closeGameBtPressed() {
-        System.out.println("Close button pressed");  //TODO debug
-        stop();
         getController().actionPerformedCloseBtn();
     }
 

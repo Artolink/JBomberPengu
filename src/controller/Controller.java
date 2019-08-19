@@ -34,6 +34,6 @@ public interface Controller {
 
     public void actionPerformedLoseBtn();
 
-    public void actionPerformedHTPBtn();    //this.gui.loadPage(GUI.PageNames.HOWTOPLAY); this.gui.getActivePageController().translate(getTranslator());
+    public void actionPerformedHTPBtn();
 
 }

@@ -18,6 +18,7 @@ import model.utils.Pair;
 import view.GUI;
 import view.GUIImpl;
 import view.game.GameController;
+import view.game.GameEndedController;
 
 public class ControllerImpl implements Controller {
 
@@ -28,7 +29,12 @@ public class ControllerImpl implements Controller {
     private GameController gameView;
     final Timer timer;
 
-    public ControllerImpl(Model model, GUIImpl gui) {
+    /**
+     * 
+     * @param model
+     * @param gui
+     */
+    public ControllerImpl(final Model model, final GUIImpl gui) {
         this.model = model;
         this.gui = gui;
         this.gui.setController(this);
@@ -36,19 +42,31 @@ public class ControllerImpl implements Controller {
     }
 
     // global data utilities
+    /**
+     * @return the ApplicationStrings instance
+     */
     public ApplicationStrings getTranslator() {
         return this.model.getTranslator();
     }
 
+    /**
+     * 
+     * @param language - one language taken from getTranslator().getAvailableLanguages()
+     */
     public void setLanguage(final String language) {
         this.model.getTranslator().setLanguage(language);
         // this.view.notifyLanguageChanged();
     }
 
+
     // main menu controller
 
     // game controller
 
+    /**
+     * 
+     * @param controller - the view controller
+     */
     public void initGame(final GameController controller) {
         this.model.initGameData();
         final GameMap map = model.getGameMap();
@@ -106,7 +124,11 @@ public class ControllerImpl implements Controller {
     }
 
 
-    public void releaseBomb(Player player) {
+    /**
+     * Drop a bomb from player.
+     * @param player - who is dropping the bomb
+     */
+    public void releaseBomb(final Player player) {
         final int bombX = (player.getPosition().getX() + (player.getWidth() / 2)) / player.getWidth();
         final int bombY = (player.getPosition().getY() + (player.getHeight() / 2)) / player.getHeight();
         Bomb bomb = new Bomb(new Pair<>(bombX, bombY), player);
@@ -115,7 +137,7 @@ public class ControllerImpl implements Controller {
         BombTimer bombTimer = new BombTimer(bomb, getExplosionBlocks(bomb.getRange(), bombX, bombY), this.model.getGameMap(), this.gameView);
         this.timer.schedule(bombTimer, bomb.getExplosionTime());
     }
-    
+
     private List<AbstractEntity> getExplosionBlocks(final int range, final int row, final int column) {
         final List<AbstractEntity> blocks = new ArrayList<>();
         boolean canGoUp = true;
@@ -123,10 +145,10 @@ public class ControllerImpl implements Controller {
         boolean canGoLeft = true;
         boolean canGoRight = true;
         AbstractEntity block;
-        for(int level = 1; level <= range; level++) {
+        for (int level = 1; level <= range; level++) {
             try {
                 block = this.model.getGameMap().getBlock(row, column - level);
-                if(!block.getClass().getCanonicalName().equals(IndestructibleBlock.class.getCanonicalName()) && canGoUp) {
+                if (!block.getClass().getCanonicalName().equals(IndestructibleBlock.class.getCanonicalName()) && canGoUp) {
                     blocks.add(block);
                 } else {
                     canGoUp = false;
@@ -134,7 +156,7 @@ public class ControllerImpl implements Controller {
             } catch (Exception e) { }
             try {
                 block = this.model.getGameMap().getBlock(row, column + level);
-                if(!block.getClass().getCanonicalName().equals(IndestructibleBlock.class.getCanonicalName()) && canGoDown) {
+                if (!block.getClass().getCanonicalName().equals(IndestructibleBlock.class.getCanonicalName()) && canGoDown) {
                     blocks.add(block);
                 } else {
                     canGoDown = false;
@@ -142,7 +164,7 @@ public class ControllerImpl implements Controller {
             } catch (Exception e) { }
             try {
                 block = this.model.getGameMap().getBlock(row - level, column);
-                if(!block.getClass().getCanonicalName().equals(IndestructibleBlock.class.getCanonicalName()) && canGoLeft) {
+                if (!block.getClass().getCanonicalName().equals(IndestructibleBlock.class.getCanonicalName()) && canGoLeft) {
                     blocks.add(block);
                 } else {
                     canGoLeft = false;
@@ -150,7 +172,7 @@ public class ControllerImpl implements Controller {
             } catch (Exception e) { }
             try {
                 block = this.model.getGameMap().getBlock(row + level, column);
-                if(!block.getClass().getCanonicalName().equals(IndestructibleBlock.class.getCanonicalName()) && canGoRight) {
+                if (!block.getClass().getCanonicalName().equals(IndestructibleBlock.class.getCanonicalName()) && canGoRight) {
                     blocks.add(block);
                 } else {
                     canGoRight = false;
@@ -161,56 +183,85 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
-    public void actionPerformedSingleplayerBtn() {
+    public final void actionPerformedSingleplayerBtn() {
         //this.gui.loadPage(GUI.PageNames.GAME);
+        //this.gui.getActivePageController().translate(getTranslator());
     }
 
     @Override
-    public void actionPerformedBackBtn() {
+    public final void actionPerformedBackBtn() {
         this.gui.loadPage(GUI.PageNames.MAINMENU);
+        this.gui.getActivePageController().translate(getTranslator());
     }
 
     @Override
-    public void actionPerformedMultiplayerBtn() {
+    public final void actionPerformedMultiplayerBtn() {
         this.gui.loadPage(GUI.PageNames.GAME);
+        this.gui.getActivePageController().translate(getTranslator());
     }
 
     @Override
-    public void actionPerformedMapEditorBtn() {
+    public final void actionPerformedMapEditorBtn() {
         //this.gui.loadPage(GUI.PageNames.MAPEDITOR);
+        //this.gui.getActivePageController().translate(getTranslator());
     }
 
     @Override
-    public void actionPerformedLanguageEditorBtn() {
+    public final void actionPerformedLanguageEditorBtn() {
         this.gui.loadPage(GUI.PageNames.LANGUAGEDITOR);
+        this.gui.getActivePageController().translate(getTranslator());
     }
 
     @Override
-    public void actionPerformedSettingsBtn() {
+    public final void actionPerformedSettingsBtn() {
         this.gui.loadPage(GUI.PageNames.SETTINGS);
+        this.gui.getActivePageController().translate(getTranslator());
     }
 
     @Override
-    public void actionPerformedSaveBtn() {
+    public final void actionPerformedSaveBtn() {
         //this.gui.loadPage(GUI.PageNames.GAME);
     }
 
     @Override
-    public void actionPerformedLanguageChanged(String language) {
-        // TODO Auto-generated method stub
-
+    public final void actionPerformedLanguageChanged(final String language) {
+        setLanguage(language);
+        this.gui.getActivePageController().translate(getTranslator());
     }
 
     @Override
-    public void actionPerformedLoseBtn() {
+    public final void actionPerformedLoseBtn() {
         this.gui.loadPage(GUI.PageNames.GAMENDED);
+        this.gui.getActivePageController().translate(getTranslator());
     }
 
     @Override
-    public void actionPerformedCloseBtn() {
+    public final void actionPerformedCloseBtn() {
         System.out.println("Closing application...");
         this.gui.stop();
-        System.exit(0); //HOW am I supposed to close it???  //TODO
+        System.exit(0); //TODO HOW am I supposed to close it spotbugs???
+    }
+
+    @Override
+    public final void actionPerformedHTPBtn() {
+      this.gui.loadPage(GUI.PageNames.HOWTOPLAY);
+      this.gui.getActivePageController().translate(getTranslator());
+    }
+
+
+    /**
+     * Called while loading GameEnded.fxml.
+     * @param gameEndedController - controller of GameEnded.fxml
+     */
+    public final void gameEnded(final GameEndedController gameEndedController) {
+        // TODO use score to determine who won
+        if (true) {
+            gameEndedController.leftPlayerSet("Player 1 WON!!!", "view/penguin.png");
+            gameEndedController.rightPlayerSet("Player 2 Lost...", "view/loser_gif.gif");
+        } else {
+            gameEndedController.leftPlayerSet("Player 1 Lost...", "view/loser_gif.gif");
+            gameEndedController.rightPlayerSet("Player 2 WON!!!", "view/penguin.png"); 
+        }
     }
 
 }

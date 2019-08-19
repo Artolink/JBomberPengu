@@ -46,7 +46,6 @@ public class SettingsMenuController extends PageController {
     private void initialize() {
 
         fullscreenCB.setSelected(isFullscreen());
-        
         soundsCB.setSelected(isSoundEnabled());
 
         // Init ComboBox items.
@@ -94,7 +93,7 @@ public class SettingsMenuController extends PageController {
     public void fullscreenPressed() {
         setFullscreenMode(fullscreenCB.isSelected());
     }
-    
+
     /**
      * 
      */

@@ -32,7 +32,7 @@ import view.PageController;
 /**
  * Controller of res.view.MultilangView.fxm.
  */
-public class MultilangController extends PageController{
+public class MultilangController extends PageController {
 
     private ObservableList<String> languageList;
     private JSONArray languageKey;
@@ -79,7 +79,7 @@ public class MultilangController extends PageController{
         System.out.println("Back button pressed");  //TODO debug
         getController().actionPerformedBackBtn();
     }
-    
+
     /**
      * Button save. Save translation into file.
      */
@@ -209,9 +209,9 @@ public class MultilangController extends PageController{
     }
 
     @Override
-    public void translate(ApplicationStrings t) {
+    public void translate(final ApplicationStrings t) {
         // TODO Auto-generated method stub
-        
+
     }
 
 }
