@@ -50,10 +50,10 @@ public class BombTimer extends TimerTask {
         for (final Player player : players) {
             collision = new CollisionImpl(player);
             if (collision.bombCollided(interestedBlock)) {
-                killedPlayer.add(player);
+                player.setStatus(true);
             }
         }
-        this.controller.notifyKilledPlayers(this.killedPlayer);
+        this.controller.notifyKilledPlayers(); 
     }
 
     private List<AbstractEntity> getExplosionBlocks(final int range, final int row, final int column) {
