@@ -2,6 +2,7 @@ package model.collisions;
 
 import java.util.List;
 
+import model.AbstractEntity;
 import model.player.Player;
 import model.utils.Directions;
 import model.utils.Rectangle;
@@ -17,6 +18,14 @@ public interface Collision {
      * @return true if there's a collision, false otherwise
      */
     boolean blocksCollided();
+
+    /**
+     * Checks if there's a collision with bombs.
+     * 
+     * @param blocks is the list of all bombs
+     * @return true if there's a collision, false otherwise
+     */
+    boolean bombCollided(List<AbstractEntity> blocks);
 
     /**
      * Gets a list of hitboxes to check for collisions.

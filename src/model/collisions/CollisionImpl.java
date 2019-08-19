@@ -18,24 +18,37 @@ public final class CollisionImpl implements Collision {
 
     // private Rectangle entityHitbox;
     private final Player player;
-    private final GameMap map;
+    private GameMap map;
 
     /**
      * Collision builder, initialize the entity that needs to be checked and its
      * collision box.
      * 
      * @param player player associated at this collision set
-     * @param map    is the map of the entire game, used to know all blocks position
      */
-    public CollisionImpl(final Player player, final GameMap map) {
+    public CollisionImpl(final Player player) {
         this.player = player;
+    }
+    /**
+     * Sets the map.
+     * 
+     * @param map is the game map containing all the blocks
+     * @return the class
+     */
+    public CollisionImpl setMap(final GameMap map) {
         this.map = map;
+        return this;
     }
 
     @Override
     public boolean blocksCollided() {
         return getCollisionBlock(player, player.getDirection()).stream()
                 .anyMatch((block) -> player.getCollisionBox().intersectsWith(block));
+    }
+
+    @Override
+    public boolean bombCollided(final List<AbstractEntity> blocks) {
+        return blocks.stream().anyMatch((block) -> player.getCollisionBox().intersectsWithBomb(block.getCollisionBox()));
     }
 
     @Override
@@ -112,7 +125,7 @@ public final class CollisionImpl implements Collision {
                     break;
                 }
             } catch (Exception e) {
-                
+
             }
         } else if (xRelative && !yRelative) {
             try {
@@ -173,7 +186,7 @@ public final class CollisionImpl implements Collision {
                     break;
                 }
             } catch (Exception e) {
-                
+
             }
         } else if (!xRelative && yRelative) {
             try {
@@ -234,7 +247,7 @@ public final class CollisionImpl implements Collision {
                     break;
                 }
             } catch (Exception e) {
-                
+
             }
         }
         return collisionBlock;

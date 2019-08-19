@@ -208,4 +208,27 @@ public final class Rectangle {
                 yr1 + this.height >= yr2 &&     // if the first rectangle top edge goes past the second rectangle bottom edge
                 yr1 <= yr2 + hr2;               // if the first rectangle bottom edge goes past the second rectangle top edge
     }
+
+    /**
+     * Method to check if two generic bombs collide. Used for generic
+     * collisions where you don't need to know the position (up,
+     * down, left, right) of the collision.
+     * 
+     * @param rectangle is the rectangle you want to check if it collides with
+     *                  yours.
+     * @return true if the rectangles collide, false otherwise.
+     */
+    public boolean intersectsWithBomb(final Rectangle rectangle) {
+        final double xr1 = this.position.getX();
+        final double yr1 = this.position.getY();
+        final double xr2 = rectangle.getPosition().getX();
+        final double yr2 = rectangle.getPosition().getY();
+        final double wr2 = rectangle.getWidth();
+        final double hr2 = rectangle.getHeight();
+
+        return xr1 + this.width > xr2 &&       // if the first rectangle right edge goes past the second rectangle left edge
+                xr1 < xr2 + wr2 &&             // if the first rectangle left edge goes past the second rectangle right edge
+                yr1 + this.height > yr2 &&     // if the first rectangle top edge goes past the second rectangle bottom edge
+                yr1 < yr2 + hr2;               // if the first rectangle bottom edge goes past the second rectangle top edge
+    }
 }
