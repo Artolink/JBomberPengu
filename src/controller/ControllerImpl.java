@@ -270,18 +270,11 @@ public class ControllerImpl implements Controller {
      * @param killedPlayer 
      */
     public void notifyKilledPlayers(final List<Player> killedPlayer) {
-        for (Player p: killedPlayer) {
-            p.setStatus(true);
-            System.out.println(p.getColor().toString() + " killed");
-        }
+        scoreCompute.killPlayers(killedPlayer);
         System.out.println(scoreCompute.getAlivePlayers());
-        if (scoreCompute.getAlivePlayers().size() <= 1) {
+        
+        if (scoreCompute.isGameEnded()) {
             System.out.println("GAME ENDED NOW!!!");
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             this.gui.loadPage(GUI.PageNames.GAMENDED);
             this.gui.getActivePageController().translate(getTranslator());
         }
