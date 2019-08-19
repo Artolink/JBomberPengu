@@ -44,8 +44,13 @@ public class MyPane extends Pane {
      * @param column column
      */
     public void removeNode(final int row, final int column) {
-        ImageView image = (ImageView) gridMap.get(new Pair<>(row, column));
-        image.setImage(null);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                final ImageView image = (ImageView) gridMap.get(new Pair<>(row, column));
+                image.setImage(null);
+            }
+        });
     }
 
     /**
