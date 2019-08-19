@@ -61,6 +61,7 @@ public class GUIImpl extends Application implements GUI {
 
         //Load main menu FXML as default
         loadPage(PageNames.MAINMENU);
+        getActivePageController().translate(getTranslator());
 
         //start sound
         StObjCont.setSoundsAssociator(new SoundsAssociator());
@@ -219,6 +220,16 @@ public class GUIImpl extends Application implements GUI {
      */
     protected Boolean isSoundEnabled() {
         return StObjCont.isMusicEnabled();
+    }
+    
+    /**
+     * Sets first character to UpperCase.
+     * @param str
+     * @return
+     */
+    protected String capitalize(String str)
+    {
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 
     // Private methods -------------------------------------------------------------------------------------------
