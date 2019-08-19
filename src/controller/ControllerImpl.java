@@ -256,11 +256,11 @@ public class ControllerImpl implements Controller {
     public final void gameEnded(final GameEndedController gameEndedController) {
         // TODO use score to determine who won
         if (true) {
-            gameEndedController.leftPlayerSet("Player 1 WON!!!", "view/penguin.png");
-            gameEndedController.rightPlayerSet("Player 2 Lost...", "view/loser_gif.gif");
+            gameEndedController.leftPlayerSet("RED WON!!!", "view/iu.gif");
+            gameEndedController.rightPlayerSet("YELLOW Lost...", "view/loser.gif");
         } else {
-            gameEndedController.leftPlayerSet("Player 1 Lost...", "view/loser_gif.gif");
-            gameEndedController.rightPlayerSet("Player 2 WON!!!", "view/penguin.png"); 
+            gameEndedController.leftPlayerSet("RED Lost...", "view/loser.gif");
+            gameEndedController.rightPlayerSet("YELLOW WON!!!", "view/iu.gif"); 
         }
     }
 
