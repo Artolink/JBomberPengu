@@ -1,9 +1,11 @@
 package view.game;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import controller.ControllerImpl;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -13,10 +15,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import model.AbstractEntity;
+import model.blocks.Bomb;
 import model.player.Player;
 import model.utils.Pair;
 import view.GUIImpl;
 import view.animations.PlayerAnimations;
+import view.animations.WakeAnimations;
 
 /**
  * Controller of Game.fxml. It draws the game interface.
@@ -53,7 +58,9 @@ public class GameController extends GUIImpl {
     public void keyPressed(final KeyEvent event) {
         final KeyCode code = event.getCode();
         if (associator.contains(code)) {
-            this.controller.movePlayer(associator.getPlayer(code), associator.getDirection(code));
+            if (!associator.isBombControl(code)) {
+                this.controller.movePlayer(associator.getPlayer(code), associator.getDirection(code));
+            }
         }
     }
 
@@ -66,7 +73,11 @@ public class GameController extends GUIImpl {
     public void keyReleased(final KeyEvent event) {
         final KeyCode code = event.getCode();
         if (associator.contains(code)) {
-            this.controller.stopPlayer(associator.getPlayer(code), associator.getDirection(code));
+            if (associator.isBombControl(code)) {
+                this.controller.releaseBomb(associator.getPlayer(code));
+            } else {
+                this.controller.stopPlayer(associator.getPlayer(code), associator.getDirection(code));
+            }
         }
     }
 
@@ -140,13 +151,16 @@ public class GameController extends GUIImpl {
      * @param col  column to add the image
      */
     public void draw(final String path, final int row, final int col) {
+        ImageView view = null;
         if (!path.isEmpty()) {
             final Image image = new Image(path, blockDimension - blockSpacing, blockDimension - blockSpacing, false,
                     false);
-            final ImageView view = new ImageView(image);
-            view.relocate(blockDimension * row, blockDimension * col);
-            canvas.addNode(view, row, col);
+            view = new ImageView(image);
+        } else {
+            view = new ImageView();
         }
+        view.relocate(blockDimension * row, blockDimension * col);
+        canvas.addNode(view, row, col);
     }
 
     /**
@@ -163,7 +177,7 @@ public class GameController extends GUIImpl {
             view.setFitWidth(blockDimension - blockSpacing);
             view.relocate(blockDimension * player.getInitialPosition().getX(),
                     blockDimension * player.getInitialPosition().getY());
-            canvas.addNode(view, player.getInitialPosition().getX(), player.getInitialPosition().getY());
+            canvas.addPlayer(view, player.getInitialPosition().getX(), player.getInitialPosition().getY());
             final PlayerAnimations animation = new PlayerAnimations();
             animation.setImageView(view);
             animation.setPlayer(player);
@@ -173,7 +187,7 @@ public class GameController extends GUIImpl {
             associator.associatePlayer(player);
         }
     }
-
+    
     /**
      * Move the specified player in the final specified position.
      * 
@@ -182,8 +196,80 @@ public class GameController extends GUIImpl {
      * @param col    column parameter
      */
     public void movePlayer(final Player player, final int row, final int col) {
-        this.canvas.getNode(player.getInitialPosition().getX(), player.getInitialPosition().getY()).relocate(row, col);
+        this.canvas.getPlayer(player.getInitialPosition().getX(), player.getInitialPosition().getY()).relocate(row, col);
     }
+    
+    /**
+     * Draw the bomb on the game area.
+     * 
+     * @param path image to draw
+     * @param row  row to add the bomb
+     * @param col  column to add the bomb
+     */
+    public void drawBomb(final String path, final int row, final int col) {
+        if (!path.isEmpty()) {
+            final Image image = new Image(path, blockDimension - blockSpacing, blockDimension - blockSpacing, false,
+                    false);
+            ImageView view = (ImageView) canvas.getNode(row, col);
+            if (view == null) {
+                view = new ImageView(image);
+                canvas.addNode(view, row, col);
+            } else {
+                view.setImage(image);
+            }
+            view.relocate(blockDimension * row, blockDimension * col);
+        }
+    }
+
+    /**
+     * Draw the Explosion on the game area.
+     * 
+     * @param bomb bomb to explode
+     * @param row  row
+     * @param col  column
+     */
+    public void explodeBomb(final Bomb bomb, final List<AbstractEntity> interestedBlocks) {
+        final List<Thread> threads = new ArrayList<>();
+        final WakeAnimations animationBomb = new WakeAnimations();
+        animationBomb.setPlayer(bomb.getPlayerInfo());
+        ImageView imageBomb = (ImageView) canvas.getNode(bomb.getInitialPosition().getX(), bomb.getInitialPosition().getY());
+        imageBomb.setFitHeight(blockDimension - blockSpacing);
+        imageBomb.setFitWidth(blockDimension - blockSpacing);
+        animationBomb.setImageView(imageBomb);
+        threads.add(new Thread(animationBomb));
+        for (final AbstractEntity block : interestedBlocks) {
+            final WakeAnimations animation = new WakeAnimations();
+            animation.setPlayer(bomb.getPlayerInfo());
+            ImageView image = (ImageView) canvas.getNode(block.getInitialPosition().getX(), block.getInitialPosition().getY());
+            image.setFitHeight(blockDimension - blockSpacing);
+            image.setFitWidth(blockDimension - blockSpacing);
+            animation.setImageView(image);
+            threads.add(new Thread(animation));
+        }
+        for(Thread thread : threads) {
+            thread.start();
+            try {
+                Thread.sleep(5);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        for(Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        for (final AbstractEntity block : interestedBlocks) {
+            canvas.removeNode(block.getInitialPosition().getX(), block.getInitialPosition().getY());
+        }
+        canvas.removeNode(bomb.getInitialPosition().getX(), bomb.getInitialPosition().getY());
+    }
+
+    
 
     /**
      * An event occurs when the button is pressed.

@@ -17,7 +17,7 @@ import model.utils.Pair;
  */
 public class Model {
 
-    public static final int VELOCITY = 4;
+    public static final int VELOCITY = 10;
     public static final int BLOCKDIMENSION = 40;
     public static final int BLOCKSPACING = 0;
     public static final int PANEOFFSET = 10;

@@ -10,7 +10,7 @@ import view.game.GameController;
 
 public class ViewUpdater implements Runnable {
 
-    private static final int TIMETOSLEEP = 75;
+    private static final int TIMETOSLEEP = 100;
     private Model model;
     private GameController view;
 
