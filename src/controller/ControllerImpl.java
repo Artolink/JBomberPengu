@@ -93,7 +93,9 @@ public class ControllerImpl implements Controller {
         // render players
         gameView.drawPlayers(model.getPlayers());
         for (final Player player : model.getPlayers()) {
-            player.setCollision(new CollisionImpl(player).setMap(map));
+            CollisionImpl collision = new CollisionImpl(player);
+            collision.setMap(map);
+            player.setCollision(collision);
         }
         this.viewUpdater.setModel(this.model);
         this.viewUpdater.setView(gameView);
