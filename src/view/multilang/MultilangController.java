@@ -185,7 +185,7 @@ public class MultilangController extends PageController {
             this.keyInSelectedLanguage.setText(translation.getTranslation());
             this.translationKey = translation.getKey();
 
-            this.translationLabel.setText("Translation ->");
+            this.translationLabel.setText(" Translation ->");
             this.translationLabel.setPadding(new Insets(0, 10, 0, 0));
             this.mainLayout.setPadding(new Insets(0, 0, 10, 0));
             this.mainLayout.setAlignment(Pos.CENTER);

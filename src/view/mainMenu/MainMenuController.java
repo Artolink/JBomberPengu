@@ -85,13 +85,13 @@ public class MainMenuController extends PageController {
 
     @Override
     public final void translate(final ApplicationStrings t) {
-        spBtn.setText(t.getValueOf("singleplayer"));
-        mpBtn.setText(t.getValueOf("multiplayer"));
-        mapEditorBtn.setText(t.getValueOf("map editor"));
-        langEditorBtn.setText(t.getValueOf("language editor"));
-        settingsBtn.setText(t.getValueOf("settings"));
-        howToPlayBtn.setText(t.getValueOf("howtoplay"));
-        closeBtn.setText(t.getValueOf("close"));
+        spBtn.setText(t.getValueOf("singleplayer").toUpperCase());
+        mpBtn.setText(t.getValueOf("multiplayer").toUpperCase());
+        mapEditorBtn.setText(t.getValueOf("map editor").toUpperCase());
+        langEditorBtn.setText(t.getValueOf("language editor").toUpperCase());
+        settingsBtn.setText(t.getValueOf("settings").toUpperCase());
+        howToPlayBtn.setText(t.getValueOf("howtoplay").toUpperCase());
+        closeBtn.setText(t.getValueOf("close").toUpperCase());
     }
  
 }

@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.image.Image?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="656.0" prefWidth="649.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="656.0" prefWidth="649.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="view/howToPlay/HowToPlay.css" fx:controller="view.howToPlay.HowToPlayController">
    <children>
       <ImageView fitHeight="656.0" fitWidth="649.0">
          <image>
@@ -61,7 +61,7 @@
       </VBox>
       <HBox layoutX="224.0" layoutY="575.0" prefHeight="67.0" prefWidth="202.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="63.0" prefWidth="206.0" text="Back to menu" />
+            <Button mnemonicParsing="false" prefHeight="63.0" prefWidth="206.0" text="Back to menu" onAction="#backBtnPressed"/>
          </children>
       </HBox>
       <HBox layoutX="12.0" layoutY="133.0" prefHeight="108.0" prefWidth="626.0">
