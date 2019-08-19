@@ -40,6 +40,7 @@ public class Model {
 
     public void initGameData() {
         // check if map is saved on file or generate it (and save it into file)
+        System.out.println("Starting level " + level.get());
         final MapOnFile onFile = new MapOnFile();
         if (onFile.containsLevel(level)) {
             final Optional<GameMap> optionalMap = onFile.getMap(level);
@@ -52,6 +53,7 @@ public class Model {
             this.map = new MapGenerator(this.level, new Pair<Integer, Integer>(MAPROWS, MAPCOLUMN)).get();
         }
 
+        players.clear();
         Player player = new Player(0, "Marco", new Pair<Integer, Integer>(0, 0), PlayerColor.RED);
         player.setHeight(BLOCKDIMENSION);
         player.setWidth(BLOCKDIMENSION);
@@ -62,6 +64,7 @@ public class Model {
         player2.setWidth(BLOCKDIMENSION);
         player2.setVelocity(VELOCITY);
         this.players.add(player2);
+        level.next();
     }
 
     /**
