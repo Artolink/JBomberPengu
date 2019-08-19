@@ -74,30 +74,61 @@ public class ControllerImpl implements Controller {
         this.viewUpdater = new ViewUpdater();
         scoreCompute = new ScoreCompute(model.getPlayers());
 
+        
         // set game dimensions
         gameView.setDimensions(new Pair<Integer, Integer>(map.getDimensions().getX(), map.getDimensions().getY()));
         gameView.setBlockDimension(Model.BLOCKDIMENSION);
         gameView.setBlockSpacing(Model.BLOCKSPACING);
         gameView.resizeToMap();
 
-        // first render of map in view
-        for (int a = 0; a < map.getDimensions().getX(); a++) {
-            for (int b = 0; b < map.getDimensions().getY(); b++) {
-                final AbstractEntity block = map.getBlock(a, b);
-                block.setHeight(Model.BLOCKDIMENSION);
-                block.setWidth(Model.BLOCKDIMENSION);
-                gameView.draw(block.getImagePath(), a, b);
+        //Heavy calculations---------------------------------------------------------
+        //executing on thread 1
+        Thread renderMapThread = new Thread(new Runnable() {
+            public void run() {
+                // first render of map in view
+                for (int a = 0; a < map.getDimensions().getX(); a++) {
+                    for (int b = 0; b < map.getDimensions().getY(); b++) {
+                        final AbstractEntity block = map.getBlock(a, b);
+                        block.setHeight(Model.BLOCKDIMENSION);
+                        block.setWidth(Model.BLOCKDIMENSION);
+                        gameView.draw(block.getImagePath(), a, b);
+                    }
+                }
             }
-        }
+        }); 
+        renderMapThread.start();
 
+        //executed by javafx thread
         // render players
         gameView.drawPlayers(model.getPlayers());
-        for (final Player player : model.getPlayers()) {
-            player.setCollision(new CollisionImpl(player).setMap(map));
+
+        //executed on thread 2
+        Thread renderPlThread = new Thread(new Runnable() {
+            public void run() {
+                for (final Player player : model.getPlayers()) {
+                    player.setCollision(new CollisionImpl(player).setMap(map));
+                }
+            }
+        }); 
+        renderPlThread.start();
+
+        //thread join
+        try {
+            System.out.println("wait map render");
+            renderMapThread.join();
+            System.out.println("wait collision generation");
+            renderPlThread.join();
+            System.out.println("done");
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
+      //Heavy calculations ended---------------------------------------------------
+
         this.viewUpdater.setModel(this.model);
         this.viewUpdater.setView(gameView);
         new Thread(this.viewUpdater).start();
+            
     }
 
     /**
@@ -210,6 +241,7 @@ public class ControllerImpl implements Controller {
      * @param gameEndedController - controller of GameEnded.fxml
      */
     public final void gameEnded(final GameEndedController gameEndedController) {
+        viewUpdater.stop();
         if ((scoreCompute.getAlivePlayers().stream().map(e -> e.getColor()).anyMatch(e -> e.compareTo(PlayerColor.RED) == 0)) 
                 && (scoreCompute.getAlivePlayers().size() == 1) 
                 || (scoreCompute.getWinnerByScore().isPresent()
@@ -243,14 +275,13 @@ public class ControllerImpl implements Controller {
             System.out.println(p.getColor().toString() + " killed");
         }
         System.out.println(scoreCompute.getAlivePlayers());
-        if (scoreCompute.getAlivePlayers().size() <= 1){
+        if (scoreCompute.getAlivePlayers().size() <= 1) {
             System.out.println("GAME ENDED NOW!!!");
             try {
-                Thread.sleep(2000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            viewUpdater.stop();
             this.gui.loadPage(GUI.PageNames.GAMENDED);
             this.gui.getActivePageController().translate(getTranslator());
         }
