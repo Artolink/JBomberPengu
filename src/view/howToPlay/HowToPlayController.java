@@ -14,14 +14,7 @@ public class HowToPlayController extends PageController {
     private Button backBtn;
 
     /**
-     * Automatically called from the FXML file.
-     */
-    @FXML
-    private void initialize() {
-    }
-
-    /**
-     * Returns to main menu whitout saving.
+     * Returns to main menu.
      */
     @FXML
     public void backBtnPressed() {
@@ -30,7 +23,7 @@ public class HowToPlayController extends PageController {
 
     @Override
     public final void translate(final ApplicationStrings t) {
-        backBtn.setText(t.getValueOf("main menu"));
+        backBtn.setText(capitalize(t.getValueOf("main menu")));
     }
 
 }
