@@ -71,6 +71,15 @@ public class MainMenuController extends PageController {
     }
 
     /**
+     * Action executed when howToPlay button is pressed.
+     */
+    @FXML
+    private void howToPlayBtPressed() {
+        System.out.println("howToPlayBtPressed button pressed");  //TODO debug
+        getController().actionPerformedHTPBtn();
+    }
+
+    /**
      * Action executed when Settings button is pressed.
      */
     @FXML
