@@ -14,7 +14,7 @@ public final class DestructibleBlock extends AbstractEntity {
     private static final double POWER_UP_CHANCE = 0.5;
     private static final int SCORE_VALUE = 25;
 
-    private final Optional<Object> powerup; //object has to change with a enum of powerup block type
+    private final Optional<Object> powerup;
 
     /**
      * Block builder.
@@ -33,9 +33,11 @@ public final class DestructibleBlock extends AbstractEntity {
         return Math.random() < POWER_UP_CHANCE ? Optional.of(1) : Optional.empty(); //optional.of(1) has to change with enum of powerup block type
     }
 
-//    public void dropPowerUpWhenDestroyed() {
-//        if (this.powerup.isPresent()) {
-//            return;
-//        }
-//    }
+    /**
+     * Defines if have to drop a power up when destroying this block.
+     * @return if have to drop
+     */
+    public boolean dropPowerUpWhenDestroyed() {
+        return this.powerup.isPresent();
+    }
 }

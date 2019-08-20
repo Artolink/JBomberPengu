@@ -17,7 +17,7 @@ import model.player.Player;
  */
 public class ScoreCompute {
 
-    private Score score = new Score();
+    private final Score score = new Score();
 
     /**
      * Construct the score managing system.
@@ -61,7 +61,7 @@ public class ScoreCompute {
      */
     public void saveScores() {
         if (isGameEnded()) {
-            ScoreWorker scoreWorker = new ScoreWorker();
+            final ScoreWorker scoreWorker = new ScoreWorker();
               try {
                 scoreWorker.saveScore(score);
             } catch (IOException e) {

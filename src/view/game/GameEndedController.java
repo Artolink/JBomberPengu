@@ -27,14 +27,13 @@ public class GameEndedController extends PageController {
     @FXML
     private ImageView playerImage2;
 
-    private ControllerImpl controller;
 
     /**
      * Automatically called from FXML file.
      */
     public void initialize() {
-        this.controller = (ControllerImpl) getController();
-        this.controller.gameEnded(this);
+        final ControllerImpl controller = (ControllerImpl) getController();
+        controller.gameEnded(this);
     }
 
     /**
@@ -61,7 +60,7 @@ public class GameEndedController extends PageController {
      * Action executed when Multiplayer button is pressed.
      */
     @FXML
-    private void multiPlayerBtPressed() {
+    public void multiPlayerBtPressed() {
         getController().actionPerformedMultiplayerBtn();
     }
 
@@ -69,7 +68,7 @@ public class GameEndedController extends PageController {
      * Returns to main menu whitout saving.
      */
     @FXML
-    private  void backBtPressed() {
+    public  void backBtPressed() {
         getController().actionPerformedBackBtn();
     }
 

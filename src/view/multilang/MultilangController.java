@@ -74,8 +74,11 @@ public class MultilangController extends PageController {
         renderTranslation();
     }
 
+    /**
+     * Return to main menu window.
+     */
     @FXML
-    private  void backBtPressed() {
+    public void backBtPressed() {
         System.out.println("Back button pressed");  //TODO debug
         getController().actionPerformedBackBtn();
     }

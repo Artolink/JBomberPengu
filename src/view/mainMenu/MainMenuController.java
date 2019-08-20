@@ -1,5 +1,7 @@
 package view.mainMenu;
 
+import java.util.Locale;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import model.language.ApplicationStrings;
@@ -31,7 +33,7 @@ public class MainMenuController extends PageController {
      * Action executed when singleplayer button is pressed.
      */
     @FXML
-    private void singlePlayerBtPressed() {
+    public void singlePlayerBtPressed() {
         getController().actionPerformedSingleplayerBtn();
     }
 
@@ -39,7 +41,7 @@ public class MainMenuController extends PageController {
      * Action executed when Multiplayer button is pressed.
      */
     @FXML
-    private void multiPlayerBtPressed() {
+    public void multiPlayerBtPressed() {
         getController().actionPerformedMultiplayerBtn();
     }
  
@@ -47,7 +49,7 @@ public class MainMenuController extends PageController {
      * Action executed when map editor button is pressed.
      */
     @FXML
-    private void mapEditorPressed() {
+    public void mapEditorPressed() {
         getController().actionPerformedMapEditorBtn();
     }
 
@@ -55,7 +57,7 @@ public class MainMenuController extends PageController {
      * Action executed when language editor button is pressed.
      */
     @FXML
-    private void languageEditorPressed() {
+    public void languageEditorPressed() {
         getController().actionPerformedLanguageEditorBtn();
     }
 
@@ -63,7 +65,7 @@ public class MainMenuController extends PageController {
      * Action executed when Settings button is pressed.
      */
     @FXML
-    private void settingsBtPressed() {
+    public void settingsBtPressed() {
         getController().actionPerformedSettingsBtn();
     }
 
@@ -71,7 +73,7 @@ public class MainMenuController extends PageController {
      * Action executed when howToPlay button is pressed.
      */
     @FXML
-    private void howToPlayBtPressed() {
+    public void howToPlayBtPressed() {
         getController().actionPerformedHTPBtn();
     }
 
@@ -79,19 +81,19 @@ public class MainMenuController extends PageController {
      * Action executed when Settings button is pressed.
      */
     @FXML
-    private void closeGameBtPressed() {
+    public void closeGameBtPressed() {
         getController().actionPerformedCloseBtn();
     }
 
     @Override
     public final void translate(final ApplicationStrings t) {
-        spBtn.setText(t.getValueOf("singleplayer").toUpperCase());
-        mpBtn.setText(t.getValueOf("multiplayer").toUpperCase());
-        mapEditorBtn.setText(t.getValueOf("map editor").toUpperCase());
-        langEditorBtn.setText(t.getValueOf("language editor").toUpperCase());
-        settingsBtn.setText(t.getValueOf("settings").toUpperCase());
-        howToPlayBtn.setText(t.getValueOf("howtoplay").toUpperCase());
-        closeBtn.setText(t.getValueOf("close").toUpperCase());
+        spBtn.setText(t.getValueOf("singleplayer").toUpperCase(Locale.getDefault()));
+        mpBtn.setText(t.getValueOf("multiplayer").toUpperCase(Locale.getDefault()));
+        mapEditorBtn.setText(t.getValueOf("map editor").toUpperCase(Locale.getDefault()));
+        langEditorBtn.setText(t.getValueOf("language editor").toUpperCase(Locale.getDefault()));
+        settingsBtn.setText(t.getValueOf("settings").toUpperCase(Locale.getDefault()));
+        howToPlayBtn.setText(t.getValueOf("howtoplay").toUpperCase(Locale.getDefault()));
+        closeBtn.setText(t.getValueOf("close").toUpperCase(Locale.getDefault()));
     }
  
 }

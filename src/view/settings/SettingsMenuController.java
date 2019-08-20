@@ -29,7 +29,7 @@ public class SettingsMenuController extends PageController {
 
     @FXML
     private ComboBox<String> languageChoiceBox;
-    private ObservableList<String> languageComboBoxData = FXCollections.observableArrayList();
+    private final ObservableList<String> languageComboBoxData = FXCollections.observableArrayList();
 
     /**
      * 
@@ -43,7 +43,7 @@ public class SettingsMenuController extends PageController {
      * Automatically called from the FXML file.
      */
     @FXML
-    private void initialize() {
+    public void initialize() {
 
         fullscreenCB.setSelected(isFullscreen());
         soundsCB.setSelected(isSoundEnabled());
@@ -81,7 +81,7 @@ public class SettingsMenuController extends PageController {
      * Action executed when language ChoiceBox is pressed.
      */
     @FXML
-    private void languageChoiceBoxPressed() {
+    public void languageChoiceBoxPressed() {
         System.out.println(languageChoiceBox.getValue());
         getController().actionPerformedLanguageChanged(languageChoiceBox.getValue());
     }

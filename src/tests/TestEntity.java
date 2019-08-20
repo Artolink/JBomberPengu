@@ -2,10 +2,7 @@ package tests;
 
 import static org.junit.Assert.assertTrue;
 
-import java.util.HashSet;
-import java.util.Set;
 import model.utils.Pair;
-import model.utils.Rectangle;
 import model.blocks.DestructibleBlock;
 import model.player.Player;
 import model.player.PlayerColor;

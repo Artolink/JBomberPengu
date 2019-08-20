@@ -208,7 +208,7 @@ public class GameController extends PageController {
      * stop all players animation.
      */
     public void stopPlayerAnimations() {
-        for (PlayerAnimations a: playerAnimations) {
+        for (final PlayerAnimations a: playerAnimations) {
             a.stop();
         }
     }

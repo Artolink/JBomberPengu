@@ -1,6 +1,8 @@
 package view;
 
 import java.io.File;
+import java.util.Locale;
+
 import controller.Controller;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -20,7 +22,8 @@ import view.sounds.SoundsAssociator;
  */
 public class GUIImpl extends Application implements GUI {
 
-    private static final String ICON_FILE = "view" + File.separator + "penguin.png";
+    private static final String FOLDER = "view";
+    private static final String ICON_FILE = FOLDER + File.separator + "penguin.png";
 
     private Pair<Double, Double> preferredSizes;
     private Pair<Double, Double> modifiedSizes;
@@ -125,10 +128,10 @@ public class GUIImpl extends Application implements GUI {
 
         switch (pageName) {
             case MAINMENU:
-                StObjCont.setPage((Page) new FxmlFileLoader("view" + File.separator + "mainMenu", "MainMenu"));
+                StObjCont.setPage((Page) new FxmlFileLoader(FOLDER + File.separator + "mainMenu", "MainMenu"));
                 break;
             case GAME:
-                StObjCont.setPage((Page) new FxmlFileLoader("view" + File.separator + "game", "Game"));
+                StObjCont.setPage((Page) new FxmlFileLoader(FOLDER + File.separator + "game", "Game"));
                 //start match sound
                 if (isSoundEnabled()) {
                     getSounds().stopSounds();
@@ -136,19 +139,19 @@ public class GUIImpl extends Application implements GUI {
                 }
                 break;
             case GAMENDED:
-                StObjCont.setPage((Page) new FxmlFileLoader("view" + File.separator + "game", "GameEnded"));
+                StObjCont.setPage((Page) new FxmlFileLoader(FOLDER + File.separator + "game", "GameEnded"));
                 break;
             case SETTINGS:
-                StObjCont.setPage((Page) new FxmlFileLoader("view" + File.separator + "settings", "SettingsMenu"));
+                StObjCont.setPage((Page) new FxmlFileLoader(FOLDER + File.separator + "settings", "SettingsMenu"));
                 break;
             case HOWTOPLAY:
-                StObjCont.setPage((Page) new FxmlFileLoader("view" + File.separator + "howToPlay", "HowToPlay"));
+                StObjCont.setPage((Page) new FxmlFileLoader(FOLDER + File.separator + "howToPlay", "HowToPlay"));
                 break;
             case MAPEDITOR:
-                StObjCont.setPage((Page) new FxmlFileLoader("view" + File.separator + "mapEditor", "MapEditor"));
+                StObjCont.setPage((Page) new FxmlFileLoader(FOLDER + File.separator + "mapEditor", "MapEditor"));
                 break;
             case LANGUAGEDITOR:
-                StObjCont.setPage((Page) new FxmlFileLoader("view" + File.separator + "multiLang", "MultilangView"));
+                StObjCont.setPage((Page) new FxmlFileLoader(FOLDER + File.separator + "multiLang", "MultilangView"));
                 break;
             default:
                 System.out.println("404 Page not found");
@@ -228,8 +231,8 @@ public class GUIImpl extends Application implements GUI {
      * @return The string str whit first character Upper case
      */
     protected String capitalize(final String str) {
-        String s = str;
-        return s.substring(0, 1).toUpperCase() + s.substring(1);
+        final String s = str;
+        return s.substring(0, 1).toUpperCase(Locale.getDefault()) + s.substring(1);
     }
 
  // Private methods -------------------------------------------------------------------------------------------

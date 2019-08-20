@@ -4,7 +4,6 @@ import java.util.Timer;
 
 import javafx.application.Platform;
 import model.AbstractEntity;
-import model.Level;
 import model.ModelImpl;
 import model.blocks.Bomb;
 import model.collisions.CollisionImpl;
@@ -12,7 +11,6 @@ import model.language.ApplicationStrings;
 import model.map.GameMap;
 import model.player.Player;
 import model.player.PlayerColor;
-import model.score.Score;
 import model.score.ScoreCompute;
 import model.utils.Directions;
 import model.utils.Pair;
