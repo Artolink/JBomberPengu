@@ -32,18 +32,23 @@ public class TestCollisions {
 
         block1.setHeight(50);
         block1.setWidth(50);
+        block1.setPosition(initialPosition);
 
         block2.setHeight(50);
         block2.setWidth(50);
+        block2.setPosition(middlePosition);
 
         block3.setHeight(50);
         block3.setWidth(50);
+        block3.setPosition(touchingUpPosition);
 
         block4.setHeight(50);
         block4.setWidth(50);
+        block4.setPosition(endingPosition);
 
         block5.setHeight(50);
         block5.setWidth(50);
+        block5.setPosition(touchingLeftPosition);
 
         final Rectangle r1 = new Rectangle(initialPosition, block1.getWidth(), block1.getHeight());
         final Rectangle r2 = new Rectangle(initialPosition, block2.getWidth(), block2.getHeight());

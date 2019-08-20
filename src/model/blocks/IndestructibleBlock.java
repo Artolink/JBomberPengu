@@ -6,7 +6,7 @@ import model.AbstractEntity;
 import model.utils.Pair;
 
 /**
- * Final class for the indestructible walls in the game.
+ * Final class for the indestructible blocks (walls) in the game.
  */
 public final class IndestructibleBlock extends AbstractEntity {
 

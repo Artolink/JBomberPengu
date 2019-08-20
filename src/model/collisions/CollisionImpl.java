@@ -17,15 +17,14 @@ import model.utils.Rectangle;
  */
 public final class CollisionImpl implements Collision {
 
-    // private Rectangle entityHitbox;
+    //private Rectangle entityHitbox;
     private final Player player;
     private GameMap map;
 
     /**
-     * Collision builder, initialize the entity that needs to be checked and its
-     * collision box.
+     * Collision builder, initialize the entity that needs to be checked.
      * 
-     * @param player player associated at this collision set
+     * @param player is the player associated with this collision system.
      */
     public CollisionImpl(final Player player) {
         this.player = player;
@@ -35,7 +34,7 @@ public final class CollisionImpl implements Collision {
      * Sets the map.
      * 
      * @param map is the game map containing all the blocks
-     * @return the class
+     * @return this class at the game controller
      */
     public CollisionImpl setMap(final GameMap map) {
         this.map = map;
@@ -75,6 +74,7 @@ public final class CollisionImpl implements Collision {
         final boolean yRelative = player.getPosition().getY() % player.getHeight() == 0;
         AbstractEntity entity0;
         Rectangle hitBox0;
+
         if (xRelative && yRelative) {
             switch (direction) {
             case DOWN:

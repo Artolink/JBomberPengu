@@ -1,7 +1,7 @@
 package model.player;
 
 /**
- * Enumeration to handle player and bomb color in the game.
+ * Enumeration to handle player, bomb and explosion color in the game.
  *
  */
 public enum PlayerColor {

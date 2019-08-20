@@ -32,10 +32,11 @@ public class ViewUpdater implements Runnable {
     }
 
     /**
-     * Stops the updater thread.
+     * stops update thread, calls stop on player animations.
      */
     public void stop() {
         canRun = false;
+        view.stopPlayerAnimations();
     }
 
     /**

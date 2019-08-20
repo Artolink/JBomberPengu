@@ -32,7 +32,7 @@ public class GUIImpl extends Application implements GUI {
 
     //private boolean fullscreen = false;
 
- // application creation methods ------------------------------------------------------------------------------------------- 
+ // application creation methods ----------------------------------------------------------------------------
 
     /**
      * Application entry point.
@@ -223,18 +223,17 @@ public class GUIImpl extends Application implements GUI {
     protected Boolean isSoundEnabled() {
         return StObjCont.isMusicEnabled();
     }
-    
+
     /**
      * Sets first character to UpperCase.
-     * @param str
-     * @return
+     * @param str the string you want to change
+     * @return The string str whit first character Upper case
      */
-    protected String capitalize(String str)
-    {
+    protected String capitalize(final String str) {
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 
-    // Private methods -------------------------------------------------------------------------------------------
+ // Private methods -------------------------------------------------------------------------------------------
 
     /**
      * To be called when a new Scene has to be loaded.
@@ -242,14 +241,23 @@ public class GUIImpl extends Application implements GUI {
      */
     private void switchScene(final Scene scene) {
         if (scene != null) {
-            Platform.runLater(new Runnable() {
-                public void run() {
-                    StObjCont.getStage().setScene(scene);
-                    StObjCont.getStage().sizeToScene();
-                    preferredSizes = new Pair<>(scene.getWidth(), scene.getHeight());
-                    modifiedSizes = getStageSizes();
-                }
-            });
+            if (!Platform.isFxApplicationThread()) {
+                System.out.println("switchScene on runLater task");
+                Platform.runLater(new Runnable() {
+                    public void run() {
+                        StObjCont.getStage().setScene(scene);
+                        StObjCont.getStage().sizeToScene();
+                        preferredSizes = new Pair<>(scene.getWidth(), scene.getHeight());
+                        modifiedSizes = getStageSizes();
+                    }
+                });
+            } else {
+                System.out.println("switchScene executed from javaFx");
+                StObjCont.getStage().setScene(scene);
+                StObjCont.getStage().sizeToScene();
+                preferredSizes = new Pair<>(scene.getWidth(), scene.getHeight());
+                modifiedSizes = getStageSizes();
+            }
         }
     }
 
@@ -268,8 +276,8 @@ public class GUIImpl extends Application implements GUI {
         StObjCont.getStage().setMaxWidth(getMaxScreenDimensions().getX());
         StObjCont.getStage().setMaxHeight(getMaxScreenDimensions().getY());
 
-        //this.stage.centerOnScreen();
-        //this.stage.initStyle(StageStyle.UNDECORATED);
+        StObjCont.getStage().centerOnScreen();
+        //StObjCont.getStage().initStyle(StageStyle.UNDECORATED); //remove borders
 
         StObjCont.getStage().sizeToScene();
 
@@ -293,8 +301,8 @@ public class GUIImpl extends Application implements GUI {
     }
 
 
-    /**
-     * All the objects common to all of this class instance.
+    /*
+     * All the objects common to all of this class instance (example: fxml file controller class -> extends PageController -> extends GUIImpl).
      */
     private static class StObjCont {
 

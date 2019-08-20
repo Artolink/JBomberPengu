@@ -36,6 +36,7 @@ public class GameController extends PageController {
     private int blockSpacing;
     private Pair<Integer, Integer> dimensions;
     private final KeyAssociator associator = new KeyAssociator();
+    private final List<PlayerAnimations> playerAnimations = new ArrayList<>();
 
     private String scoreString;
 
@@ -197,8 +198,18 @@ public class GameController extends PageController {
             final PlayerAnimations animation = new PlayerAnimations();
             animation.setImageView(view);
             animation.setPlayer(player);
+            playerAnimations.add(animation);
             new Thread(animation).start();
             associator.associatePlayer(player);
+        }
+    }
+
+    /**
+     * stop all players animation.
+     */
+    public void stopPlayerAnimations() {
+        for (PlayerAnimations a: playerAnimations) {
+            a.stop();
         }
     }
 

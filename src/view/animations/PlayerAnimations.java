@@ -25,6 +25,7 @@ public class PlayerAnimations implements Animation {
     private static final int DEAD = 250;
     private static final int STATIONARY = 280;
 
+    private boolean running = true;
 
     /**
      * Runs the animations.
@@ -34,7 +35,7 @@ public class PlayerAnimations implements Animation {
 
         long timeToSleep = 0;
 
-        while (true) {
+        while (running) {
 
             if (player.isDestroyed()) {
                 this.updateFrame();
@@ -97,6 +98,13 @@ public class PlayerAnimations implements Animation {
             }
         }
 
+    }
+
+    /**
+     * Stops this animation Thread.
+     */
+    public void stop() {
+        running = false;
     }
 
     /**

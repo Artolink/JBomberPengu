@@ -112,19 +112,3 @@ public class SettingsMenuController extends PageController {
 
 }
 
-
-/*
- *  To get the items in the choice box:
-  ObservableList<String> availableChoices = choiceBox.getItems();
-
- To set the items in the choice box:
-  ObservableList<String> availableChoices = FXCollections.ObservableArrayList("apples", "oranges"); 
-  choiceBox.setItems(availableChoices);
-
- To get the selected item write:
-  String selectedChoice = choiceBox.getSelectionModel().getSelectedItem();
-
- To set the selected item write:
-  choiceBox.getSelectionModel().setSelectedItem("oranges");
-
- */
