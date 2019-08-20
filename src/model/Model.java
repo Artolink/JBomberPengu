@@ -46,4 +46,10 @@ public interface Model {
      */
     ApplicationStrings getTranslator();
 
+    /**
+     * Get the actual level.
+     * @return level
+     */
+    Level getLevel();
+
 }

@@ -136,9 +136,7 @@ public class GUIImpl extends Application implements GUI {
                 }
                 break;
             case GAMENDED:
-                Platform.runLater(() -> {
-                    StObjCont.setPage((Page) new FxmlFileLoader("view" + File.separator + "game", "GameEnded"));
-                });
+                StObjCont.setPage((Page) new FxmlFileLoader("view" + File.separator + "game", "GameEnded"));
                 break;
             case SETTINGS:
                 StObjCont.setPage((Page) new FxmlFileLoader("view" + File.separator + "settings", "SettingsMenu"));
@@ -230,7 +228,8 @@ public class GUIImpl extends Application implements GUI {
      * @return The string str whit first character Upper case
      */
     protected String capitalize(final String str) {
-        return str.substring(0, 1).toUpperCase() + str.substring(1);
+        String s = str;
+        return s.substring(0, 1).toUpperCase() + s.substring(1);
     }
 
  // Private methods -------------------------------------------------------------------------------------------
@@ -242,7 +241,7 @@ public class GUIImpl extends Application implements GUI {
     private void switchScene(final Scene scene) {
         if (scene != null) {
             if (!Platform.isFxApplicationThread()) {
-                System.out.println("switchScene on runLater task");
+                //System.out.println("switchScene on runLater task");
                 Platform.runLater(new Runnable() {
                     public void run() {
                         StObjCont.getStage().setScene(scene);
@@ -252,7 +251,7 @@ public class GUIImpl extends Application implements GUI {
                     }
                 });
             } else {
-                System.out.println("switchScene executed from javaFx");
+                //System.out.println("switchScene executed from javaFx");
                 StObjCont.getStage().setScene(scene);
                 StObjCont.getStage().sizeToScene();
                 preferredSizes = new Pair<>(scene.getWidth(), scene.getHeight());
