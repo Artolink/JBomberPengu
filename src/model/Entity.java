@@ -9,6 +9,13 @@ import model.utils.Pair;
 public interface Entity {
 
     /**
+     * Gets the initial (relative, map) position of the entity.
+     * 
+     * @return the initial position of the player
+     */
+    Pair<Integer, Integer> getInitialPosition();
+
+    /**
      * Gets the position of the entity on screen (absolute, pixel).
      * 
      * @return entity current position on screen

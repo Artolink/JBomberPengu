@@ -29,15 +29,7 @@ public abstract class AbstractEntity implements Entity {
     }
 
     @Override
-    public final void setPosition(final Pair<Integer, Integer> position) {
-        this.realPosition = position;
-    }
-
-    /**
-     * This method can be overridden by dynamic entities like players to get a more specific hitbox.
-     */
-    @Override
-    public Rectangle getCollisionBox() {
+    public final Rectangle getCollisionBox() {
         return new Rectangle(new Pair<Integer, Integer>(getPosition().getX(), getPosition().getY()), getWidth(), getHeight());
     }
 
@@ -47,6 +39,11 @@ public abstract class AbstractEntity implements Entity {
             this.realPosition = new Pair<Integer, Integer>(this.getInitialPosition().getX() * this.getWidth(), this.getInitialPosition().getY() * this.getHeight());
         }
         return this.realPosition;
+    }
+
+    @Override
+    public final void setPosition(final Pair<Integer, Integer> position) {
+        this.realPosition = position;
     }
 
     @Override
@@ -104,12 +101,8 @@ public abstract class AbstractEntity implements Entity {
         return scoreValue;
     }
 
-    /**
-     * Gets the initial (relative, map) position of the entity.
-     * 
-     * @return the initial position of the player
-     */
-    public Pair<Integer, Integer> getInitialPosition() {
+    @Override
+    public final Pair<Integer, Integer> getInitialPosition() {
         return this.initialPosition;
     }
 }

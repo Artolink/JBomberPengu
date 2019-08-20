@@ -1,6 +1,5 @@
 package model.player;
 
-import model.utils.Rectangle;
 import model.AbstractEntity;
 import model.collisions.CollisionImpl;
 import model.utils.Directions;
@@ -171,14 +170,6 @@ public final class Player extends AbstractEntity {
      */
     public PlayerColor getColor() {
         return color;
-    }
-
-    @Override
-    public Rectangle getCollisionBox() {
-        return new Rectangle(
-                new Pair<Integer, Integer>(getPosition().getX(), getPosition().getY()),
-                getWidth(),
-                getHeight());
     }
 
     /**
