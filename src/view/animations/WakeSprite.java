@@ -36,6 +36,7 @@ public class WakeSprite {
         for (int i = start; i < toMove; i++) {
             this.wake.add(new Sprite(sheet, 0, i));
         }
+        wake.stream().forEach(action);
     }
 
     /**

@@ -3,6 +3,9 @@
     -fx-background-size: stretch;
     -fx-background-repeat: no-repeat;
 }
+.label{
+	-fx-text-fill: brown;
+}
 .button{
     -fx-background-image: url(../Empty_Button.png);
     -fx-background-color: transparent;

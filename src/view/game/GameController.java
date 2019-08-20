@@ -47,13 +47,9 @@ public class GameController extends PageController {
     @FXML
     private Label plRedScore;
     @FXML
-    private HBox lifeCounterR;
-    @FXML
     private HBox bombCounterR;
     @FXML
     private Label plYellScore;
-    @FXML
-    private HBox lifeCounterY;
     @FXML
     private HBox bombCounterY;
 
@@ -327,35 +323,6 @@ public class GameController extends PageController {
         });
     }
 
-    /*
-     * NOT USED
-     * @param color
-     * @param life
-     *
-    public void showLife(final PlayerColor color, final Integer life) {
-        switch (color) {
-        case RED:
-            lifeCounterR.getChildren().clear();
-            for (int i = 0; i < life; i++) {
-                ImageView img = new ImageView(new Image("/view/Heart.png"));
-                img.setFitWidth(blockDimension);
-                img.setFitHeight(blockDimension);
-                lifeCounterR.getChildren().add(img);
-            }
-            break;
-        case YELLOW:
-            lifeCounterY.getChildren().clear();
-            for (int i = 0; i < life; i++) {
-                ImageView img = new ImageView(new Image("/view/Heart.png"));
-                img.setFitWidth(blockDimension);
-                img.setFitHeight(blockDimension);
-                lifeCounterY.getChildren().add(img);
-            }
-            break;
-        default:
-        }
-    }*/
-
     /**
      * 
      * @param player 
@@ -392,8 +359,6 @@ public class GameController extends PageController {
     @Override
     public final void translate(final ApplicationStrings t) {
         this.scoreString = t.getValueOf("score");
-
-        //TODO add this key to ApplicatioStrings
         button.setText(t.getValueOf("give up"));
     }
 }

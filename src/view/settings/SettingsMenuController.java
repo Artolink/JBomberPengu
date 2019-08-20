@@ -107,7 +107,7 @@ public class SettingsMenuController extends PageController {
         pageLabel.setText(t.getValueOf("settings"));
         fullscreenCB.setText(t.getValueOf("fullscreen"));
         soundsCB.setText(t.getValueOf("sounds"));
-        backBtn.setText(t.getValueOf("back"));
+        backBtn.setText(capitalize(t.getValueOf("back")));
     }
 
 }
