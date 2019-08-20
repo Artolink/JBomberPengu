@@ -26,7 +26,7 @@ public final class Rectangle {
 
     /**
      * Rectangle empty builder. Used if you need to create the rectangle afterwards
-     * without initializing the parameters.
+     * without initializing the parameters immediately.
      */
     public Rectangle() {
         // empty
@@ -51,9 +51,9 @@ public final class Rectangle {
     }
 
     /**
-     * Gets the position of the rectangle.
+     * Gets the relative position of the rectangle.
      * 
-     * @return rectangle position
+     * @return rectangle relative position
      */
     public Pair<Integer, Integer> getMapPosition() {
         return new Pair<>(this.getPosition().getX() / this.getWidth(), this.getPosition().getY() / this.getHeight());
@@ -162,9 +162,9 @@ public final class Rectangle {
         ye1 = e.getPosition().getY();
         ye2 = e.getPosition().getY() + e.getHeight();
 
-        if ((y1 > ye1 && y1 < ye2) && (x1 < xe2 && x1 > xe1)) {
+        if ((y1 >= ye1 && y1 <= ye2) && (x1 <= xe2 && x1 >= xe1)) {
             return true;
-        } else if ((y2 > ye1 && y2 < ye2) && (x1 < xe2 && x1 > xe1)) {
+        } else if ((y2 >= ye1 && y2 <= ye2) && (x1 <= xe2 && x1 >= xe1)) {
             return true;
         }
         return false;
@@ -187,9 +187,9 @@ public final class Rectangle {
         ye1 = e.getPosition().getY();
         ye2 = e.getPosition().getY() + e.getHeight();
 
-        if ((y1 > ye1 && y1 < ye2) && (x1 > xe1 && x1 < xe2)) {
+        if ((y1 >= ye1 && y1 <= ye2) && (x1 >= xe1 && x1 <= xe2)) {
             return true;
-        } else if ((y2 > ye1 && y2 < ye2) && (x1 > xe1 && x1 < xe2)) {
+        } else if ((y2 >= ye1 && y2 <= ye2) && (x1 >= xe1 && x1 <= xe2)) {
             return true;
         }
         return false;
@@ -219,9 +219,8 @@ public final class Rectangle {
     }
 
     /**
-     * Method to check if two generic bombs collide. Used for generic
-     * collisions where you don't need to know the position (up,
-     * down, left, right) of the collision.
+     * Method to check if two generic bomb rectangles collide. 
+     * Used almost in the same way of the previous method, but with this you don't get stuck when you're above a bomb.
      * 
      * @param rectangle is the rectangle you want to check if it collides with
      *                  yours.

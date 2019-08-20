@@ -4,9 +4,9 @@ import model.AbstractEntity;
 import model.utils.Pair;
 
 /**
- * 
+ * Final class for the explosions in the game, after a bomb is exploded.
  */
-public class Explosion extends AbstractEntity {
+public final class Explosion extends AbstractEntity {
 
     /**
      * Explosion builder.

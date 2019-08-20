@@ -29,6 +29,7 @@ public interface Collision {
 
     /**
      * Checks if there's a collision with an explosion.
+     * 
      * @return true if there's a collision, false otherwise
      */
     boolean explosionCollided();

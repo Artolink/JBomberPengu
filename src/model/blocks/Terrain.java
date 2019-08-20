@@ -4,7 +4,8 @@ import model.AbstractEntity;
 import model.utils.Pair;
 
 /**
- * Base class for the main terrain where players walk (more terrain types can be added in the future e.g. ice, mud..).
+ * Base class for the main terrain where players walk.
+ * (more terrain types can be added in the future e.g. ice, mud..)
  *
  */
 public class Terrain extends AbstractEntity {

@@ -12,7 +12,7 @@ import model.utils.Pair;
 public final class DestructibleBlock extends AbstractEntity {
 
     private static final double POWER_UP_CHANCE = 0.5;
-    private static final int SCORE_VALUE = 50;
+    private static final int SCORE_VALUE = 25;
 
     private final Optional<Object> powerup; //object has to change with a enum of powerup block type
 

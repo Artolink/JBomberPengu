@@ -7,7 +7,7 @@ import model.utils.Directions;
 import model.utils.Pair;
 
 /**
- * The player that the user will control.
+ * The player that the users will control.
  */
 public final class Player extends AbstractEntity {
 
@@ -107,6 +107,7 @@ public final class Player extends AbstractEntity {
 
     /**
      * Gets the number of bombs the player can place.
+     * 
      * @return number of available bomb
      */
     public Integer getBombNumber() {
@@ -114,14 +115,14 @@ public final class Player extends AbstractEntity {
     }
 
     /**
-     * Decrease the available bomb of this player.
+     * Decrease the available bomb number of this player.
      */
     public void placeBomb() {
         this.bombNumber--;
     }
 
     /**
-     * Increase the available bomb of this player.
+     * Increase the available bomb number of this player.
      */
     public void bombExploded() {
         this.bombNumber++;
@@ -181,7 +182,7 @@ public final class Player extends AbstractEntity {
     }
 
     /**
-     * Sets the player collision system.
+     * Sets the player collision system. Called by controller when the game starts.
      * 
      * @param collision defines the system containing all the collisions
      */
@@ -190,10 +191,10 @@ public final class Player extends AbstractEntity {
     }
 
     /**
-     * Method that defines and sets the new position of the player.
+     * Method that defines if the player can move.
      * 
      * @param direction is the player direction where he wants to move
-     * @return true if player can move, false if it collides with something
+     * @return true if player can move, false if it collides with explosions, blocks, bombs or if he is dead
      */
     public boolean move(final Directions direction) {
         if (collision.explosionCollided()) {

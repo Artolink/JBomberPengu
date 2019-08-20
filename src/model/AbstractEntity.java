@@ -20,8 +20,8 @@ public abstract class AbstractEntity implements Entity {
     /**
      * AbstractMovableEntity builder.
      * 
-     * @param pos defines the initial position of the entity.
-     * @param isSolid if this block is solid
+     * @param pos defines the INITIAL (relative) position of the entity. (the same positions that the game map uses)
+     * @param isSolid defines if the entity is solid
      */
     public AbstractEntity(final Pair<Integer, Integer> pos, final boolean isSolid) {
         this.initialPosition = pos;
@@ -105,7 +105,7 @@ public abstract class AbstractEntity implements Entity {
     }
 
     /**
-     * Gets the initial position of the player, useful for the view.
+     * Gets the initial (relative, map) position of the entity.
      * 
      * @return the initial position of the player
      */
