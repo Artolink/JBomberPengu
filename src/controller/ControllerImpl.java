@@ -4,6 +4,7 @@ import java.util.Timer;
 
 import javafx.application.Platform;
 import model.AbstractEntity;
+import model.Level;
 import model.ModelImpl;
 import model.blocks.Bomb;
 import model.collisions.CollisionImpl;
@@ -11,6 +12,7 @@ import model.language.ApplicationStrings;
 import model.map.GameMap;
 import model.player.Player;
 import model.player.PlayerColor;
+import model.score.Score;
 import model.score.ScoreCompute;
 import model.utils.Directions;
 import model.utils.Pair;
@@ -62,7 +64,7 @@ public class ControllerImpl implements Controller {
         final GameMap map = model.getGameMap();
         this.gameView = controller;
         this.viewUpdater = new ViewUpdater();
-        scoreCompute = new ScoreCompute(model.getPlayers());
+        scoreCompute = new ScoreCompute(model.getPlayers(), model.getLevel());
         // set game dimensions
         gameView.setDimensions(new Pair<Integer, Integer>(map.getDimensions().getX(), map.getDimensions().getY()));
         gameView.setBlockDimension(ModelImpl.BLOCKDIMENSION);
@@ -222,9 +224,9 @@ public class ControllerImpl implements Controller {
         try {
             Thread.sleep(TIMEBEFOREGAMEND);
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        scoreCompute.saveScores();
         this.gui.loadPage(GUI.PageNames.GAMENDED);
         this.gui.getActivePageController().translate(getTranslator());
     }

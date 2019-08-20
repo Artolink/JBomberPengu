@@ -73,7 +73,7 @@ public class ScoreWorker {
         scoreObject.put("players", playerList);
         final FileWorker fileWorker = new FileWorker(FILENAME);
         final String text = fileWorker.load();
-        final JSONArray scoreList = new JSONArray(text);
+        final JSONArray scoreList = new JSONArray(text.isEmpty() ? "[]" : text);
         scoreList.put(scoreObject);
         fileWorker.setContent(scoreList.toString());
         fileWorker.save();

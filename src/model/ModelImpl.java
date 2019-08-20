@@ -92,4 +92,9 @@ public final class ModelImpl implements Model {
         return this.translator;
     }
 
+    @Override
+    public Level getLevel() {
+        return this.level;
+    }
+
 }

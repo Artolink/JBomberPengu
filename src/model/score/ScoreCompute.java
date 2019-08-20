@@ -1,10 +1,15 @@
 package model.score;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.json.JSONException;
+
+import model.Level;
 import model.player.Player;
 
 /**
@@ -12,31 +17,24 @@ import model.player.Player;
  */
 public class ScoreCompute {
 
-    private List<Player> players;
-    private List<Player> changeHistory = new ArrayList<>();
+    private Score score = new Score();
 
     /**
-     * 
-     * @param players - list of player to evaluate
+     * Construct the score managing system.
+     * @param players list of players
+     * @param level current level
      */
-    public ScoreCompute(final List<Player> players) {
-        this.players = players;
+    public ScoreCompute(final List<Player> players, final Level level) {
+        score.setLevel(level);
+        players.stream().forEach(e -> score.setPlayer(e));
+        score.setDate(new Date().toString());
     }
-
-    /**
-     * 
-     * @param players - list of player to evaluate
-     */
-    public void setPlayers(final List<Player> players) {
-        this.players = players;
-    }
-
     /**
      * 
      * @return List<Player> alive
      */
     public List<Player> getAlivePlayers() {
-        return players.stream()
+        return score.getPlayers().stream()
                 .filter(e -> !e.isDestroyed())
                 .collect(Collectors.toCollection(ArrayList::new));
     }
@@ -46,37 +44,30 @@ public class ScoreCompute {
      * @return Optional<Player> winner
      */
     public Optional<Player> getWinnerByScore() {
-        return players.stream()
+        return score.getPlayers().stream()
                 .max((e, r) -> Integer.compare(e.getScore(), r.getScore()));
     }
 
     /**
      * 
-     * @return a
+     * @return if match has ended
      */
-    public Optional<Player> getLastModified(){
-        Optional<Player> oP = Optional.ofNullable(null);
-        if (changeHistory.size() > 0) {
-            oP = Optional.ofNullable(changeHistory.get(0));
-            changeHistory.remove(0);
-        }
-        return oP; 
-    }
-
     public Boolean isGameEnded() {
-        return getLastModified().isPresent();
+        return score.getPlayers().stream().anyMatch(e -> e.isDestroyed());
     }
 
     /**
-     * 
-     * @param killedPlayer a
+     * Save current score, if match has ended.
      */
-    public void killPlayers(final List<Player> killedPlayer) {
-        for (Player p: killedPlayer) {
-            if (!p.isDestroyed()) {
-                p.setStatus(true);
-                changeHistory.add(p);
-                System.out.println(p.getColor().toString() + " killed");
+    public void saveScores() {
+        if (isGameEnded()) {
+            ScoreWorker scoreWorker = new ScoreWorker();
+              try {
+                scoreWorker.saveScore(score);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
     }
