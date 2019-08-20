@@ -1,42 +1,26 @@
 package model.score;
 
-import model.AbstractEntity;
+import java.util.ArrayList;
+import java.util.List;
+
 import model.Level;
+import model.player.Player;
 
 /**
- * Class representing Score of a Player.    OBSOLETE
+ * Class representing Score of a Player.
  *
  */
 public class Score {
 
-    private int points;
-    private String player;
+    private final List<Player> player = new ArrayList<>();
     private String date;
     private int level;
-
-    /**
-     * Get the actual score.
-     * @return actual score
-     */
-    public int getScore() {
-        return points;
-    }
-
-    /**
-     * Set a score.
-     * @param score score to be setted
-     * @return this Score object
-     */
-    public Score setScore(final int score) {
-        this.points = score;
-        return this;
-    }
 
     /**
      * Get the player associated to this score.
      * @return the name of the player
      */
-    public String getPlayer() {
+    public List<Player> getPlayers() {
         return player;
     }
 
@@ -45,8 +29,8 @@ public class Score {
      * @param player name of the player
      * @return this Score object
      */
-    public Score setPlayer(final String player) {
-        this.player = player;
+    public Score setPlayer(final Player player) {
+        this.player.add(player);
         return this;
     }
 
@@ -60,34 +44,12 @@ public class Score {
 
     /**
      * Set the date of the score.
-     * @param date date to be setted
+     * @param date date to be set
      * @return this Score object
      */
     public Score setDate(final String date) {
         this.date = date;
         return this;
-    }
-
-    /**
-     * Apply a score from a block.
-     * @param block block to take points
-     * @return a boolean representing a positive score with true or negative with false.
-     */
-    public boolean applyScore(final AbstractEntity block) {
-        // this.points += block.getPoints();
-        if (!this.isScorePositive()) {
-            this.points = 0;
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Check if score is major than 0.
-     * @return true if positive, false if negative
-     */
-    public boolean isScorePositive() {
-        return this.points > 0;
     }
 
     /**
@@ -100,7 +62,7 @@ public class Score {
 
     /**
      * Set the level associated with actual score.
-     * @param level level to be setted
+     * @param level level to be set
      * @return this Score object
      */
     public Score setLevel(final Level level) {
@@ -109,7 +71,7 @@ public class Score {
 
     /**
      * Set the level associated with actual score.
-     * @param level level to be setted
+     * @param level level to be set
      * @return this Score object
      */
     public Score setLevel(final int level) {

@@ -26,6 +26,7 @@ public class BombTimer extends TimerTask {
     private final Bomb bomb;
     private final GameMap map;
     private final List<Player> players;
+    private static final String IGNORE = "Ignored block on explosion";
 
     /**
      * Initialize fields.
@@ -101,7 +102,7 @@ public class BombTimer extends TimerTask {
                     canGoUp = false;
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println(IGNORE);
             }
             try {
                 block = map.getBlock(row, column + level);
@@ -112,7 +113,7 @@ public class BombTimer extends TimerTask {
                     canGoDown = false;
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println(IGNORE);
             }
             try {
                 block = map.getBlock(row - level, column);
@@ -123,7 +124,7 @@ public class BombTimer extends TimerTask {
                     canGoLeft = false;
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println(IGNORE);
             }
             try {
                 block = map.getBlock(row + level, column);
@@ -134,7 +135,7 @@ public class BombTimer extends TimerTask {
                     canGoRight = false;
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println(IGNORE);
             }
         }
         return blocks;
