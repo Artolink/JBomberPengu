@@ -26,6 +26,8 @@ public class PlayerAnimations implements Animation {
     private static final int DEAD = 250;
     private static final int STATIONARY = 280;
 
+    private boolean running = true;
+
     /**
      * Constructor.
      */
@@ -41,7 +43,7 @@ public class PlayerAnimations implements Animation {
 
         long timeToSleep = 0;
 
-        while (true) {
+        while (running) {
 
             switch (player.getDirection()) {
             case UP:
@@ -105,6 +107,13 @@ public class PlayerAnimations implements Animation {
             }
         }
 
+    }
+
+    /**
+     * Stops this animation Thread.
+     */
+    public void stop() {
+        running = false;
     }
 
     /**

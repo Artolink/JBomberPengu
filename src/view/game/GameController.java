@@ -36,6 +36,7 @@ public class GameController extends PageController {
     private int blockSpacing;
     private Pair<Integer, Integer> dimensions;
     private final KeyAssociator associator = new KeyAssociator();
+    private final List<PlayerAnimations> playerAnimations = new ArrayList<>();
 
     private String scoreString;
 
@@ -197,10 +198,20 @@ public class GameController extends PageController {
             final PlayerAnimations animation = new PlayerAnimations();
             animation.setImageView(view);
             animation.setPlayer(player);
+            playerAnimations.add(animation);
             new Thread(animation).start();
             player.setPosition(new Pair<>(blockDimension * player.getInitialPosition().getX(),
                     blockDimension * player.getInitialPosition().getY()));
             associator.associatePlayer(player);
+        }
+    }
+
+    /**
+     * stop all players animation.
+     */
+    public void stopPlayerAnimations() {
+        for (PlayerAnimations a: playerAnimations) {
+            a.stop();
         }
     }
 
@@ -352,8 +363,8 @@ public class GameController extends PageController {
 
     /**
      * 
-     * @param color
-     * @param life
+     * @param color color
+     * @param bombs bombs 
      */
     public void showAvailableBombs(final PlayerColor color, final Integer bombs) {
         switch (color) {
@@ -386,8 +397,6 @@ public class GameController extends PageController {
         scoreString = t.getValueOf("score");
         showScore(PlayerColor.RED, Integer.parseInt(plRedScore.getText().replace(s + ": ", "")));
         showScore(PlayerColor.YELLOW, Integer.parseInt(plYellScore.getText().replace(s + ": ", "")));
-
-        //TODO add this key to ApplicatioStrings
         button.setText(t.getValueOf("give up"));
     }
 }

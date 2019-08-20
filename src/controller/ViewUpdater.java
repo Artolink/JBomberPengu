@@ -34,9 +34,13 @@ public class ViewUpdater implements Runnable {
             }
         }
     }
-    
+
+    /**
+     * stops update thread, calls stop on player animations.
+     */
     public void stop() {
         run = false;
+        view.stopPlayerAnimations();
     }
 
     public Directions getDirection(final Player player) {

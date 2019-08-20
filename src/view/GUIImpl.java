@@ -242,14 +242,23 @@ public class GUIImpl extends Application implements GUI {
      */
     private void switchScene(final Scene scene) {
         if (scene != null) {
-            Platform.runLater(new Runnable() {
-                public void run() {
-                    StObjCont.getStage().setScene(scene);
-                    StObjCont.getStage().sizeToScene();
-                    preferredSizes = new Pair<>(scene.getWidth(), scene.getHeight());
-                    modifiedSizes = getStageSizes();
-                }
-            });
+            if (!Platform.isFxApplicationThread()) {
+                System.out.println("switchScene on runLater task");
+                Platform.runLater(new Runnable() {
+                    public void run() {
+                        StObjCont.getStage().setScene(scene);
+                        StObjCont.getStage().sizeToScene();
+                        preferredSizes = new Pair<>(scene.getWidth(), scene.getHeight());
+                        modifiedSizes = getStageSizes();
+                    }
+                });
+            } else {
+                System.out.println("switchScene executed from javaFx");
+                StObjCont.getStage().setScene(scene);
+                StObjCont.getStage().sizeToScene();
+                preferredSizes = new Pair<>(scene.getWidth(), scene.getHeight());
+                modifiedSizes = getStageSizes();
+            }
         }
     }
 
