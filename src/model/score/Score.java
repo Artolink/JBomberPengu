@@ -1,6 +1,6 @@
 package model.score;
 
-import model.AbstractDestructibleEntity;
+import model.AbstractEntity;
 import model.Level;
 
 /**
@@ -73,7 +73,7 @@ public class Score {
      * @param block block to take points
      * @return a boolean representing a positive score with true or negative with false.
      */
-    public boolean applyScore(final AbstractDestructibleEntity block) {
+    public boolean applyScore(final AbstractEntity block) {
         // this.points += block.getPoints();
         if (!this.isScorePositive()) {
             this.points = 0;

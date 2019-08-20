@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import controller.ControllerImpl;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -20,7 +21,6 @@ import model.AbstractEntity;
 import model.blocks.Bomb;
 import model.language.ApplicationStrings;
 import model.player.Player;
-import model.player.PlayerColor;
 import model.utils.Pair;
 import view.PageController;
 import view.animations.PlayerAnimations;
@@ -200,8 +200,6 @@ public class GameController extends PageController {
             animation.setPlayer(player);
             playerAnimations.add(animation);
             new Thread(animation).start();
-            player.setPosition(new Pair<>(blockDimension * player.getInitialPosition().getX(),
-                    blockDimension * player.getInitialPosition().getY()));
             associator.associatePlayer(player);
         }
     }
@@ -259,13 +257,6 @@ public class GameController extends PageController {
      */
     public void explodeBomb(final Bomb bomb, final List<AbstractEntity> interestedBlocks) {
         final List<Thread> threads = new ArrayList<>();
-        final WakeAnimations animationBomb = new WakeAnimations();
-        animationBomb.setPlayer(bomb.getPlayerInfo());
-        final ImageView imageBomb = (ImageView) canvas.getNode(bomb.getInitialPosition().getX(), bomb.getInitialPosition().getY());
-        imageBomb.setFitHeight(blockDimension - blockSpacing);
-        imageBomb.setFitWidth(blockDimension - blockSpacing);
-        animationBomb.setImageView(imageBomb);
-        threads.add(new Thread(animationBomb));
         for (final AbstractEntity block : interestedBlocks) {
             final WakeAnimations animation = new WakeAnimations();
             animation.setPlayer(bomb.getPlayerInfo());
@@ -278,7 +269,7 @@ public class GameController extends PageController {
         if (isSoundEnabled()) {
             getSounds().getExplosionSound().play();
         }
-        for (Thread thread : threads) {
+        for (final Thread thread : threads) {
             thread.start();
             try {
                 Thread.sleep(EXPLOSIONSDELAY);
@@ -286,7 +277,7 @@ public class GameController extends PageController {
                 e.printStackTrace();
             }
         }
-        for (Thread thread : threads) {
+        for (final Thread thread : threads) {
             try {
                 thread.join();
             } catch (InterruptedException e) {
@@ -317,19 +308,23 @@ public class GameController extends PageController {
 
     /**
      * Changes the score visualized for specified player.
-     * @param color - The color matching player
-     * @param score - The score you want to display
+     * @param player player to take the score from
      */
-    public void showScore(final PlayerColor color, final Integer score) {
-        switch (color) {
-        case RED:
-            plRedScore.setText(scoreString + ": " + score.toString());
-            break;
-        case YELLOW:
-            plYellScore.setText(scoreString + ": " + score.toString());
-            break;
-        default:
-        }
+    public void showScore(final Player player) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                switch (player.getColor()) {
+                    case RED:
+                        plRedScore.setText(scoreString + ": " + player.getScore());
+                        break;
+                    case YELLOW:
+                        plYellScore.setText(scoreString + ": " + player.getScore());
+                        break;
+                    default:
+                }
+            }
+        });
     }
 
     /*
@@ -363,40 +358,42 @@ public class GameController extends PageController {
 
     /**
      * 
-     * @param color color
-     * @param bombs bombs 
+     * @param player 
      */
-    public void showAvailableBombs(final PlayerColor color, final Integer bombs) {
-        switch (color) {
-        case RED:
-            bombCounterR.getChildren().clear();
-            for (int i = 0; i < bombs; i++) {
-                ImageView img = new ImageView(new Image("/view/bomba_rossa.png"));
-                img.setFitWidth(blockDimension);
-                img.setFitHeight(blockDimension);
-                bombCounterR.getChildren().add(img);
+    public void showAvailableBombs(final Player player) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                switch (player.getColor()) {
+                    case RED:
+                        bombCounterR.getChildren().clear();
+                        for (int i = 0; i < player.getBombNumber(); i++) {
+                            final ImageView img = new ImageView(new Image("/view/bomba_rossa.png"));
+                            img.setFitWidth(blockDimension);
+                            img.setFitHeight(blockDimension);
+                            bombCounterR.getChildren().add(img);
+                        }
+                        break;
+                    case YELLOW:
+                        bombCounterY.getChildren().clear();
+                        for (int i = 0; i < player.getBombNumber(); i++) {
+                            final ImageView img = new ImageView(new Image("/view/bomba_gialla.png"));
+                            img.setFitWidth(blockDimension);
+                            img.setFitHeight(blockDimension);
+                            bombCounterY.getChildren().add(img);
+                        }
+                        break;
+                    default:
+                }
             }
-            break;
-        case YELLOW:
-            bombCounterY.getChildren().clear();
-            for (int i = 0; i < bombs; i++) {
-                ImageView img = new ImageView(new Image("/view/bomba_gialla.png"));
-                img.setFitWidth(blockDimension);
-                img.setFitHeight(blockDimension);
-                bombCounterY.getChildren().add(img);
-            }
-            break;
-        default:
-        }
+        });
     }
 
     @Override
     public final void translate(final ApplicationStrings t) {
-        //translating score labels
-        String s = scoreString;
-        scoreString = t.getValueOf("score");
-        showScore(PlayerColor.RED, Integer.parseInt(plRedScore.getText().replace(s + ": ", "")));
-        showScore(PlayerColor.YELLOW, Integer.parseInt(plYellScore.getText().replace(s + ": ", "")));
+        this.scoreString = t.getValueOf("score");
+
+        //TODO add this key to ApplicatioStrings
         button.setText(t.getValueOf("give up"));
     }
 }

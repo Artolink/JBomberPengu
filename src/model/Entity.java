@@ -9,23 +9,27 @@ import model.utils.Pair;
 public interface Entity {
 
     /**
-     * Gets the position of the entity.
+     * Gets the position of the entity on screen (absolute, pixel).
      * 
-     * @return entity current position
+     * @return entity current position on screen
      */
     Pair<Integer, Integer> getPosition();
 
     /**
-     * Sets the initial position of the entity.
+     * Sets the position of the entity on screen.
+     * Can be used to change an absolute position (that is grid locked because they're a multiple of a value) 
+     * to a specific position and place an object everywhere you want
      * 
-     * @param position defines the entity position
+     * Please check {@link TestEntity} for an in-depth explanation of how this works.
+     * 
+     * @param position defines the entity position on screen
      */
     void setPosition(Pair<Integer, Integer> position);
 
     /**
-     * Gets the hitbox of the entity (a Rectangle if it's solid, null otherwise.
+     * Gets the hitbox of the entity (a Rectangle if it's solid, null otherwise).
      * 
-     * @return the collision box for each entity.
+     * @return the collision box of the entity.
      */
     Rectangle getCollisionBox();
 
@@ -51,9 +55,9 @@ public interface Entity {
     boolean isDestroyed();
 
     /**
-     * Sets the status of the entity (1 if destroyed, 0 otherwise).
+     * Sets the status of the entity (true if destroyed, false otherwise).
      * 
-     * @param destroyed defines if the Entity has been destroyed or not
+     * @param destroyed defines if the entity has been destroyed or not
      */
     void setStatus(boolean destroyed);
 
@@ -87,7 +91,7 @@ public interface Entity {
 
     /**
      * Return the state of the block, if it is solid or not.
-     * @return {@link Boolean} associated at the state of solidity
+     * @return true if entity is solid, false otherwise.
      */
     boolean isSolid();
 

@@ -33,7 +33,7 @@ public class Translation implements TranslationInterface {
     public final String getTranslation() {
         return translated;
     }
-    
+
     @Override
     public final void setTranslation(final String translated) {
         this.translated = translated;

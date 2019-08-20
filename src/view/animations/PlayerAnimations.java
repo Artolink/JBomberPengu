@@ -20,20 +20,12 @@ public class PlayerAnimations implements Animation {
     private final SpriteSheet sheet = new SpriteSheet("/view/sheet.png", SHEET_ROWS, SHEET_COLUMNS);
     private Integer nextFrameTwo = 0;
     private Integer nextFrameThree = 0;
-    private boolean isDead;
     private static final int VERTICAL = 300;
     private static final int HORIZONTAL = 120;
     private static final int DEAD = 250;
     private static final int STATIONARY = 280;
 
     private boolean running = true;
-
-    /**
-     * Constructor.
-     */
-    public PlayerAnimations() {
-        this.isDead = false;
-    }
 
     /**
      * Runs the animations.
@@ -45,48 +37,47 @@ public class PlayerAnimations implements Animation {
 
         while (running) {
 
-            switch (player.getDirection()) {
-            case UP:
-                this.updateFrame();
-                this.imageView.setImage(sprite.getUpSprites().get(nextFrameTwo).getImage());
-                timeToSleep = VERTICAL;
-                break;
-            case RIGHT:
-                this.updateFrame();
-                this.imageView.setImage(sprite.getRunRightSprites().get(nextFrameThree).getImage());
-                lastHorizontalDir = Directions.RIGHT;
-                timeToSleep = HORIZONTAL;
-                break;
-            case LEFT:
-                this.updateFrame();
-                this.imageView.setImage(sprite.getRunLeftSprites().get(nextFrameThree).getImage());
-                lastHorizontalDir = Directions.LEFT;
-                timeToSleep = HORIZONTAL;
-                break;
-            case DOWN:
-                this.updateFrame();
-                this.imageView.setImage(sprite.getDownSprites().get(nextFrameTwo).getImage());
-                timeToSleep = VERTICAL;
-                break;
-            case STATIONARY:
-                if (lastHorizontalDir.equals(Directions.LEFT)) {
-                    this.updateFrame();
-                    this.imageView.setImage(sprite.getStayLeftSprites().get(nextFrameThree).getImage());
-
-                } else {
-                    this.updateFrame();
-                    this.imageView.setImage(sprite.getStayRightSprites().get(nextFrameThree).getImage());
-                }
-                timeToSleep = STATIONARY;
-                break;
-            default:
-                break;
-            }
-
-            if (isDead) {
+            if (player.isDestroyed()) {
                 this.updateFrame();
                 this.imageView.setImage(sprite.getLoseSprites().get(nextFrameTwo).getImage());
                 timeToSleep = DEAD;
+            } else {
+                switch (player.getDirection()) {
+                    case UP:
+                        this.updateFrame();
+                        this.imageView.setImage(sprite.getUpSprites().get(nextFrameTwo).getImage());
+                        timeToSleep = VERTICAL;
+                        break;
+                    case RIGHT:
+                        this.updateFrame();
+                        this.imageView.setImage(sprite.getRunRightSprites().get(nextFrameThree).getImage());
+                        lastHorizontalDir = Directions.RIGHT;
+                        timeToSleep = HORIZONTAL;
+                        break;
+                    case LEFT:
+                        this.updateFrame();
+                        this.imageView.setImage(sprite.getRunLeftSprites().get(nextFrameThree).getImage());
+                        lastHorizontalDir = Directions.LEFT;
+                        timeToSleep = HORIZONTAL;
+                        break;
+                    case DOWN:
+                        this.updateFrame();
+                        this.imageView.setImage(sprite.getDownSprites().get(nextFrameTwo).getImage());
+                        timeToSleep = VERTICAL;
+                        break;
+                    case STATIONARY:
+                        if (lastHorizontalDir.equals(Directions.LEFT)) {
+                            this.updateFrame();
+                            this.imageView.setImage(sprite.getStayLeftSprites().get(nextFrameThree).getImage());
+                        } else {
+                            this.updateFrame();
+                            this.imageView.setImage(sprite.getStayRightSprites().get(nextFrameThree).getImage());
+                        }
+                        timeToSleep = STATIONARY;
+                        break;
+                    default:
+                        break;
+                }
             }
 
             try {
@@ -114,13 +105,6 @@ public class PlayerAnimations implements Animation {
      */
     public void stop() {
         running = false;
-    }
-
-    /**
-     * Controls if the player is dead.
-     */
-    public void playerDead() {
-        this.isDead = true;
     }
 
     /**
