@@ -1,42 +1,33 @@
 package controller;
 
-import model.Model;
+import model.ModelImpl;
 import view.GUIImpl;
 
 /**
  *Class that launches the game.
  */
-public class Launcher {
+public final class Launcher {
 
     private static GUIImpl gui;
-    static final Agent AGENT = new Agent();
+    private static final Agent AGENT = new Agent();
+
+    private Launcher() { }
 
     /**
-     * 
-     * @param args arguments
+     * Start the game!
+     * @param args arguments will be ignored
      */
     public static void main(final String[] args) {
-
-        Model model = new Model();
+        final ModelImpl model = ModelImpl.getInstance();
         gui = new GUIImpl();
-        ControllerImpl controller = new ControllerImpl(model, gui);
-
-        //Sinchronyze GUI and Controller
-        //gui.setController(/*controller here*/);
-
-        //Start view Thread
+        new ControllerImpl(model, gui);
         new Thread(AGENT).start();
-
-        System.out.println("CONTROLLER IS STILL RUNNING...");
-
-        //controller stuff (start cycle)
-
     }
 
 
     private static class Agent implements Runnable {
         public void run() {
-            gui.launch();   //starts graphical interface
+            gui.launch();
         }
     }
 

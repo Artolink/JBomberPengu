@@ -1,7 +1,7 @@
 package model.map;
 
 import model.AbstractEntity;
-import model.Model;
+import model.ModelImpl;
 import model.blocks.Terrain;
 import model.utils.Pair;
 
@@ -36,8 +36,8 @@ public class GameMap implements GameMapInterface {
         for (int a = 0; a < this.dimensions.getX(); a++) {
             for (int b = 0; b < this.dimensions.getY(); b++) {
                 this.map[a][b] = new Terrain(new Pair<Integer, Integer>(a, b));
-                this.map[a][b].setHeight(Model.BLOCKDIMENSION);
-                this.map[a][b].setWidth(Model.BLOCKDIMENSION);
+                this.map[a][b].setHeight(ModelImpl.BLOCKDIMENSION);
+                this.map[a][b].setWidth(ModelImpl.BLOCKDIMENSION);
             }
         }
     }
@@ -70,6 +70,6 @@ public class GameMap implements GameMapInterface {
     }
 
     private boolean isDimensionsCorrect(final int x, final int y) {
-        return this.dimensions.getX() > x && this.dimensions.getY() > y;
+        return this.dimensions.getX() > x  && x >= 0 && this.dimensions.getY() > y && y >= 0;
     }
 }

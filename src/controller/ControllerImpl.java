@@ -1,10 +1,10 @@
 package controller;
 
-import java.util.List;
 import java.util.Timer;
 
+import javafx.application.Platform;
 import model.AbstractEntity;
-import model.Model;
+import model.ModelImpl;
 import model.blocks.Bomb;
 import model.collisions.CollisionImpl;
 import model.language.ApplicationStrings;
@@ -19,52 +19,45 @@ import view.GUIImpl;
 import view.game.GameController;
 import view.game.GameEndedController;
 
+/**
+ *  Class controller of all Game and windows of it.
+ */
 public class ControllerImpl implements Controller {
 
-
-    private final Model model;
+    private static final int TIMEBEFOREGAMEND = 2000;
+    private final ModelImpl model;
     private final GUIImpl gui;
     private ViewUpdater viewUpdater;
     private GameController gameView;
     private ScoreCompute scoreCompute;
+    private boolean gameEnd;
+
     /**
-     * 
-     * @param model 
-     * @param gui 
+     * Sets Model and View references.
+     * @param model where to find data
+     * @param gui where to load data and game images
      */
-    public ControllerImpl(final Model model, final GUIImpl gui) {
+    public ControllerImpl(final ModelImpl model, final GUIImpl gui) {
         this.model = model;
         this.gui = gui;
         this.gui.setController(this);
     }
 
-    // global data utilities
-    /**
-     * @return the ApplicationStrings instance
-     */
-    public ApplicationStrings getTranslator() {
+    @Override
+    public final ApplicationStrings getTranslator() {
         return this.model.getTranslator();
     }
 
-    /**
-     * 
-     * @param language - one language taken from getTranslator().getAvailableLanguages()
-     */
-    public void setLanguage(final String language) {
+    @Override
+    public final void setLanguage(final String language) {
         this.model.getTranslator().setLanguage(language);
         // this.view.notifyLanguageChanged();
     }
 
 
-    // main menu controller
-
-    // game controller
-
-    /**
-     * 
-     * @param controller - the view controller
-     */
-    public void initGame(final GameController controller) {
+    @Override
+    public final void initGame(final GameController controller) {
+        gameEnd = false;
         this.model.initGameData();
         final GameMap map = model.getGameMap();
         this.gameView = controller;
@@ -72,98 +65,61 @@ public class ControllerImpl implements Controller {
         scoreCompute = new ScoreCompute(model.getPlayers());
         // set game dimensions
         gameView.setDimensions(new Pair<Integer, Integer>(map.getDimensions().getX(), map.getDimensions().getY()));
-        gameView.setBlockDimension(Model.BLOCKDIMENSION);
-        gameView.setBlockSpacing(Model.BLOCKSPACING);
+        gameView.setBlockDimension(ModelImpl.BLOCKDIMENSION);
+        gameView.setBlockSpacing(ModelImpl.BLOCKSPACING);
         gameView.resizeToMap();
 
-        //Heavy calculations---------------------------------------------------------
-        //executing on thread 1
-        Thread renderMapThread = new Thread(new Runnable() {
-            public void run() {
-                // first render of map in view
-                for (int a = 0; a < map.getDimensions().getX(); a++) {
-                    for (int b = 0; b < map.getDimensions().getY(); b++) {
-                        final AbstractEntity block = map.getBlock(a, b);
-                        block.setHeight(Model.BLOCKDIMENSION);
-                        block.setWidth(Model.BLOCKDIMENSION);
-                        gameView.draw(block.getImagePath(), a, b);
-                    }
-                }
+        // first render of map in view
+        for (int a = 0; a < map.getDimensions().getX(); a++) {
+            for (int b = 0; b < map.getDimensions().getY(); b++) {
+                final AbstractEntity block = map.getBlock(a, b);
+                block.setHeight(ModelImpl.BLOCKDIMENSION);
+                block.setWidth(ModelImpl.BLOCKDIMENSION);
+                gameView.draw(block.getImagePath(), a, b);
             }
-        }); 
-        renderMapThread.start();
-
-        //executed by javafx thread
-        // render players
-        gameView.drawPlayers(model.getPlayers());
-
-        //executed on thread 2
-        Thread renderPlThread = new Thread(new Runnable() {
-            public void run() {
-                for (final Player player : model.getPlayers()) {
-                    player.setCollision(new CollisionImpl(player).setMap(map));
-                }
-            }
-        }); 
-        renderPlThread.start();
-
-        //thread join
-        try {
-            System.out.println("wait map render");
-            renderMapThread.join();
-            System.out.println("wait collision generation");
-            renderPlThread.join();
-            System.out.println("done");
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
-      //Heavy calculations ended---------------------------------------------------
 
-        this.viewUpdater.setModel(this.model);
+        // render players
+
+        gameView.drawPlayers(model.getPlayers());
+        for (final Player player : model.getPlayers()) {
+            player.setCollision(new CollisionImpl(player).setMap(map));
+            gameView.showAvailableBombs(player);
+            gameView.showScore(player);
+        }
         this.viewUpdater.setView(gameView);
         new Thread(this.viewUpdater).start();
     }
 
-    /**
-     * Move the player specified in the specified direction.
-     * 
-     * @param player    player to move
-     * @param direction direction to move
-     */
-    public void movePlayer(final Player player, final Directions direction) {
-        if (!this.viewUpdater.getDirection(player).equals(direction)) {
-            this.viewUpdater.setDirection(player, direction);
+    @Override
+    public final void movePlayer(final Player player, final Directions direction) {
+        if (!player.getDirection().equals(direction)) {
+            player.setDirection(direction);
         }
     }
 
-    /**
-     * Stop to move the specified player in the specified direction.
-     * 
-     * @param player    player to stop
-     * @param direction direction to stop the player moving in
-     */
-    public void stopPlayer(final Player player, final Directions direction) {
-        if (this.viewUpdater.getDirection(player).equals(direction)) {
-            this.viewUpdater.setDirection(player, Directions.STATIONARY);
+    @Override
+    public final void stopPlayer(final Player player, final Directions direction) {
+        if (player.getDirection().equals(direction)) {
+            player.setDirection(Directions.STATIONARY);
         }
     }
 
-
-    /**
-     * Drop a bomb from player.
-     * @param player - who is dropping the bomb
-     */
-    public void releaseBomb(final Player player) {
-        final int bombX = (player.getPosition().getX() + (player.getWidth() / 2)) / player.getWidth();
-        final int bombY = (player.getPosition().getY() + (player.getHeight() / 2)) / player.getHeight();
-        final Bomb bomb = new Bomb(new Pair<>(bombX, bombY), player);
-        this.model.getGameMap().setBlock(bomb, bombX, bombY);
-        this.model.getGameMap().getBlock(bombX, bombY).setWidth(player.getWidth());
-        this.model.getGameMap().getBlock(bombX, bombY).setHeight(player.getHeight());
-        this.gameView.drawBomb(bomb.getImagePath(), bomb.getInitialPosition().getX(), bomb.getInitialPosition().getY());
-        final BombTimer bombTimer = new BombTimer(bomb, this.model.getPlayers(), this.model.getGameMap(), this, this.gameView);
-        new Timer().schedule(bombTimer, bomb.getExplosionTime());
+    @Override
+    public final void releaseBomb(final Player player) {
+        if (player.canPlaceBomb()) {
+            final int bombX = (player.getPosition().getX() + (player.getWidth() / 2)) / player.getWidth();
+            final int bombY = (player.getPosition().getY() + (player.getHeight() / 2)) / player.getHeight();
+            final Bomb bomb = new Bomb(new Pair<>(bombX, bombY), player);
+            this.model.getGameMap().setBlock(bomb, bombX, bombY);
+            this.model.getGameMap().getBlock(bombX, bombY).setWidth(player.getWidth());
+            this.model.getGameMap().getBlock(bombX, bombY).setHeight(player.getHeight());
+            this.gameView.drawBomb(bomb.getImagePath(), bomb.getInitialPosition().getX(), bomb.getInitialPosition().getY());
+            final BombTimer bombTimer = new BombTimer(bomb, this, this.gameView);
+            new Timer().schedule(bombTimer, bomb.getExplosionTime());
+            player.placeBomb();
+            gameView.showAvailableBombs(player);
+        }
     }
 
     @Override
@@ -223,7 +179,7 @@ public class ControllerImpl implements Controller {
     public final void actionPerformedCloseBtn() {
         System.out.println("Closing application...");
         this.gui.stop();
-        System.exit(0); //TODO HOW am I supposed to close it spotbugs???
+        Platform.exit(); //TODO HOW am I supposed to close it spotbugs???
     }
 
     @Override
@@ -232,10 +188,8 @@ public class ControllerImpl implements Controller {
       this.gui.getActivePageController().translate(getTranslator());
     }
 
-    /**
-     * Called while loading GameEnded.fxml.
-     * @param gameEndedController - controller of GameEnded.fxml
-     */
+
+    @Override
     public final void gameEnded(final GameEndedController gameEndedController) {
         viewUpdater.stop();
         if ((scoreCompute.getAlivePlayers().stream().map(e -> e.getColor()).anyMatch(e -> e.compareTo(PlayerColor.RED) == 0)) 
@@ -260,21 +214,32 @@ public class ControllerImpl implements Controller {
             gameEndedController.yellowPlayerSet("match draw", "view/draw.gif");
         }
     }
-    /**
-     * 
-     * @param killedPlayer 
-     */
-    public void notifyKilledPlayers() {
-        System.out.println(scoreCompute.getAlivePlayers());
-        if (scoreCompute.getAlivePlayers().size() <= 1) {
-            System.out.println("GAME ENDED NOW!!!");
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+
+    @Override
+    public final void notifyKilledPlayers() {
+        this.gameEnd = true;
+        System.out.println("GAME ENDED NOW!!!");
+        try {
+            Thread.sleep(TIMEBEFOREGAMEND);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        this.gui.loadPage(GUI.PageNames.GAMENDED);
+        this.gui.getActivePageController().translate(getTranslator());
+    }
+
+    @Override
+    public final void notifyExplosionDone() {
+        if (!gameEnd) {
+            for (final Player player : this.model.getPlayers()) {
+                gameView.showAvailableBombs(player);
+                gameView.showScore(player);
+                if (player.isDestroyed()) {
+                    notifyKilledPlayers();
+                    return;
+                }
             }
-            this.gui.loadPage(GUI.PageNames.GAMENDED);
-            this.gui.getActivePageController().translate(getTranslator());
         }
     }
 

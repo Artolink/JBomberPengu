@@ -13,6 +13,7 @@ import model.player.Player;
 public class ScoreCompute {
 
     private List<Player> players;
+    private List<Player> changeHistory = new ArrayList<>();
 
     /**
      * 
@@ -47,6 +48,37 @@ public class ScoreCompute {
     public Optional<Player> getWinnerByScore() {
         return players.stream()
                 .max((e, r) -> Integer.compare(e.getScore(), r.getScore()));
+    }
+
+    /**
+     * 
+     * @return a
+     */
+    public Optional<Player> getLastModified(){
+        Optional<Player> oP = Optional.ofNullable(null);
+        if (changeHistory.size() > 0) {
+            oP = Optional.ofNullable(changeHistory.get(0));
+            changeHistory.remove(0);
+        }
+        return oP; 
+    }
+
+    public Boolean isGameEnded() {
+        return getLastModified().isPresent();
+    }
+
+    /**
+     * 
+     * @param killedPlayer a
+     */
+    public void killPlayers(final List<Player> killedPlayer) {
+        for (Player p: killedPlayer) {
+            if (!p.isDestroyed()) {
+                p.setStatus(true);
+                changeHistory.add(p);
+                System.out.println(p.getColor().toString() + " killed");
+            }
+        }
     }
 
 }

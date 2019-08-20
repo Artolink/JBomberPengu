@@ -28,6 +28,12 @@ public interface Collision {
     boolean bombCollided(List<AbstractEntity> blocks);
 
     /**
+     * Checks if there's a collision with an explosion.
+     * @return true if there's a collision, false otherwise
+     */
+    boolean explosionCollided();
+
+    /**
      * Gets a list of hitboxes to check for collisions.
      * 
      * @param player            is the player you want to check for collisions

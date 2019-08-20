@@ -68,7 +68,6 @@ public class PlayerAnimations implements Animation {
                         if (lastHorizontalDir.equals(Directions.LEFT)) {
                             this.updateFrame();
                             this.imageView.setImage(sprite.getStayLeftSprites().get(nextFrameThree).getImage());
-        
                         } else {
                             this.updateFrame();
                             this.imageView.setImage(sprite.getStayRightSprites().get(nextFrameThree).getImage());

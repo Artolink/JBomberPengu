@@ -15,12 +15,10 @@ import model.utils.Pair;
 /**
  * Game model.
  */
-public class Model {
+public final class ModelImpl implements Model {
 
-    public static final int VELOCITY = 10;
-    public static final int BLOCKDIMENSION = 40;
-    public static final int BLOCKSPACING = 0;
-    public static final int PANEOFFSET = 10;
+    private static ModelImpl instance;
+
     private static final int MAPROWS = 15;
     private static final int MAPCOLUMN = 15;
 
@@ -32,12 +30,24 @@ public class Model {
     /**
      * Constructor initialize level and link to view controller.
      */
-    public Model() {
+    private ModelImpl() {
         this.level = new Level();
         this.translator = new ApplicationStrings();
         this.translator.setDefault();
     }
 
+    /**
+     * Get the instance of the Model singleton.
+     * @return the singleton instance
+     */
+    public static synchronized ModelImpl getInstance() {
+        if (instance == null) {
+            instance = new ModelImpl();
+        }
+        return instance;
+    }
+
+    @Override
     public void initGameData() {
         // check if map is saved on file or generate it (and save it into file)
         System.out.println("Starting level " + level.get());
@@ -54,12 +64,12 @@ public class Model {
         }
 
         players.clear();
-        Player player = new Player(0, "Marco", new Pair<Integer, Integer>(0, 0), PlayerColor.RED);
+        final Player player = new Player(0, "Marco", new Pair<Integer, Integer>(0, 0), PlayerColor.RED);
         player.setHeight(BLOCKDIMENSION);
         player.setWidth(BLOCKDIMENSION);
         player.setVelocity(VELOCITY);
         this.players.add(player);
-        Player player2 = new Player(1, "Andrea", new Pair<Integer, Integer>(this.map.getDimensions().getX() - 1, this.map.getDimensions().getY() - 1), PlayerColor.YELLOW);
+        final Player player2 = new Player(1, "Andrea", new Pair<Integer, Integer>(this.map.getDimensions().getX() - 1, this.map.getDimensions().getY() - 1), PlayerColor.YELLOW);
         player2.setHeight(BLOCKDIMENSION);
         player2.setWidth(BLOCKDIMENSION);
         player2.setVelocity(VELOCITY);
@@ -67,26 +77,17 @@ public class Model {
         level.next();
     }
 
-    /**
-     * Get the {@link GameMap} of this level.
-     * @return {@link GameMap} object
-     */
-    public final GameMap getGameMap() {
+    @Override
+    public GameMap getGameMap() {
         return this.map;
     }
 
-    /**
-     * Get the players.
-     * @return players
-     */
+    @Override
     public List<Player> getPlayers() {
         return this.players;
     }
 
-    /**
-     * Get the global translator.
-     * @return {@link ApplicationStrings} object
-     */
+    @Override
     public ApplicationStrings getTranslator() {
         return this.translator;
     }

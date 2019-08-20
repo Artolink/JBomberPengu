@@ -93,7 +93,7 @@ public final class Player extends AbstractEntity {
      * @return true if a bomb can be placed, false otherwise.
      */
     public boolean canPlaceBomb() {
-        return this.bombNumber > 0 ? true : false;
+        return this.bombNumber > 0;
     }
 
     /**
@@ -103,6 +103,28 @@ public final class Player extends AbstractEntity {
      */
     public void setBombNumber(final Integer bombNumber) {
         this.bombNumber = bombNumber;
+    }
+
+    /**
+     * Gets the number of bombs the player can place.
+     * @return number of available bomb
+     */
+    public Integer getBombNumber() {
+        return this.bombNumber;
+    }
+
+    /**
+     * Decrease the available bomb of this player.
+     */
+    public void placeBomb() {
+        this.bombNumber--;
+    }
+
+    /**
+     * Increase the available bomb of this player.
+     */
+    public void bombExploded() {
+        this.bombNumber++;
     }
 
     /**
@@ -174,7 +196,10 @@ public final class Player extends AbstractEntity {
      * @return true if player can move, false if it collides with something
      */
     public boolean move(final Directions direction) {
-        if (collision.blocksCollided()) {
+        if (collision.explosionCollided()) {
+            setStatus(true);
+            return false;
+        } else if (collision.blocksCollided() || isDestroyed()) {
             return false;
         } else {
             int x = 0;

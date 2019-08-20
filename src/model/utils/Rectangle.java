@@ -51,6 +51,15 @@ public final class Rectangle {
     }
 
     /**
+     * Gets the position of the rectangle.
+     * 
+     * @return rectangle position
+     */
+    public Pair<Integer, Integer> getMapPosition() {
+        return new Pair<>(this.getPosition().getX() / this.getWidth(), this.getPosition().getY() / this.getHeight());
+    }
+
+    /**
      * Gets the width of the rectangle.
      * 
      * @return rectangle width
