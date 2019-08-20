@@ -17,6 +17,7 @@ import model.utils.Pair;
  */
 public class MapGenerator implements MapGeneratorInterface {
 
+    private static final int PERCORRIBLEROUTE = 3;
     private final Level level;
     private final Pair<Integer, Integer> dimensions;
     private final List<Pair<Integer, Integer>> illegalPosition;
@@ -82,6 +83,7 @@ public class MapGenerator implements MapGeneratorInterface {
                 }
             }
         }
+        setPercorribleroute(map);
         return map;
     }
 
@@ -99,6 +101,43 @@ public class MapGenerator implements MapGeneratorInterface {
             }
         }
         return position;
+    }
+
+    private void setPercorribleroute(final GameMap map) {
+        final Pair<Integer, Integer> end = new Pair<>(dimensions.getX() - 1, dimensions.getY() - 1);
+        for (int route = 0; route < PERCORRIBLEROUTE; route++) {
+            Pair<Integer, Integer> position = new Pair<Integer, Integer>(0, 0);
+            while (!position.equals(end)) {
+                position = nextBlock(position);
+                System.out.println(position.toString());
+                if (map.getBlock(position).getClass().getCanonicalName().equals(IndestructibleBlock.class.getCanonicalName())) {
+                    map.setBlock(new DestructibleBlock(position), position);
+                }
+            }
+        }
+    }
+
+    private Pair<Integer, Integer> nextBlock(final Pair<Integer, Integer> position) {
+        final Random rand = new Random();
+        rand.setSeed(System.currentTimeMillis());
+        while (true) {
+            switch (rand.nextInt() % 2) {
+            case 0:
+                if (position.getX() + 1 >= dimensions.getX()) {
+                    continue;
+                } else {
+                    return new Pair<Integer, Integer>(position.getX() + 1, position.getY());
+                }
+            case 1:
+                if (position.getY() + 1 >= dimensions.getY()) {
+                    continue;
+                } else {
+                    return new Pair<Integer, Integer>(position.getX(), position.getY() + 1);
+                }
+            default:
+                continue;
+            }
+        }
     }
 
 }
