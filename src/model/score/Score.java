@@ -12,7 +12,7 @@ import model.player.Player;
  */
 public class Score {
 
-    private final List<Player> player = new ArrayList<>();
+    private List<Player> player = new ArrayList<>();
     private String date;
     private int level;
 
@@ -25,12 +25,22 @@ public class Score {
     }
 
     /**
-     * Set the player of this score.
-     * @param player name of the player
+     * Set the player.
+     * @param player player
      * @return this Score object
      */
     public Score setPlayer(final Player player) {
         this.player.add(player);
+        return this;
+    }
+
+    /**
+     * Set the players.
+     * @param players players
+     * @return this Score object
+     */
+    public Score setPlayers(final List<Player> players) {
+        this.player = players;
         return this;
     }
 
