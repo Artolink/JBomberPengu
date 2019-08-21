@@ -15,7 +15,7 @@ import model.score.ScoreCompute;
 import model.utils.Pair;
 
 /**
- *
+ *  Test score related methods.
  */
 public class TestScore {
 

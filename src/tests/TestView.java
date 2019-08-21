@@ -8,11 +8,14 @@ import view.FxmlFileLoader;
 import view.Page;
 
 /**
- *
+ * Test view objects.
  */
 public class TestView {
+
+
     /**
-     * 
+     * Test Page.getPageName() based on FxmlFileLoader page generation,
+     * "MainMenu.fxml" will make the page name result "MainMenu".
      */
     @org.junit.Test
     public void testPageName() {
