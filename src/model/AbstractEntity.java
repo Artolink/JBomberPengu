@@ -28,8 +28,11 @@ public abstract class AbstractEntity implements Entity {
         this.solid = isSolid;
     }
 
+    /**
+     * This method can be overridden by more complex entities to get a specific behaviour (e.g. Terrain doesn't need an hitbox -> return an empty rectangle). 
+     */
     @Override
-    public final Rectangle getCollisionBox() {
+    public Rectangle getCollisionBox() {
         return new Rectangle(new Pair<Integer, Integer>(getPosition().getX(), getPosition().getY()), getWidth(), getHeight());
     }
 
