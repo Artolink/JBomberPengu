@@ -24,7 +24,7 @@ public class FxmlFileLoader extends Page {
      * @param fileName - the name of the file whitout extension
      */
     public FxmlFileLoader(final String filePath, final String fileName) {
-        this(filePath + File.separator + fileName + ".fxml");
+        this(filePath + "/" + fileName + ".fxml");
     }
 
     /**

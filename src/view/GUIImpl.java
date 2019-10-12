@@ -23,7 +23,7 @@ import view.sounds.SoundsAssociator;
 public class GUIImpl extends Application implements GUI {
 
     private static final String FOLDER = "view";
-    private static final String ICON_FILE = FOLDER + File.separator + "penguin.png";
+    private static final String ICON_FILE = FOLDER + "/penguin.png";
 
     private Pair<Double, Double> preferredSizes;
     private Pair<Double, Double> modifiedSizes;
@@ -128,10 +128,10 @@ public class GUIImpl extends Application implements GUI {
 
         switch (pageName) {
             case MAINMENU:
-                StObjCont.setPage((Page) new FxmlFileLoader(FOLDER + File.separator + "mainMenu", "MainMenu"));
+                StObjCont.setPage((Page) new FxmlFileLoader(FOLDER + "/" + "mainMenu", "MainMenu"));
                 break;
             case GAME:
-                StObjCont.setPage((Page) new FxmlFileLoader(FOLDER + File.separator + "game", "Game"));
+                StObjCont.setPage((Page) new FxmlFileLoader(FOLDER + "/" + "game", "Game"));
                 //start match sound
                 if (isSoundEnabled()) {
                     getSounds().stopSounds();
@@ -139,19 +139,19 @@ public class GUIImpl extends Application implements GUI {
                 }
                 break;
             case GAMENDED:
-                StObjCont.setPage((Page) new FxmlFileLoader(FOLDER + File.separator + "game", "GameEnded"));
+                StObjCont.setPage((Page) new FxmlFileLoader(FOLDER + "/" + "game", "GameEnded"));
                 break;
             case SETTINGS:
-                StObjCont.setPage((Page) new FxmlFileLoader(FOLDER + File.separator + "settings", "SettingsMenu"));
+                StObjCont.setPage((Page) new FxmlFileLoader(FOLDER + "/" + "settings", "SettingsMenu"));
                 break;
             case HOWTOPLAY:
-                StObjCont.setPage((Page) new FxmlFileLoader(FOLDER + File.separator + "howToPlay", "HowToPlay"));
+                StObjCont.setPage((Page) new FxmlFileLoader(FOLDER + "/" + "howToPlay", "howToPlay"));
                 break;
             case MAPEDITOR:
-                StObjCont.setPage((Page) new FxmlFileLoader(FOLDER + File.separator + "mapEditor", "MapEditor"));
+                StObjCont.setPage((Page) new FxmlFileLoader(FOLDER + "/" + "mapEditor", "MapEditor"));
                 break;
             case LANGUAGEDITOR:
-                StObjCont.setPage((Page) new FxmlFileLoader(FOLDER + File.separator + "multiLang", "MultilangView"));
+                StObjCont.setPage((Page) new FxmlFileLoader(FOLDER + "/" + "multilang", "MultilangView"));
                 break;
             default:
                 System.out.println("404 Page not found");

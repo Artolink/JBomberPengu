@@ -1,5 +1,7 @@
 package controller;
 
+import java.net.URISyntaxException;
+
 import model.ModelImpl;
 import view.GUIImpl;
 
@@ -18,6 +20,13 @@ public final class Launcher {
      * @param args arguments will be ignored
      */
     public static void main(final String[] args) {
+    	EnvironmentCreator env = new EnvironmentCreator();
+    	try {
+			env.create();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         final ModelImpl model = ModelImpl.getInstance();
         gui = new GUIImpl();
         new ControllerImpl(model, gui);

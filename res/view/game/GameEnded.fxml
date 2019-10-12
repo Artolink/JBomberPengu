@@ -22,7 +22,7 @@
    <children>
        <ImageView fitHeight="100.0" fitWidth="800.0">
 	       <image>
-	           <Image url="@view/logo.png" />
+	           <Image url="view/logo.png" />
 	       </image>
        </ImageView>
        <HBox alignment="CENTER" prefHeight="223.0" prefWidth="455.0">
@@ -48,7 +48,7 @@
           <children>
                   <ImageView fx:id="playerImage2" fitHeight="213.0" fitWidth="311.0">
                      <image>
-                        <Image url="@view/penguin.png" />
+                        <Image url="view/penguin.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="playerNameLabelyellow" alignment="CENTER" prefHeight="119.0" prefWidth="351.0" text="you lost" textAlignment="CENTER" textFill="WHITE">

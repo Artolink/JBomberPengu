@@ -1,7 +1,5 @@
 package model.blocks;
 
-import java.io.File;
-
 import model.AbstractEntity;
 import model.player.Player;
 import model.player.PlayerColor;
@@ -33,9 +31,9 @@ public class Bomb extends AbstractEntity {
         this.range = DEFAULT_RANGE;
         this.explosionTime = EXPLOSION_TIME;
         if (pinfo.getColor().equals(PlayerColor.RED)) {
-            this.setImagePath(ClassLoader.getSystemClassLoader().getResource("view") + File.separator + "bomba_rossa.png");
+            this.setImagePath(ClassLoader.getSystemClassLoader().getResource("view") + "/bomba_rossa.png");
         } else if (pinfo.getColor().equals(PlayerColor.YELLOW)) {
-            this.setImagePath(ClassLoader.getSystemClassLoader().getResource("view") + File.separator + "bomba_gialla.png");
+            this.setImagePath(ClassLoader.getSystemClassLoader().getResource("view") + "/bomba_gialla.png");
         }
     }
 

@@ -18,11 +18,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.image.Image?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="656.0" prefWidth="649.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="view/howToPlay/HowToPlay.css" fx:controller="view.howToPlay.HowToPlayController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="656.0" prefWidth="649.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="view/howToPlay/howToPlay.css" fx:controller="view.howToPlay.HowToPlayController">
    <children>
       <ImageView fitHeight="656.0" fitWidth="649.0">
          <image>
-            <Image url="@view/how_to_play.jpg" />
+            <Image url="view/how_to_play.jpg" />
          </image>
       </ImageView>
       <HBox layoutX="22.0" layoutY="25.0" prefHeight="114.0" prefWidth="575.0">

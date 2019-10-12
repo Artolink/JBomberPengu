@@ -22,7 +22,7 @@
    <children>
        <ImageView fitHeight="100.0" fitWidth="800.0" style="-fx-scale-x: 100%; -fx-scale-y: 100%;">
 	       <image>
-	           <Image url="@view/logo.png" />
+	           <Image url="view/logo.png" />
 	       </image>
        </ImageView>
        <HBox alignment="CENTER">
@@ -31,7 +31,7 @@
                <children>
              <ImageView fitHeight="486.0" fitWidth="550.0">
                    <image>
-                       <Image url="@view/initial_penguin.png" />
+                       <Image url="view/initial_penguin.png" />
                    </image>
              </ImageView>
                </children>
